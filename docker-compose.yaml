@@ -1,0 +1,24 @@
+services:
+  react:
+    build:
+      context: ./react-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./react-app:/src
+    environment:
+      - WATCHPACK_POLLING=true
+    command: npm run start
+
+  python:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./python:/src
+    depends_on:
+      - react
+    command: python3 main.py

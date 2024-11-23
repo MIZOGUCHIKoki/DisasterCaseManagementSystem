@@ -1,10 +1,9 @@
 [tool.poetry]
-name = "api-server"
+name = "src"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["MIZOGUCHI Koki"]
 readme = "README.md"
-packages = [{include = "api_server"}]
 
 [tool.poetry.dependencies]
 python = "^3.7"

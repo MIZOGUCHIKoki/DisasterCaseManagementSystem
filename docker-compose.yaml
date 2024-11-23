@@ -21,4 +21,4 @@ services:
       - ./python:/src
     depends_on:
       - react
-    command: python3 api_server/main.py
+    tty: true

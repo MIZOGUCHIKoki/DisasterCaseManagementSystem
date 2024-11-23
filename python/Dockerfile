@@ -1,4 +1,4 @@
-FROM python:3.7.3
+FROM python:3.9
 
 RUN mkdir -p /src
 WORKDIR /src
@@ -8,11 +8,6 @@ RUN pip install poetry
 
 # poetryの定義ファイルをコピー (存在する場合)
 COPY pyproject.toml* poetry.lock* ./
-
-# poetryの定義ファイルをコピー (存在する場合)
-COPY pyproject.toml* poetry.lock* ./
-
-# poetryでライブラリをインストール (pyproject.tomlが既にある場合)
 RUN poetry config virtualenvs.in-project true
 
-RUN if [ -f pyproject.toml ]; then poetry install --no-root; fi
+RUN if [ -f pyproject.toml ]; then poetry install --no-root; else poetry init; fi

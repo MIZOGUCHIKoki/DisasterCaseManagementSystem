@@ -1,12 +1,13 @@
 [tool.poetry]
-name = "src"
+name = "dcms-api"
 version = "0.1.0"
 description = ""
-authors = ["MIZOGUCHI Koki"]
+authors = ["MIZOGUCHI Koki <94270819+MIZOGUCHIKoki@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.13"
+fastapi = "^0.115.5"
 
 
 [build-system]

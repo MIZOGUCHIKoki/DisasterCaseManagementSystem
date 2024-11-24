@@ -1,13 +1,14 @@
-FROM python:3.9
+FROM python:3.13.0
 
 RUN mkdir -p /src
 WORKDIR /src
 
 RUN python -m pip install --upgrade pip
+RUN apt-get update && apt-get install -y vim
 RUN pip install poetry
 
-# poetryの定義ファイルをコピー (存在する場合)
-COPY pyproject.toml* poetry.lock* ./
-RUN poetry config virtualenvs.in-project true
+# OFF virtual envs of poetry
+RUN poetry config virtualenvs.create false
+RUN poetry config virtualenvs.in-project false
 
-RUN if [ -f pyproject.toml ]; then poetry install --no-root; else poetry init; fi
+RUN if [ -f pyproject.toml ]; then poetry install --no-root; fi

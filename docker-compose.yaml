@@ -3,6 +3,7 @@ services:
     build:
       context: ./react-app
       dockerfile: Dockerfile
+    container_name: react
     ports:
       - "3000:3000"
     volumes:
@@ -10,11 +11,13 @@ services:
     environment:
       - WATCHPACK_POLLING=true
     command: npm run start
+    tty: true
 
   python:
     build:
       context: ./python
       dockerfile: Dockerfile
+    container_name: python
     ports:
       - "4000:4000"
     volumes:

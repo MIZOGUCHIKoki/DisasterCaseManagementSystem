@@ -1,4 +1,5 @@
-from typing import Dict, List
+from typing import List, Dict, Any
+import subprocess
 import sqlite3
 from fastapi import FastAPI, HTTPException
 from contextlib import asynccontextmanager
@@ -20,30 +21,94 @@ app:FastAPI = FastAPI(lifespan = lifespan)
 database = Database("sqlite:///dataBase.db")
 database_path = "dataBase.db"
 
-@app.get('/person/{person_id}', response_model = Person)
+@app.get('/person/{person_id}')
 async def get_person(person_id: str):
-    query:str = "SELECT * FROM person WHERE id = :person_id"
-    values: Dict[str, str] = {"person_id": person_id}
-    person = await database.fetch_one(query=query, values=values) # type: ignore
+    query_personInfo:str = "SELECT * FROM person WHERE id = :person_id"
+    query_serveLog:str = "SELECT id, asGroup, receiveClassID, created_at FROM serveLog WHERE person_id = :person_id"
+    person = await database.fetch_one(query=query_personInfo, values={"person_id": person_id})
     if not person:
         raise HTTPException(status_code=404, detail="Person not found")
-    # Personモデルにマッピングして返す
-    return person
+    
+    serveLog = await database.fetch_all(query=query_serveLog, values={"person_id": person_id})
+    for log in serveLog:
+        log_dict:dict = dict(log)
+        query_stockIO:str = "SELECT stockList_id, amount FROM stockIO WHERE serveLog_id = :serveLog_id"
+        stockIO = await database.fetch_all(query=query_stockIO, values={"serveLog_id": log["id"]})
+        log_dict["stockIO"] = []
+        for io in stockIO:
+            io_dict:dict = dict(io)
+            query_stockList:str = "SELECT name, size, unit FROM stockList WHERE id = :stockList_id"
+            stockList = await database.fetch_one(query=query_stockList, values={"stockList_id": io["stockList_id"]})
+            io_dict["stockList"] = stockList
+            log_dict["stockIO"].append(io_dict) # stockIOのリストに追加
+        serveLog[serveLog.index(log)] = log_dict # serveLogのリストに追加
+    return {"person": person, "serveLog": serveLog}
 
 @app.get("/person/", response_model=List[Person])
 async def get_persons():
     query: str = "SELECT * FROM person ORDER BY id DESC"
-    persons = await database.fetch_all(query=query)
-    return persons
-
-@app.get("/stocklist/", response_model=List[StockList])
-async def get_stockList():
-    query: str = "SELECT * FROM stockList"
-    stockList = await database.fetch_all(query=query)
+    person = await database.fetch_all(query=query)
+    return person
+@app.get("/stocklist/{janureID}", response_model=List[StockList])
+async def get_stockList(janureID: int = None):
+    query: str = "SELECT * FROM stockList WHERE janureID = :janureID"
+    values = {"janureID": janureID}
+    stockList = await database.fetch_all(query=query, values=values)
     return stockList
+@app.get("/serveLog/", response_model=List[ServeLog])
+async def get_serveLog():
+    query: str = "SELECT * FROM serveLog"
+    serveLog = await database.fetch_all(query=query)
+    return serveLog
+@app.get("/stockIO/", response_model=List[StockIO])
+async def get_stockIO():
+    query: str = "SELECT * FROM stockIO"
+    stockIO = await database.fetch_all(query=query)
+    return stockIO
+
+
+async def create_serveLog(serveLog: ServeLog) -> int|None:
+    query:str = "INSERT INTO serveLog (person_id, asGroup, receiveClassID) VALUES (:person_id, :asGroup, :receiveClassID)"
+    values = {"person_id": serveLog.person_id, "asGroup": serveLog.asGroup, "receiveClassID": serveLog.receiveClassID}
+    print("called create_serveLog()")
+    try:
+        # Execute the insert query
+        id = await database.execute(query=query, values=values)
+        return id
+    except Exception as e:
+        # Return an error response if something goes wrong
+        return None
+
+async def create_stockIO(stockIO: StockIO) -> int|None:
+    query:str = "INSERT INTO stockIO (stockList_id, serveLog_id, amount) VALUES (:stockList_id, :serveLog_id, :amount)"
+    values = {"stockList_id": stockIO.stockList_id, "serveLog_id": stockIO.serveLog_id, "amount": stockIO.amount}
+    try:
+        # Execute the insert query
+        id = await database.execute(query=query, values=values)
+        return id
+    except Exception as e:
+        # Return an error response if something goes wrong
+        return None
+
+
+@app.post('/serveLog/')
+async def pickUpSupplies(serveLog: ServeLog, stockIO: List[StockIO]) -> None:
+    print('called pickUpSupplies()')
+    serveLogid = await create_serveLog(serveLog)
+    if not serveLogid:
+        raise HTTPException(status_code=500, detail="Failed to create serveLog")
+    for io in stockIO:
+        io.serveLog_id = serveLogid
+        if io.stockList_id is not None:
+            io.amount = -1 * int(io.amount)
+        stockIOid = await create_stockIO(io)
+        if not stockIOid:
+            raise HTTPException(status_code=500, detail="Failed to create stockIO")
+
 
 
 if __name__ == "__main__":
+    subprocess.run(["rm", database_path])
     conn:sqlite3.Connection = open_db(database_path)
     setup_db_person(conn)
     setup_db_stockList(conn)

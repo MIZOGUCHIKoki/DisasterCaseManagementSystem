@@ -24,7 +24,8 @@ def make_testData_serveLog(conn: sqlite3.Connection) -> None:
         ('1679091c5a880faf6fb5e6087eb1b2dc', True, 1),
         ('1679091c5a880faf6fb5e6087eb1b2dc', True, 2),
         ('c81e728d9d4c2f636f067f89cc14862c', False, 3),
-        ('c81e728d9d4c2f636f067f89cc14862c', False, 1)
+        ('c81e728d9d4c2f636f067f89cc14862c', False, 1),
+        ('e4da3b7fbbce2345d7772b0674a318d5', True, 2)
     ])
     conn.commit()
 

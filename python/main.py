@@ -16,33 +16,51 @@ async def lifespan(app: FastAPI):
     await database.disconnect()
     print("Database disconnected")
 
-
 app:FastAPI = FastAPI(lifespan = lifespan)
 database = Database("sqlite:///dataBase.db")
 database_path = "dataBase.db"
 
-@app.get('/person/{person_id}')
-async def get_person(person_id: str):
-    query_personInfo:str = "SELECT * FROM person WHERE id = :person_id"
-    query_serveLog:str = "SELECT id, asGroup, receiveClassID, created_at FROM serveLog WHERE person_id = :person_id"
-    person = await database.fetch_one(query=query_personInfo, values={"person_id": person_id})
-    if not person:
-        raise HTTPException(status_code=404, detail="Person not found")
-    
+async def get_serveLog_stockIO_stockList(person_id:str, asGroup:bool = False):
+    if asGroup:
+        query_serveLog = "SELECT * FROM serveLog WHERE asGroup = True and person_id = :person_id"
+    else:
+        query_serveLog:str = "SELECT * FROM serveLog WHERE person_id = :person_id"
+    query_stockIO:str = "SELECT stockList_id, amount FROM stockIO WHERE serveLog_id = :serveLog_id"
+    query_stockList:str = "SELECT name, size, unit FROM stockList WHERE id = :stockList_id"
     serveLog = await database.fetch_all(query=query_serveLog, values={"person_id": person_id})
     for log in serveLog:
         log_dict:dict = dict(log)
-        query_stockIO:str = "SELECT stockList_id, amount FROM stockIO WHERE serveLog_id = :serveLog_id"
         stockIO = await database.fetch_all(query=query_stockIO, values={"serveLog_id": log["id"]})
         log_dict["stockIO"] = []
         for io in stockIO:
             io_dict:dict = dict(io)
-            query_stockList:str = "SELECT name, size, unit FROM stockList WHERE id = :stockList_id"
             stockList = await database.fetch_one(query=query_stockList, values={"stockList_id": io["stockList_id"]})
             io_dict["stockList"] = stockList
             log_dict["stockIO"].append(io_dict) # stockIOのリストに追加
         serveLog[serveLog.index(log)] = log_dict # serveLogのリストに追加
-    return {"person": person, "serveLog": serveLog}
+    return serveLog
+
+
+@app.get('/person/{person_id}')
+async def get_person(person_id: str):
+    query_personInfo:str = "SELECT * FROM person WHERE id = :person_id"
+    person = await database.fetch_one(query=query_personInfo, values={"person_id": person_id})
+    if not person:
+        raise HTTPException(status_code=404, detail="Person not found")
+    
+    serveLog = await get_serveLog_stockIO_stockList(person_id)
+    group_id = person["group_id"]
+    if group_id is not None:
+        query_groupInfo:str = "SELECT id, nickName FROM person WHERE group_id = :group_id"
+        person_sameGroup = await database.fetch_all(query=query_groupInfo, values={"group_id": group_id})
+        serveLog_sameGroup_List = []
+        for p in person_sameGroup:
+            serveLog_sameGroup = await get_serveLog_stockIO_stockList(p["id"], asGroup=True)
+            if serveLog_sameGroup:
+                serveLog_sameGroup_List.append(serveLog_sameGroup)
+        return {"person": person, "serveLog": serveLog, "person_sameGroup": person_sameGroup, "serveLog_sameGroup": serveLog_sameGroup_List}
+    else:
+        return {"person": person, "serveLog": serveLog}
 
 @app.get("/person/", response_model=List[Person])
 async def get_persons():
@@ -65,7 +83,6 @@ async def get_stockIO():
     query: str = "SELECT * FROM stockIO"
     stockIO = await database.fetch_all(query=query)
     return stockIO
-
 
 async def create_serveLog(serveLog: ServeLog) -> int|None:
     query:str = "INSERT INTO serveLog (person_id, asGroup, receiveClassID) VALUES (:person_id, :asGroup, :receiveClassID)"
@@ -90,7 +107,6 @@ async def create_stockIO(stockIO: StockIO) -> int|None:
         # Return an error response if something goes wrong
         return None
 
-
 @app.post('/serveLog/')
 async def pickUpSupplies(serveLog: ServeLog, stockIO: List[StockIO]) -> None:
     print('called pickUpSupplies()')
@@ -104,8 +120,6 @@ async def pickUpSupplies(serveLog: ServeLog, stockIO: List[StockIO]) -> None:
         stockIOid = await create_stockIO(io)
         if not stockIOid:
             raise HTTPException(status_code=500, detail="Failed to create stockIO")
-
-
 
 if __name__ == "__main__":
     subprocess.run(["rm", database_path])

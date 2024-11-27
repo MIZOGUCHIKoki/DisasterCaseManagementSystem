@@ -2,6 +2,7 @@ from typing import List, Dict, Any
 import subprocess
 import sqlite3
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import uvicorn
 from model import Person, StockList, ServeLog, StockIO
@@ -19,6 +20,14 @@ async def lifespan(app: FastAPI):
 app:FastAPI = FastAPI(lifespan = lifespan)
 database = Database("sqlite:///dataBase.db")
 database_path = "dataBase.db"
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # 許可するオリジンを設定
+    allow_credentials=True,
+    allow_methods=["*"],  # 許可するHTTPメソッド
+    allow_headers=["*"],  # 許可するHTTPヘッダー
+)
 
 async def get_serveLog_stockIO_stockList(person_id:str, asGroup:bool = False):
     if asGroup:
@@ -62,23 +71,23 @@ async def get_person(person_id: str):
     else:
         return {"person": person, "serveLog": serveLog}
 
-@app.get("/person/", response_model=List[Person])
+@app.get("/person", response_model=List[Person])
 async def get_persons():
     query: str = "SELECT * FROM person ORDER BY id DESC"
     person = await database.fetch_all(query=query)
     return person
-@app.get("/stocklist/{janureID}", response_model=List[StockList])
+@app.get("/stocklist{janureID}", response_model=List[StockList])
 async def get_stockList(janureID: int = None):
     query: str = "SELECT * FROM stockList WHERE janureID = :janureID"
     values = {"janureID": janureID}
     stockList = await database.fetch_all(query=query, values=values)
     return stockList
-@app.get("/serveLog/", response_model=List[ServeLog])
+@app.get("/serveLog", response_model=List[ServeLog])
 async def get_serveLog():
     query: str = "SELECT * FROM serveLog"
     serveLog = await database.fetch_all(query=query)
     return serveLog
-@app.get("/stockIO/", response_model=List[StockIO])
+@app.get("/stockIO", response_model=List[StockIO])
 async def get_stockIO():
     query: str = "SELECT * FROM stockIO"
     stockIO = await database.fetch_all(query=query)
@@ -107,7 +116,7 @@ async def create_stockIO(stockIO: StockIO) -> int|None:
         # Return an error response if something goes wrong
         return None
 
-@app.post('/serveLog/')
+@app.post('/serveLog')
 async def pickUpSupplies(serveLog: ServeLog, stockIO: List[StockIO]) -> None:
     print('called pickUpSupplies()')
     serveLogid = await create_serveLog(serveLog)

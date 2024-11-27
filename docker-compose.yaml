@@ -10,7 +10,6 @@ services:
       - ./react-app:/src
     environment:
       - WATCHPACK_POLLING=true
-    command: npm run start
     tty: true
 
   python:

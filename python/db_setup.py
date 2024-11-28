@@ -88,8 +88,8 @@ def setup_db_person(conn: sqlite3.Connection) -> None:
         allergy INTEGER NOT NULL default 0,
         remarks_food TEXT,
         remarks_other TEXT,
-        created_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime')),
-        updated_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime'))
+        created_at TEXT NOT NULL DEFAULT (DATETIME('now', '+9 hours')),
+        updated_at TEXT NOT NULL DEFAULT (DATETIME('now', '+9 hours'))
     )
     ''')
     conn.execute('PRAGMA foreign_keys = ON')
@@ -105,7 +105,7 @@ def setup_db_serveLog(conn: sqlite3.Connection) -> None:
         person_id TEXT NOT NULL,
         asGroup BOOLEAN NOT NULL DEFAULT FALSE,
         receiveClassID INTEGER NOT NULL DEFAULT 0,
-        created_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime')),
+        created_at TEXT NOT NULL DEFAULT (DATETIME('now', '+9 hours')),
         FOREIGN KEY (person_id) REFERENCES person(id)
     )
     ''')
@@ -125,7 +125,7 @@ def setup_db_stockList(conn: sqlite3.Connection) -> None:
         unit TEXT NOT NULL, 
         allergy INTEGER NOT NULL default 0,
         janureID INTEGER NOT NULL,
-        created_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime'))
+        created_at TEXT NOT NULL DEFAULT (DATETIME('now', '+9 hours'))
     )
     ''')
     conn.execute('PRAGMA foreign_keys = ON')
@@ -142,7 +142,7 @@ def setup_db_stockIO(conn: sqlite3.Connection) -> None:
         stockList_id INTEGER NOT NULL,
         serveLog_id INTEGER,
         amount INTEGER NOT NULL,
-        created_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime')),
+        created_at TEXT NOT NULL DEFAULT (DATETIME('now', '+9 hours')),
         FOREIGN KEY (serveLog_id) REFERENCES serveLog(id),
         FOREIGN KEY (stockList_id) REFERENCES stockList(id)
     )

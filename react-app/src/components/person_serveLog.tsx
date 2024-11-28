@@ -78,22 +78,23 @@ export const PersonServeLog = (): JSX.Element => {
                     <thead>
                         <tr>
                             <th>日時</th>
-                            <th>食品名</th>
-                            <th>数量</th>
-                            <th>単位</th>
+                            <th>支給物</th>
+                        </tr>
+                        <tr>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {personServeLog.serveLog.map((serveLog) => (
                             <tr key={serveLog.id}>
-                                <td>{serveLog.created_at}</td>
+                                <td >{serveLog.created_at}</td>
                                 <td>
                                     {serveLog.stockIO.map((stockIO: stockIOTypeNew) => (
                                         <tr key={stockIO.id}>
-                                            <td>{stockIO.stockList.name}</td>
-                                            <td>{stockIO.stockList.size}</td>
-                                            <td>[ {stockIO.stockList.unit} ]</td>
-                                            <td>{stockIO.amount}</td>
+                                            <td width={100} style={{ border: 'none' }}>{stockIO.stockList.name}</td>
+                                            <td width={100} style={{ border: 'none' }}>{stockIO.stockList.size}</td>
+                                            <td width={100} style={{ border: 'none' }}>[ {stockIO.stockList.unit} ]</td>
+                                            <td width={100} style={{ border: 'none' }}>{stockIO.amount}</td>
                                         </tr>
                                     ))}
                                 </td>

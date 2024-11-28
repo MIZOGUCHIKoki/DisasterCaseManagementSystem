@@ -38,7 +38,7 @@ export const PersonList = (): JSX.Element => {
                         <th>allergy</th>
                         <th>remarks_food</th>
                         <th>remarks_other</th>
-                        <th>created_at</th>
+                        <th>created_at[JST]</th>
                     </tr>
                 </thead>
                 <tbody>

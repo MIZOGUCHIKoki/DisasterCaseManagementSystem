@@ -37,3 +37,14 @@
     transform: rotate(360deg);
   }
 }
+
+th,
+td {
+  border: solid 1px;
+  /* 枠線指定 */
+}
+
+table {
+  border-collapse: collapse;
+  /* セルの線を重ねる */
+}

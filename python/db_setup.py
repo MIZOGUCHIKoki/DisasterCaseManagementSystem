@@ -65,10 +65,10 @@ def make_testData_stockIO(conn: sqlite3.Connection) -> None:
         (3, 3, -3),
         (4, 4, -4),
         (5, None, 100),
-        (6, None, -1),
+        (6, 2, -1),
         (7, 3, -1),
-        (8, None, -1),
-        (9, None, -1)
+        (8, 3, -1),
+        (9, 1, -1)
     ])
     conn.commit()
 

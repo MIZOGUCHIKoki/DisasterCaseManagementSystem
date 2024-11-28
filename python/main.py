@@ -31,16 +31,16 @@ app.add_middleware(
 
 async def get_serveLog_stockIO_stockList(person_id:str, asGroup:bool = False):
     if asGroup:
-        query_serveLog = "SELECT * FROM serveLog WHERE asGroup = True and person_id = :person_id"
+        query_serveLog:str = "SELECT * FROM serveLog WHERE asGroup = True and person_id = :person_id"
     else:
         query_serveLog:str = "SELECT * FROM serveLog WHERE person_id = :person_id"
-    query_stockIO:str = "SELECT stockList_id, amount FROM stockIO WHERE serveLog_id = :serveLog_id"
-    query_stockList:str = "SELECT name, size, unit FROM stockList WHERE id = :stockList_id"
+    query_stockIO:str = "SELECT * FROM stockIO WHERE serveLog_id = :serveLog_id"
+    query_stockList:str = "SELECT * FROM stockList WHERE id = :stockList_id"
     serveLog = await database.fetch_all(query=query_serveLog, values={"person_id": person_id})
     for log in serveLog:
         log_dict:dict = dict(log)
         stockIO = await database.fetch_all(query=query_stockIO, values={"serveLog_id": log["id"]})
-        log_dict["stockIO"] = []
+        log_dict["stockIO"] = [] # Initialize stockIO list
         for io in stockIO:
             io_dict:dict = dict(io)
             stockList = await database.fetch_one(query=query_stockList, values={"stockList_id": io["stockList_id"]})
@@ -76,10 +76,14 @@ async def get_persons():
     query: str = "SELECT * FROM person ORDER BY id DESC"
     person = await database.fetch_all(query=query)
     return person
-@app.get("/stocklist{janureID}", response_model=List[StockList])
+@app.get("/stocklist/{janureID}", response_model=List[StockList])
 async def get_stockList(janureID: int = None):
-    query: str = "SELECT * FROM stockList WHERE janureID = :janureID"
-    values = {"janureID": janureID}
+    if janureID == 0:
+        query: str = "SELECT * FROM stockList"
+        values = {}
+    else:    
+        query: str = "SELECT * FROM stockList WHERE janureID = :janureID"
+        values = {"janureID": janureID}
     stockList = await database.fetch_all(query=query, values=values)
     return stockList
 @app.get("/serveLog", response_model=List[ServeLog])

@@ -11,6 +11,9 @@ services:
     environment:
       - WATCHPACK_POLLING=true
     tty: true
+    command:
+      - npm install
+      - npm run start
 
   python:
     build:

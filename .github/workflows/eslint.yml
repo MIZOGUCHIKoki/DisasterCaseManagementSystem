@@ -18,6 +18,9 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./react-app
     steps:
       # Checkout the code from the repository
       - name: Checkout code
@@ -28,10 +31,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'  # Update with the correct version if necessary
-
-      - name: change work directory
-        run: |
-          cd react-app
+          
       # Install dependencies
       - name: Install dependencies
         run: |

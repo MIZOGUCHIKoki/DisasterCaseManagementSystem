@@ -4,7 +4,7 @@ import { WaitingQueueType } from './type/WaitingQueue';
 
 export default function WaitingQueue() {
     return (
-        <div className="asAskGroup">
+        <div className='container-block'>
             <h2>待ち行列</h2>
             <table>
                 <thead>

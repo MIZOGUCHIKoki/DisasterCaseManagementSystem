@@ -7,13 +7,13 @@ import AskAsGroup from './askAsGroup';
 
 type Props_serve = {
     personInfo: PersonType,
-    groupMembers: PersonType[]
+    groupMembers: PersonType[],
 };
 
 
 const pInfo: Props_serve = {
-    personInfo: personInfo,
-    groupMembers: groupMembers
+    personInfo: personInfo[0],
+    groupMembers: groupMembers,
 };
 
 export default function QrCodeScanner(): JSX.Element {

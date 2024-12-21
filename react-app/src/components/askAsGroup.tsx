@@ -4,24 +4,36 @@ import StandInLine from './standInLine';
 
 type Props = {
     personInfo: PersonType,
-    groupMembers: PersonType[]
+    groupMembers: PersonType[],
 };
 
 export default function AskAsGroup(props: Props): JSX.Element {
-    const [selected, setSelected] = useState<boolean>(false);
+    const [selected, setSelected] = useState<boolean | null>(null);
+    let asGroup = false;
     const handleYes = () => {
         console.log('Yes');
+        asGroup = true;
         setSelected(true);
     };
     const handleNo = () => {
         console.log('No');
         setSelected(true);
+        asGroup = false;
     };
-    if (selected) {
+    if (selected || props.personInfo.group_id == null) {
+        if (props.personInfo.group_id == null || !asGroup) {
+            /*
+                Send data to server as a single person
+            */
+        } else {
+            /*
+                Send data to server as a group
+            */
+        }
         return <StandInLine />;
     }
     return (
-        <div className='askAsGroup'>
+        <div className='container-block'>
             <h2>グループでのお受け取りをご希望ですか？</h2>
             <h3>あなた</h3>
             <ul>

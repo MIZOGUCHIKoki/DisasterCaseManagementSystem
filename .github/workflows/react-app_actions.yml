@@ -5,8 +5,8 @@ on:
     branches:
       - master
     paths:
-    - 'react-app/**/*.tsx'
-    - 'react-app/**/*.ts'
+      - 'react-app/**/*.tsx'
+      - 'react-app/**/*.ts'
   pull_request:
     branches:
       - feature/**

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { WaitingQueueType } from './type/WaitingQueue';
 import { PersonType } from './type/Person';
@@ -7,101 +7,119 @@ import { groupMembers } from './testData/personInfo';
 import { stockList } from './testData/stockList';
 import { StockListType } from './type/StockList';
 
-
 type givenDataType = {
-    waitingQueue: WaitingQueueType;
-    groupMember: PersonType[];
+  waitingQueue: WaitingQueueType;
+  groupMember: PersonType[];
 };
 
 const givenData: givenDataType = {
-    waitingQueue: waitingQueue[1],
-    groupMember: groupMembers
+  waitingQueue: waitingQueue[0],
+  groupMember: groupMembers,
 };
 
-
-
 export default function ServeScreen(): JSX.Element {
-    const { person_id } = useParams();
-    const [stockListState, setStockListState] = useState<number[] | number[][]>(
-        givenData.waitingQueue.asGroup ? [[]] : []
-    );
+  const { person_id } = useParams();
 
-    useEffect(() => { // only once when the component is mounted
-        if (!givenData.waitingQueue.asGroup) {
-            console.log('create stockListState as ALONE');
-            setStockListState([]);
-        } else {
-            console.log('create stockListState as GROUP');
-            setStockListState([[]]);
+  const [stockListState, setStockListState] = useState<number[]>(
+    Array(stockList.length).fill(0)
+  );
+
+  const [stockListStateGroup, setStockListStateGroup] = useState<number[][]>(
+    Array(givenData.groupMember.length)
+      .fill(null)
+      .map(() => Array(stockList.length).fill(0))
+  );
+
+  const handleClick = (
+    isGroup: boolean,
+    memberIndex: number,
+    stockIndex: number,
+    isPlus: boolean
+  ) => {
+    if (isGroup) {
+      setStockListStateGroup((prev) => {
+        const updated = [...prev];
+        updated[memberIndex] = [...updated[memberIndex]];
+        if (updated[memberIndex][stockIndex] >= 0 && isPlus) {
+          updated[memberIndex][stockIndex] += isPlus ? 1 : -1;
         }
-    }, []);
-
-    console.log('person_id:', person_id);
-
-    if (givenData.waitingQueue.asGroup) {
-        return (
-            <div className='serveTbl'>
-                {givenData.groupMember.map((member, index) => (
-                    <div key={index} className='serveTbl_one'>
-                        <div>{member.nickName}</div>
-                        <table className='table_cols'>
-                            <thead>
-                                <tr>
-                                    <th>物資名</th>
-                                    <th>サイズ</th>
-                                    <th>数量</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {stockList.map((stock: StockListType, index: number) => (
-                                    < tr key={index} >
-                                        <td>{stock.name}</td>
-                                        <td>{stock.size}</td>
-                                        <td>
-                                            <div>
-                                                <button>＋</button>
-                                                <button>－</button>
-                                                {stock.unit}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                ))
-                }
-            </div >
-        );
+        return updated;
+      });
+    } else {
+      setStockListState((prev) => {
+        const updated = [...prev];
+        if (updated[stockIndex] >= 0 && isPlus) {
+          updated[stockIndex] += isPlus ? 1 : -1;
+        }
+        return updated;
+      });
     }
+  };
 
+  console.log('person_id:', person_id);
+
+  if (givenData.waitingQueue.asGroup) {
     return (
-        <div className='serveTbl'>
-            <table className='table_cols'>
-                <thead>
-                    <tr>
-                        <th>物資名</th>
-                        <th>サイズ</th>
-                        <th>数量</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {stockList.map((stock, index) => (
-                        < tr key={index} >
-                            <td>{stock.name}</td>
-                            <td>{stock.size}</td>
-                            <td>
-                                <div>
-                                    <button >＋</button>
-                                    <button>－</button>
-                                    {stockListState}
-                                    {stock.unit}
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
+      <div className="serveTbl">
+        {givenData.groupMember.map((member, memberIndex) => (
+          <div key={memberIndex} className="serveTbl_one">
+            <div>{member.nickName}</div>
+            <table className="table_cols">
+              <thead>
+                <tr>
+                  <th>物資名</th>
+                  <th>サイズ</th>
+                  <th>数量</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stockList.map((stock, stockIndex) => (
+                  <tr key={stockIndex}>
+                    <td>{stock.name}</td>
+                    <td>{stock.size}</td>
+                    <td>
+                      <div>
+                        <button onClick={() => handleClick(true, memberIndex, stockIndex, true)}>＋</button>
+                        <button onClick={() => handleClick(true, memberIndex, stockIndex, false)}>－</button>
+                        {stockListStateGroup[memberIndex][stockIndex]} {stock.unit}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
-        </div >
+          </div>
+        ))}
+      </div>
     );
+  }
+
+  return (
+    <div className="serveTbl">
+      <table className="table_cols">
+        <thead>
+          <tr>
+            <th>物資名</th>
+            <th>サイズ</th>
+            <th>数量</th>
+          </tr>
+        </thead>
+        <tbody>
+          {stockList.map((stock, stockIndex) => (
+            <tr key={stockIndex}>
+              <td>{stock.name}</td>
+              <td>{stock.size}</td>
+              <td>
+                <div>
+                  <button onClick={() => handleClick(false, 0, stockIndex, true)}>＋</button>
+                  <button onClick={() => handleClick(false, 0, stockIndex, false)}>－</button>
+                  {stockListState[stockIndex]} {stock.unit}
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }

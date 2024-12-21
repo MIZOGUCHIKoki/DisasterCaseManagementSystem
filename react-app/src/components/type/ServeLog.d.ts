@@ -1,8 +1,7 @@
 export type ServeLogType = {
     id: number,
     person_id: string,
-    asGrop: boolean,
+    received_person_id: string,
     receiveClassID: number,
-    stock_id: string,
     created_at: string,
 };

@@ -97,4 +97,3 @@ export default function QrCodeScanner(): JSX.Element {
         </div >
     );
 }
-

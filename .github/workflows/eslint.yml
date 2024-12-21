@@ -5,14 +5,14 @@ on:
     branches:
       - master
     paths:
-    - 'react/src/**/*.tsx'
-    - 'react/src/**/*.ts'
+    - 'react-app/**/*.tsx'
+    - 'react-app/**/*.ts'
   pull_request:
     branches:
       - feature/**
     paths:
-      - 'react/src/**/*.tsx'
-      - 'react/src/**/*.ts'
+      - 'react-app/**/*.tsx'
+      - 'react-app/**/*.ts'
   workflow_dispatch:
   
 jobs:

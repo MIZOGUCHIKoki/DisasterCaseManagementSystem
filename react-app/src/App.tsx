@@ -5,7 +5,7 @@ import './App.css';
 
 import QrCodeScanner from './components/QrReader';
 import WaitingQueue from './components/waitingQueue';
-
+import ServeScreen from './components/serve';
 
 function App(): JSX.Element {
   return (

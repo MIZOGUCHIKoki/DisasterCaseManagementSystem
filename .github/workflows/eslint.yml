@@ -1,0 +1,43 @@
+name: flontend actions
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+    - 'react/src/**/*.tsx'
+    - 'react/src/**/*.ts'
+  pull_request:
+    branches:
+      - feature/**
+    paths:
+      - 'react/src/**/*.tsx'
+      - 'react/src/**/*.ts'
+  workflow_dispatch:
+  
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js (ensure the version matches your project requirements)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Update with the correct version if necessary
+
+      - name: change work directory
+        run: |
+          cd react-app
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          npm install
+
+      # Run ESLint
+      - name: Run ESLint
+        run: |
+          npx eslint . --ext .tsx,.ts

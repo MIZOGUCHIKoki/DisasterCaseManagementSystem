@@ -1,7 +1,23 @@
 import jsQR from 'jsqr';
 import React, { useRef, useState, useEffect } from 'react';
 
+import { personInfo, groupMembers } from './testData/personInfo';
+import { PersonType } from './type/Person';
+import AskAsGroup from './askAsGroup';
+
 type Props = {};
+
+type Props_serve = {
+    personInfo: PersonType,
+    groupMembers: PersonType[]
+};
+
+
+const pInfo: Props_serve = {
+    personInfo: personInfo,
+    groupMembers: groupMembers
+};
+
 
 export const QrCodeScanner: React.FC<Props> = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -14,67 +30,68 @@ export const QrCodeScanner: React.FC<Props> = () => {
             video: {
                 facingMode: 'environment',
                 width: { ideal: 300 },
-                height: { ideal: 300 }
+                height: { ideal: 300 },
             },
-        }
-        // デバイスのカメラにアクセスする
-        navigator.mediaDevices
-            .getUserMedia(constraints)
-            .then((stream) => {
+        };
+
+        const startStream = async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
-                    videoRef.current.play();
-                    scanQrCode();
+
+                    // 再生準備が整ったら play() を呼び出す
+                    videoRef.current.onloadedmetadata = () => {
+                        videoRef.current?.play();
+                        scanQrCode();
+                    };
                 }
-            })
-            .catch((err) => {
+            } catch (err) {
                 console.error('Error accessing media devices:', err);
-
-            });
-        const currentVideoRef: HTMLVideoElement | null = videoRef.current;
-
-        // コンポーネントがアンマウントされたら，カメラのストリームを停止する．
-        return () => {
-            if (currentVideoRef && currentVideoRef.srcObject) {
-                const stream: MediaStream = currentVideoRef.srcObject as MediaStream;
-                const tracks: MediaStreamTrack[] = stream.getTracks();
-                tracks.forEach((track) => track.stop());
+                setError(new Error('カメラにアクセスできませんでした'));
             }
-        }
-    }, [])
+        };
+
+        startStream();
+
+        return () => {
+            // クリーンアップ：カメラストリームの停止
+            if (videoRef.current && videoRef.current.srcObject) {
+                const stream: MediaStream = videoRef.current.srcObject as MediaStream;
+                stream.getTracks().forEach((track) => track.stop());
+            }
+        };
+    }, []);
 
     const scanQrCode = () => {
-        const canvas: HTMLCanvasElement | null = canvasRef.current;
-        const video: HTMLVideoElement | null = videoRef.current;
+        const canvas = canvasRef.current;
+        const video = videoRef.current;
         if (canvas && video) {
-            const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d');
             if (ctx) {
-                // カメラの映像をcanvasに描画
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const imageData: ImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 const code = jsQR(imageData.data, imageData.width, imageData.height);
                 if (code) {
-                    if (code.data === '0113122124194192412171200599RBJMIZOGUCHI/KOUKI') {
-                        setError(new Error('QRコードが一致しました'));
-                        return;
-                    }
                     setResult(code.data);
                     return;
                 }
                 setTimeout(scanQrCode, 100);
             }
         }
-    }
+    };
+
     return (
         <div>
             {!result && (
                 <div>
-                    <video ref={videoRef} autoPlay playsInline />
-                    <canvas ref={canvasRef} width='300' height='300' />
+                    <video ref={videoRef} autoPlay playsInline muted />
+                    <canvas ref={canvasRef} width="300" height="300" />
                 </div>
             )}
-            {result && <div>{result}</div>}
+            {result && <AskAsGroup {...pInfo} />}
             {error && <div>{error.message}</div>}
         </div>
-    )
-}
+    );
+};
+

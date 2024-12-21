@@ -1,4 +1,4 @@
-name: flontend actions
+name: react-app actions
 
 on:
   push:
@@ -40,4 +40,4 @@ jobs:
       # Run ESLint
       - name: Run ESLint
         run: |
-          npx eslint . --ext .tsx,.ts
+          npm run lint

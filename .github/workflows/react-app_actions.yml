@@ -3,16 +3,12 @@ name: react-app actions
 on:
   push:
     branches:
-      - master
+      - 'master'
+      - 'feature/**'
     paths:
       - 'react-app/**/*.tsx'
       - 'react-app/**/*.ts'
-  pull_request:
-    branches:
-      - feature/**
-    paths:
-      - 'react-app/**/*.tsx'
-      - 'react-app/**/*.ts'
+
   workflow_dispatch:
   
 jobs:

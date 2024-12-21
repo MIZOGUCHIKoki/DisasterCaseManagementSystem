@@ -7,6 +7,7 @@ import { groupMembers } from './testData/personInfo';
 import { stockList } from './testData/stockList';
 import { StockListType } from './type/StockList';
 
+
 type givenDataType = {
   waitingQueue: WaitingQueueType;
   groupMember: PersonType[];
@@ -37,18 +38,19 @@ export default function ServeScreen(): JSX.Element {
     isPlus: boolean
   ) => {
     if (isGroup) {
-      setStockListStateGroup((prev) => {
-        const updated = [...prev];
+      setStockListStateGroup((prev: number[][]) => {
+        // prev は現在の stockListStateGroup の状態
+        const updated: number[][] = [...prev];
         updated[memberIndex] = [...updated[memberIndex]];
-        if (updated[memberIndex][stockIndex] >= 0 && isPlus) {
+        if (updated[memberIndex][stockIndex] > 0 || isPlus) {
           updated[memberIndex][stockIndex] += isPlus ? 1 : -1;
         }
         return updated;
       });
     } else {
-      setStockListState((prev) => {
-        const updated = [...prev];
-        if (updated[stockIndex] >= 0 && isPlus) {
+      setStockListState((prev: number[]) => {
+        const updated: number[] = [...prev];
+        if (updated[stockIndex] > 0 || isPlus) {
           updated[stockIndex] += isPlus ? 1 : -1;
         }
         return updated;
@@ -60,66 +62,82 @@ export default function ServeScreen(): JSX.Element {
 
   if (givenData.waitingQueue.asGroup) {
     return (
-      <div className="serveTbl">
-        {givenData.groupMember.map((member, memberIndex) => (
-          <div key={memberIndex} className="serveTbl_one">
-            <div>{member.nickName}</div>
-            <table className="table_cols">
-              <thead>
-                <tr>
-                  <th>物資名</th>
-                  <th>サイズ</th>
-                  <th>数量</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stockList.map((stock, stockIndex) => (
-                  <tr key={stockIndex}>
-                    <td>{stock.name}</td>
-                    <td>{stock.size}</td>
-                    <td>
-                      <div>
-                        <button onClick={() => handleClick(true, memberIndex, stockIndex, true)}>＋</button>
-                        <button onClick={() => handleClick(true, memberIndex, stockIndex, false)}>－</button>
-                        {stockListStateGroup[memberIndex][stockIndex]} {stock.unit}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      <div>
+        <header className="header-serveScreen">
+          <span className='button'>初期値</span>
+          <div>
+            {givenData.waitingQueue.personInfo.nickName} さんの受け取り
           </div>
-        ))}
+          <span className='button' onClick={
+            () => {
+              window.location.href = '/staff';
+            }
+          }>確定</span>
+        </header>
+        <div className="serveTbl">
+          {givenData.groupMember.map((member, memberIndex) => (
+            <div key={memberIndex} className="serveTbl_one">
+              <div>{member.nickName}</div>
+              <table className="table_cols">
+                <thead>
+                  <tr>
+                    <th>物資名</th>
+                    <th>サイズ</th>
+                    <th>数量</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {stockList.map((stock, stockIndex) => (
+                    <tr key={stockIndex}>
+                      <td>{stock.name}</td>
+                      <td>{stock.size}</td>
+                      <td>
+                        <div>
+                          <button onClick={() => handleClick(true, memberIndex, stockIndex, false)}>－</button>
+                          <span style={{ margin: '5px' }}>{stockListStateGroup[memberIndex][stockIndex]} {stock.unit}</span>
+                          <button onClick={() => handleClick(true, memberIndex, stockIndex, true)}>＋</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="serveTbl">
-      <table className="table_cols">
-        <thead>
-          <tr>
-            <th>物資名</th>
-            <th>サイズ</th>
-            <th>数量</th>
-          </tr>
-        </thead>
-        <tbody>
-          {stockList.map((stock, stockIndex) => (
-            <tr key={stockIndex}>
-              <td>{stock.name}</td>
-              <td>{stock.size}</td>
-              <td>
-                <div>
-                  <button onClick={() => handleClick(false, 0, stockIndex, true)}>＋</button>
-                  <button onClick={() => handleClick(false, 0, stockIndex, false)}>－</button>
-                  {stockListState[stockIndex]} {stock.unit}
-                </div>
-              </td>
+    <div className="container">
+      <div className='serveTbl_one'>
+        <div>{givenData.waitingQueue.personInfo.nickName}</div>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>物資名</th>
+              <th>サイズ</th>
+              <th>数量</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {stockList.map((stock, stockIndex) => (
+              <tr key={stockIndex}>
+                <td>{stock.name}</td>
+                <td>{stock.size}</td>
+                <td>
+                  <div>
+                    <button onClick={() => handleClick(false, 0, stockIndex, false)}>－</button>
+                    {stockListState[stockIndex]} {stock.unit}
+                    <button onClick={() => handleClick(false, 0, stockIndex, true)}>＋</button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

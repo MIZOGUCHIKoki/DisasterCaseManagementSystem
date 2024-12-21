@@ -36,7 +36,7 @@ export default function AskAsGroup(props: Props): JSX.Element {
             </ul>
             <div className='buttonGroup'>
                 <span onClick={handleYes} className='button' style={{ backgroundColor: '#336699' }}>はい</span>
-                <span onClick={handleYes} className='button' style={{ backgroundColor: 'rgb(231, 76, 60)' }}>いいえ</span>
+                <span onClick={handleNo} className='button' style={{ backgroundColor: 'rgb(231, 76, 60)' }}>いいえ</span>
             </div>
         </div >
     )

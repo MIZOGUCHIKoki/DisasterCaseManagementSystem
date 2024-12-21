@@ -5,8 +5,6 @@ import { personInfo, groupMembers } from './testData/personInfo';
 import { PersonType } from './type/Person';
 import AskAsGroup from './askAsGroup';
 
-type Props = {};
-
 type Props_serve = {
     personInfo: PersonType,
     groupMembers: PersonType[]
@@ -18,8 +16,7 @@ const pInfo: Props_serve = {
     groupMembers: groupMembers
 };
 
-
-export const QrCodeScanner: React.FC<Props> = () => {
+export default function QrCodeScanner(): JSX.Element {
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [result, setResult] = useState<string | null>(null);
@@ -99,5 +96,5 @@ export const QrCodeScanner: React.FC<Props> = () => {
             {error && <div>{error.message}</div>}
         </div >
     );
-};
+}
 

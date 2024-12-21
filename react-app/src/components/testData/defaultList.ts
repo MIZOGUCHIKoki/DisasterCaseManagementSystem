@@ -1,4 +1,4 @@
-import { DefaultListType } from '../type/defaultList';
+import { DefaultListType } from '../type/DefaultList';
 
 
 export const defaultList: DefaultListType[] = [

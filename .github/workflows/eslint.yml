@@ -29,6 +29,9 @@ jobs:
         with:
           node-version: '18'  # Update with the correct version if necessary
 
+      - name: change work directory
+        run: |
+          cd react-app
       # Install dependencies
       - name: Install dependencies
         run: |

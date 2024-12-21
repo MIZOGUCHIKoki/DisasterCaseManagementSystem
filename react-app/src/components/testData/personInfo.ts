@@ -9,7 +9,7 @@ export const personInfo: PersonType = {
     remarks_food: 'なし',
     remarks_other: 'なし',
     created_at: '2021-09-01T00:00:00.000Z'
-}
+};
 
 export const groupMembers: PersonType[] = [
     {
@@ -42,4 +42,4 @@ export const groupMembers: PersonType[] = [
         remarks_other: 'なし',
         created_at: '2021-09-01T00:00:00.000Z'
     }
-]
+];

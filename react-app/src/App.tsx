@@ -4,7 +4,7 @@ import { PersonList } from './components/personList';
 import { StockList } from './components/stockList';
 import { PersonServeLog } from './components/person_serveLog';
 import QrCodeScanner from './components/QrReader';
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import WaitingQueue from './components/waitingQueue';
 
 

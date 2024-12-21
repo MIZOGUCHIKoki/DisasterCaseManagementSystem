@@ -8,10 +8,10 @@ import { StockIOType } from './type/StockIO';
 import { StockListType } from './type/StockList';
 
 
-type stockIOTypeNew = Omit<StockIOType, ""> & {
+type stockIOTypeNew = Omit<StockIOType, ''> & {
     stockList: StockListType;
 };
-type serveLogTypeNew = Omit<ServeLogType, ""> & {
+type serveLogTypeNew = Omit<ServeLogType, ''> & {
     stockIO: stockIOTypeNew[];
 };
 type PersonServeLog = {

@@ -1,8 +1,8 @@
 import React from 'react';
-import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
-import { isError } from "./helper/helper";
-import { PersonType } from "./type/Person";
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { isError } from './helper/helper';
+import { PersonType } from './type/Person';
 
 export const PersonList = (): JSX.Element => {
     const [users, setUsers] = useState<PersonType[]>([]);
@@ -10,7 +10,7 @@ export const PersonList = (): JSX.Element => {
 
     const fetchUser = useCallback(async () => {
         try {
-            const response = await axios.get<PersonType[]>("http://localhost:4000/person");
+            const response = await axios.get<PersonType[]>('http://localhost:4000/person');
             setUsers(response.data);
         } catch (e) {
             if (isError(e)) {

@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 export default function StandInLine(): JSX.Element {
     setTimeout(() => {
-        window.location.href = "/reception";
+        window.location.href = '/reception';
     }, 5000);
     return (
         <div className="container">

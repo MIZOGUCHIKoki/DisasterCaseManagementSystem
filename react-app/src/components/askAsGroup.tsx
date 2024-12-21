@@ -39,5 +39,5 @@ export default function AskAsGroup(props: Props): JSX.Element {
                 <span onClick={handleNo} className='button' style={{ backgroundColor: 'rgb(231, 76, 60)' }}>いいえ</span>
             </div>
         </div >
-    )
+    );
 }

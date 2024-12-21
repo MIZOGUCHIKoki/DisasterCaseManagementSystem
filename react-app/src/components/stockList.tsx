@@ -1,8 +1,8 @@
 import React from 'react';
-import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
-import { isError } from "./helper/helper";
-import { StockListType } from "./type/StockList";
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { isError } from './helper/helper';
+import { StockListType } from './type/StockList';
 
 export const StockList = (): JSX.Element => {
     const janureID = 0;
@@ -11,7 +11,7 @@ export const StockList = (): JSX.Element => {
 
     const fetchStockList = useCallback(async (janureID: number | '') => {
         try {
-            const response = await axios.get<StockListType[]>("http://localhost:4000/stocklist/" + janureID);
+            const response = await axios.get<StockListType[]>('http://localhost:4000/stocklist/' + janureID);
             setStocks(response.data);
         } catch (e) {
             if (isError(e)) {
@@ -32,5 +32,5 @@ export const StockList = (): JSX.Element => {
                 <li key={stock.id}>{stock.name} {stock.size} 単位：{stock.unit}</li>
             ))}
         </div>
-    )
+    );
 };

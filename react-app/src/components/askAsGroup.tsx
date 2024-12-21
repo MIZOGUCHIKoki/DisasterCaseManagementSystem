@@ -21,22 +21,23 @@ export default function AskAsGroup(props: Props): JSX.Element {
         return <StandInLine />;
     }
     return (
-        <div>
-            <h1>グループでのお受け取りをご希望ですか？</h1>
-            あなたのニックネーム
+        <div className='askAsGroup'>
+            <h2>グループでのお受け取りをご希望ですか？</h2>
+            <h3>あなた</h3>
             <ul>
                 <li>ニックネーム: {props.personInfo.nickName}</li>
             </ul>
             <hr />
+            <h3>グループメンバー</h3>
             <ul>
                 {props.groupMembers.map((member, index) => (
                     <li key={index}>ニックネーム: {member.nickName}</li>
                 ))}
             </ul>
-            <div>
-                <button onClick={handleYes}>はい</button>
-                <button onClick={handleNo}>いいえ</button>
+            <div className='buttonGroup'>
+                <span onClick={handleYes} className='button' style={{ backgroundColor: '#336699' }}>はい</span>
+                <span onClick={handleYes} className='button' style={{ backgroundColor: 'rgb(231, 76, 60)' }}>いいえ</span>
             </div>
-        </div>
+        </div >
     )
 }

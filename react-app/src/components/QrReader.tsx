@@ -67,31 +67,37 @@ export const QrCodeScanner: React.FC<Props> = () => {
         const canvas = canvasRef.current;
         const video = videoRef.current;
         if (canvas && video) {
-            const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d', { willReadFrequently: true });
             if (ctx) {
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 const code = jsQR(imageData.data, imageData.width, imageData.height);
                 if (code) {
                     setResult(code.data);
+                    fetchData();
                     return;
                 }
                 setTimeout(scanQrCode, 100);
             }
         }
     };
-
+    const fetchData = () => {
+        console.log('Success to read QR code');
+        return;
+    };
     return (
-        <div>
+        <div className='container'>
             {!result && (
-                <div>
+                <div className='qr-reader'>
                     <video ref={videoRef} autoPlay playsInline muted />
-                    <canvas ref={canvasRef} width="300" height="300" />
+                    <canvas ref={canvasRef} />
+                    <div className='center'>QRコードを読み取ってください</div>
                 </div>
-            )}
+            )
+            }
             {result && <AskAsGroup {...pInfo} />}
             {error && <div>{error.message}</div>}
-        </div>
+        </div >
     );
 };
 

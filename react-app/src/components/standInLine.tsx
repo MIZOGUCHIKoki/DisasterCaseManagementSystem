@@ -2,8 +2,8 @@ import React from "react";
 
 export default function StandInLine(): JSX.Element {
     return (
-        <div>
-            <h1>お並びください</h1>
+        <div className="container">
+            <h2 className="center">列にお並びください</h2>
         </div>
     );
 }

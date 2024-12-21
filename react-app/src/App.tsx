@@ -10,6 +10,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 function App(): JSX.Element {
   return (
     <div className="App">
+      <header className="App-header">
+        <h1>災害時物資支給支援サービス</h1>
+      </header>
       <BrowserRouter>
         <Routes>
           <Route path='/person' element={<PersonList />} />

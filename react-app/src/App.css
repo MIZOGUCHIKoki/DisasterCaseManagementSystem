@@ -91,6 +91,11 @@ table {
   margin-top: 20px;
 }
 
+.table_cols {
+  width: 300px;
+  flex-shrink: 0;
+}
+
 thead th {
   background-color: #4a6eda;
   color: white;
@@ -120,4 +125,15 @@ tbody td a {
 tbody td a:hover {
   color: #0056b3;
   text-decoration: underline;
+}
+
+.serveTbl {
+  width: 100%;
+  display: flex;
+  overflow-x: scroll;
+}
+
+.serveTbl_one {
+  width: 500px;
+  margin-right: 20px;
 }

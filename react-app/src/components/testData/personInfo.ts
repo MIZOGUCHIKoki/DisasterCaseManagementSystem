@@ -73,5 +73,15 @@ export const groupMembers: PersonType[] = [
         remarks_food: 'なし',
         remarks_other: 'なし',
         created_at: '2021-09-01T00:00:00.000Z'
+    },
+    {
+        id: '50',
+        nickName: 'Eve',
+        group_id: 1,
+        age: 40,
+        allergy: 0,
+        remarks_food: 'なし',
+        remarks_other: 'なし',
+        created_at: '2021-09-01T00:00:00.000Z'
     }
 ];

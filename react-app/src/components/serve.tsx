@@ -79,8 +79,8 @@ export default function ServeScreen(): JSX.Element {
   ) => {
     if (isGroup) {
       setStockListStateGroup((prev: { stockList: StockListType, amount: number }[][]) => {
-        const updated = prev.map((memberStockList, memberIndex) => {
-          if (memberIndex === memberIndex) {
+        const updated = prev.map((memberStockList, memberIndex_i) => {
+          if (memberIndex === memberIndex_i) {
             return memberStockList.map((item, index) => {
               if (index === stockIndex) {
                 return {

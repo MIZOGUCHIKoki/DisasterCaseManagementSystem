@@ -5,7 +5,9 @@ import { PersonType } from './type/Person';
 import { waitingQueue } from './testData/waitingQueue';
 import { groupMembers } from './testData/personInfo';
 import { stockList } from './testData/stockList';
-
+import { DefaultListType } from './type/DefaultList';
+import { defaultList } from './testData/defaultList';
+import { StockListType } from './type/StockList';
 
 type givenDataType = {
   waitingQueue: WaitingQueueType;
@@ -20,16 +22,53 @@ const givenData: givenDataType = {
 export default function ServeScreen(): JSX.Element {
   const { person_id } = useParams();
 
+  const fetchPersonData = (person_id: PersonType['id']): givenDataType => {
+    /*
+      Fetch data from server using person_id
+    */
+    console.log('FETCH DATA from person_id:', person_id);
+    return givenData;
+  };
+  if (person_id) {
+    fetchPersonData(person_id);
+  } else {
+    console.error('person_id is undefined');
+  }
 
+  const fetchDefaultData = (): DefaultListType[] => {
+    /*
+      Fetch default stock list from server
+    */
+    console.log('FETCH DEFAULT STOCKLIST DATA');
+    return defaultList;
+  };
 
-  const [stockListState, setStockListState] = useState<number[]>(
-    Array(stockList.length).fill(0)
+  const [stockListState, setStockListState] = useState<{ stockList: StockListType, amount: number }[]>(
+    stockList.map((stock: StockListType) => {
+      const defaultItem = fetchDefaultData().find((item: DefaultListType) => item?.stockList?.id === stock.id);
+      if (!defaultItem) {
+        console.error('Default data is not found for:', stock);
+      }
+      return {
+        stockList: stock,
+        amount: defaultItem ? defaultItem.amount : 0
+      };
+    })
   );
 
-  const [stockListStateGroup, setStockListStateGroup] = useState<number[][]>(
-    Array(givenData.groupMember.length)
-      .fill(null)
-      .map(() => Array(stockList.length).fill(0))
+  const [stockListStateGroup, setStockListStateGroup] = useState<{ stockList: StockListType, amount: number }[][]>(
+    givenData.groupMember.map(() => {
+      return stockList.map((stock: StockListType) => {
+        const defaultItem = fetchDefaultData().find((item: DefaultListType) => item?.stockList?.id === stock.id);
+        if (!defaultItem) {
+          console.error('Default data is not found for:', stock);
+        }
+        return {
+          stockList: stock,
+          amount: defaultItem ? defaultItem.amount : 0
+        };
+      });
+    })
   );
 
   const handleClick = (
@@ -39,21 +78,34 @@ export default function ServeScreen(): JSX.Element {
     isPlus: boolean
   ) => {
     if (isGroup) {
-      setStockListStateGroup((prev: number[][]) => {
-        // prev は現在の stockListStateGroup の状態
-        const updated: number[][] = [...prev];
-        updated[memberIndex] = [...updated[memberIndex]];
-        if (updated[memberIndex][stockIndex] > 0 || isPlus) {
-          updated[memberIndex][stockIndex] += isPlus ? 1 : -1;
-        }
+      setStockListStateGroup((prev: { stockList: StockListType, amount: number }[][]) => {
+        const updated = prev.map((memberStockList, memberIndex) => {
+          if (memberIndex === memberIndex) {
+            return memberStockList.map((item, index) => {
+              if (index === stockIndex) {
+                return {
+                  ...item,
+                  amount: item.amount + (isPlus ? 1 : -1)
+                };
+              }
+              return item;
+            });
+          }
+          return memberStockList;
+        });
         return updated;
       });
     } else {
-      setStockListState((prev: number[]) => {
-        const updated: number[] = [...prev];
-        if (updated[stockIndex] > 0 || isPlus) {
-          updated[stockIndex] += isPlus ? 1 : -1;
-        }
+      setStockListState((prev: { stockList: StockListType, amount: number }[]) => {
+        const updated = prev.map((item, index) => {
+          if (index === stockIndex) {
+            return {
+              ...item,
+              amount: item.amount + (isPlus ? 1 : -1)
+            };
+          }
+          return item;
+        });
         return updated;
       });
     }
@@ -95,7 +147,7 @@ export default function ServeScreen(): JSX.Element {
                       <td>
                         <div>
                           <button onClick={() => handleClick(true, memberIndex, stockIndex, false)}>－</button>
-                          <span style={{ margin: '5px' }}>{stockListStateGroup[memberIndex][stockIndex]} {stock.unit}</span>
+                          <span style={{ margin: '5px' }}>{stockListStateGroup[memberIndex][stockIndex].amount} {stock.unit}</span>
                           <button onClick={() => handleClick(true, memberIndex, stockIndex, true)}>＋</button>
                         </div>
                       </td>
@@ -106,6 +158,7 @@ export default function ServeScreen(): JSX.Element {
             </div>
           ))}
         </div>
+        <Total />
       </div>
     );
   }
@@ -130,7 +183,7 @@ export default function ServeScreen(): JSX.Element {
                 <td>
                   <div>
                     <button onClick={() => handleClick(false, 0, stockIndex, false)}>－</button>
-                    {stockListState[stockIndex]} {stock.unit}
+                    {stockListState[stockIndex].amount} {stock.unit}
                     <button onClick={() => handleClick(false, 0, stockIndex, true)}>＋</button>
                   </div>
                 </td>
@@ -139,6 +192,16 @@ export default function ServeScreen(): JSX.Element {
           </tbody>
         </table>
       </div>
+      <Total />
+    </div>
+  );
+}
+
+
+export function Total(): JSX.Element {
+  return (
+    <div className='container'>
+      トータル個数表示予定地
     </div>
   );
 }

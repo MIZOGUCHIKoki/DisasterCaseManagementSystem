@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { WaitingQueueType } from './type/WaitingQueue';
+import { DB_WaitingQueueType } from './type/WaitingQueue';
 import StandInLine from './standInLine';
 import { person_groupMember } from './QrReader';
 
@@ -18,9 +18,9 @@ export default function AskAsGroup(props: person_groupMember): JSX.Element {
     };
     if (selected || props.person.group_id == null) {
         if (props.person.group_id == null || !asGroup) { // 個人での受け取り
-            const data: WaitingQueueType = {
+            const data: DB_WaitingQueueType = {
                 id: 0,
-                personInfo: props.person,
+                person_id: props.person.id,
                 asGroup: asGroup,
                 complete: false,
                 created_at: ''
@@ -30,9 +30,9 @@ export default function AskAsGroup(props: person_groupMember): JSX.Element {
                 Send data to server as an individual
             */
         } else {  // グループでの受け取り
-            const data: WaitingQueueType = {
+            const data: DB_WaitingQueueType = {
                 id: 0,
-                personInfo: props.person,
+                person_id: props.person.id,
                 asGroup: asGroup,
                 complete: true,
                 created_at: ''

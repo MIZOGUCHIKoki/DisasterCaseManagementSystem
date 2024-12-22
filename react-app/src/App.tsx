@@ -21,7 +21,7 @@ function App(): JSX.Element {
             </div>
           } />
           <Route path='/staff' element={<WaitingQueue />} />
-          <Route path='/person/:id' element={<ServeScreen />} />
+          <Route path='/person/:person_id' element={<ServeScreen />} />
         </Routes>
       </BrowserRouter>
     </div >

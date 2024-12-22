@@ -1,14 +1,3 @@
-/*
-    QRコードを読み取るためのコンポーネント．
-    Input: なし
-    Output: 
-        if (人がグループに所属する) {
-            <AskAsGroup {...pInfo} />
-
-        } else {
-            <StandInLine />
-        }
-*/
 import jsQR from 'jsqr';
 import React, { useRef, useState, useEffect } from 'react';
 

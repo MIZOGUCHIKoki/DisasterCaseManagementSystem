@@ -45,6 +45,16 @@ export const personInfo: PersonType[] = [
 
 export const groupMembers: PersonType[] = [
     {
+        id: '1',
+        nickName: 'Alice',
+        group_id: 1,
+        age: 20,
+        allergy: 0,
+        remarks_food: 'なし',
+        remarks_other: 'なし',
+        created_at: '2021-09-01T00:00:00.000Z'
+    },
+    {
         id: '20',
         nickName: 'Bob',
         group_id: 1,

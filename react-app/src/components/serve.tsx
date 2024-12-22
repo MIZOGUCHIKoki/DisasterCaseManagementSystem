@@ -5,7 +5,6 @@ import { PersonType } from './type/Person';
 import { waitingQueue } from './testData/waitingQueue';
 import { groupMembers } from './testData/personInfo';
 import { stockList } from './testData/stockList';
-import { StockListType } from './type/StockList';
 
 
 type givenDataType = {
@@ -20,6 +19,8 @@ const givenData: givenDataType = {
 
 export default function ServeScreen(): JSX.Element {
   const { person_id } = useParams();
+
+
 
   const [stockListState, setStockListState] = useState<number[]>(
     Array(stockList.length).fill(0)

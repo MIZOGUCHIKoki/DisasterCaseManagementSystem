@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { PersonType } from './type/Person';
+import { WaitingQueueType } from './type/WaitingQueue';
 import StandInLine from './standInLine';
+import { person_groupMember } from './QrReader';
 
-type Props = {
-    personInfo: PersonType,
-    groupMembers: PersonType[],
-};
-
-export default function AskAsGroup(props: Props): JSX.Element {
+export default function AskAsGroup(props: person_groupMember): JSX.Element {
     const [selected, setSelected] = useState<boolean | null>(null);
     let asGroup = false;
     const handleYes = () => {
@@ -20,12 +16,28 @@ export default function AskAsGroup(props: Props): JSX.Element {
         setSelected(true);
         asGroup = false;
     };
-    if (selected || props.personInfo.group_id == null) {
-        if (props.personInfo.group_id == null || !asGroup) {
+    if (selected || props.person.group_id == null) {
+        if (props.person.group_id == null || !asGroup) { // 個人での受け取り
+            const data: WaitingQueueType = {
+                id: 0,
+                personInfo: props.person,
+                asGroup: asGroup,
+                complete: false,
+                created_at: ''
+            };
+            console.log(data);
             /*
-                Send data to server as a single person
+                Send data to server as an individual
             */
-        } else {
+        } else {  // グループでの受け取り
+            const data: WaitingQueueType = {
+                id: 0,
+                personInfo: props.person,
+                asGroup: asGroup,
+                complete: true,
+                created_at: ''
+            };
+            console.log(data);
             /*
                 Send data to server as a group
             */
@@ -37,7 +49,7 @@ export default function AskAsGroup(props: Props): JSX.Element {
             <h2>グループでのお受け取りをご希望ですか？</h2>
             <h3>あなた</h3>
             <ul>
-                <li>ニックネーム: {props.personInfo.nickName}</li>
+                <li>ニックネーム: {props.person.nickName}</li>
             </ul>
             <hr />
             <h3>グループメンバー</h3>

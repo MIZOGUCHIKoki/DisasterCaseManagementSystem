@@ -1,3 +1,14 @@
+/*
+    QRコードを読み取るためのコンポーネント．
+    Input: なし
+    Output: 
+        if (人がグループに所属する) {
+            <AskAsGroup {...pInfo} />
+
+        } else {
+            <StandInLine />
+        }
+*/
 import jsQR from 'jsqr';
 import React, { useRef, useState, useEffect } from 'react';
 
@@ -5,15 +16,9 @@ import { personInfo, groupMembers } from './testData/personInfo';
 import { PersonType } from './type/Person';
 import AskAsGroup from './askAsGroup';
 
-type Props_serve = {
-    personInfo: PersonType,
-    groupMembers: PersonType[],
-};
-
-
-const pInfo: Props_serve = {
-    personInfo: personInfo[0],
-    groupMembers: groupMembers,
+export type person_groupMember = {
+    person: PersonType;
+    groupMembers: PersonType[];
 };
 
 export default function QrCodeScanner(): JSX.Element {
@@ -30,7 +35,6 @@ export default function QrCodeScanner(): JSX.Element {
                 height: { ideal: 300 },
             },
         };
-
         const startStream = async () => {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -44,8 +48,13 @@ export default function QrCodeScanner(): JSX.Element {
                     };
                 }
             } catch (err) {
-                console.error('Error accessing media devices:', err);
-                setError(new Error('カメラにアクセスできませんでした'));
+                if (navigator.mediaDevices === undefined) {
+                    console.error('navigator.mediaDevices is not supported');
+                    setError(new Error('navigator.mediaDevices is not supported'));
+                } else {
+                    console.error('Error accessing media devices:', err);
+                    setError(new Error('カメラにアクセスできませんでした'));
+                }
             }
         };
 
@@ -71,16 +80,25 @@ export default function QrCodeScanner(): JSX.Element {
                 const code = jsQR(imageData.data, imageData.width, imageData.height);
                 if (code) {
                     setResult(code.data);
-                    fetchData();
+                    fetchData(code.data);
                     return;
                 }
                 setTimeout(scanQrCode, 100);
             }
         }
     };
-    const fetchData = () => {
+    // Fetch Data
+    const fetchData = (person_id: string): person_groupMember => {
         console.log('Success to read QR code');
-        return;
+        console.log('person_id:', person_id);
+        /*
+            Fetch data from server using person_id
+        */
+        const pInfo: person_groupMember = {
+            person: personInfo[0],
+            groupMembers: groupMembers
+        };
+        return pInfo;
     };
     return (
         <div className='container'>
@@ -92,7 +110,7 @@ export default function QrCodeScanner(): JSX.Element {
                 </div>
             )
             }
-            {result && <AskAsGroup {...pInfo} />}
+            {result && <AskAsGroup {...fetchData(result)} />}
             {error && <div>{error.message}</div>}
         </div >
     );

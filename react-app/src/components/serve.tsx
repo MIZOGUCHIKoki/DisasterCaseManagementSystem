@@ -81,6 +81,7 @@ export default function ServeScreen(): JSX.Element {
           };
         })
       );
+      setRecivedClass(1);
     }
 
     // Update state
@@ -186,7 +187,6 @@ export default function ServeScreen(): JSX.Element {
     return (
       <div>
         <header className="header-serveScreen">
-          <span className='button'>初期値</span>
           <div>
             {givenData.waitingQueue.personInfo.nickName} さんの受け取り
           </div>
@@ -235,7 +235,6 @@ export default function ServeScreen(): JSX.Element {
   return (
     <div>
       <header className="header-serveScreen">
-        <span className='button'>初期値</span>
         <div>
           {givenData.waitingQueue.personInfo.nickName} さんの受け取り
         </div>

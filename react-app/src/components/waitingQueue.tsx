@@ -6,6 +6,7 @@ export default function WaitingQueue() {
     return (
         <div className='container-block'>
             <h2>待ち行列</h2>
+            <button style={{ margin: '10px' }} onClick={() => { window.location.href = '/default'; }}>デフォルト値の設定</button>
             <table>
                 <thead>
                     <tr>

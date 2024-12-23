@@ -93,6 +93,7 @@ canvas {
   align-items: center;
   align-content: center;
   justify-content: space-between;
+  -webkit-overflow-scrolling: touch;
 }
 
 

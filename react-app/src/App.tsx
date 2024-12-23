@@ -6,6 +6,7 @@ import './App.css';
 import QrCodeScanner from './components/QrReader';
 import WaitingQueue from './components/waitingQueue';
 import ServeScreen from './components/serve';
+import DefaultSetScreen from './components/defaultSetScreen';
 
 function App(): JSX.Element {
   return (
@@ -22,6 +23,7 @@ function App(): JSX.Element {
           } />
           <Route path='/staff' element={<WaitingQueue />} />
           <Route path='/person/:person_id' element={<ServeScreen />} />
+          <Route path='/default' element={<DefaultSetScreen />} />
         </Routes>
       </BrowserRouter>
     </div >

@@ -138,7 +138,7 @@ export default function ServeScreen(): JSX.Element {
         return { 'ServeLog': data_serveLog, 'StockIO': data_stockIO };
       }
     }
-    // window.location.href = '/staff';
+    window.location.href = '/staff';
   };
 
   if (!givenData) {

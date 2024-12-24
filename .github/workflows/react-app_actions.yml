@@ -1,0 +1,39 @@
+name: react-app actions
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'feature/**'
+    paths:
+      - 'react-app/**/*.tsx'
+      - 'react-app/**/*.ts'
+
+  workflow_dispatch:
+  
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./react-app
+    steps:
+      # Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js (ensure the version matches your project requirements)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Update with the correct version if necessary
+          
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          npm install
+
+      # Run ESLint
+      - name: Run ESLint
+        run: |
+          npm run lint

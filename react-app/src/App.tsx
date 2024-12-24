@@ -1,22 +1,32 @@
 import React from 'react';
-import './App.css';
-import { PersonList } from './components/personList';
-import { StockList } from './components/stockList';
-import { PersonServeLog } from './components/person_serveLog';
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import './App.css';
+
+import QrCodeScanner from './components/QrReader';
+import WaitingQueue from './components/waitingQueue';
+import ServeScreen from './components/serve';
+import DefaultSetScreen from './components/defaultSetScreen';
 
 function App(): JSX.Element {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path='/person' element={<PersonList />} />
-          <Route path='/stockList' element={<StockList />} />
-          <Route path='/person/:id' element={<PersonServeLog />} />
+          <Route path='/reception' element={
+            <div>
+              <header className='header-reception'>
+                <h1>受付</h1>
+              </header>
+              <QrCodeScanner />
+            </div>
+          } />
+          <Route path='/staff' element={<WaitingQueue />} />
+          <Route path='/person/:person_id' element={<ServeScreen />} />
+          <Route path='/default' element={<DefaultSetScreen />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </div >
   );
 }
 

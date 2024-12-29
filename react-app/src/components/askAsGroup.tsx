@@ -3,15 +3,17 @@ import { DB_WaitingQueueType } from './type/WaitingQueue';
 import StandInLine from './standInLine';
 import { person_groupMember } from './QrReader';
 
+import { Button } from '../stories/Button';
+
 export default function AskAsGroup(props: person_groupMember): JSX.Element {
     const [selected, setSelected] = useState<boolean | null>(null);
     let asGroup = false;
-    const handleYes = () => {
+    const handleYes = (): void => {
         console.log('Yes');
         asGroup = true;
         setSelected(true);
     };
-    const handleNo = () => {
+    const handleNo = (): void => {
         console.log('No');
         setSelected(true);
         asGroup = false;
@@ -59,8 +61,12 @@ export default function AskAsGroup(props: person_groupMember): JSX.Element {
                 ))}
             </ul>
             <div className='buttonGroup'>
-                <span onClick={handleYes} className='button' style={{ backgroundColor: '#336699' }}>はい</span>
-                <span onClick={handleNo} className='button' style={{ backgroundColor: 'rgb(231, 76, 60)' }}>いいえ</span>
+                <Button primary={false} onClick={handleNo} label="一人分のみ" />
+                <div>
+                    <Button primary={false} onClick={() => { return; }} pm={true} label="＋" />
+                    <Button primary={false} onClick={() => { return; }} pm={true} label="ー" />
+                </div>
+                <Button primary onClick={handleYes} label="グループの分も" />
             </div>
         </div >
     );

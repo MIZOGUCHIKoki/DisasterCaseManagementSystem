@@ -37,6 +37,7 @@ export const Button = ({
   }
   const getModeClass = () => {
     if (primary) return 'storybook-button--primary';
+    if (primary === false && type === undefined) return 'storybook-button--secondary';
     if (type) return 'storybook-button--pm';
     return '';
   };

@@ -5,28 +5,28 @@ export const waitingQueue: WaitingQueueType[] = [
     {
         id: 1,
         personInfo: personInfo[0],
-        asGroup: true,
+        numberOfMember: 2,
         complete: false,
         created_at: '2021-01-01 00:00:00'
     },
     {
         id: 2,
         personInfo: personInfo[1],
-        asGroup: false,
+        numberOfMember: 1,
         complete: true,
         created_at: '2021-01-01 00:00:00'
     },
     {
         id: 3,
         personInfo: personInfo[2],
-        asGroup: true,
+        numberOfMember: 3,
         complete: false,
         created_at: '2021-01-01 00:00:00'
     },
     {
         id: 4,
         personInfo: personInfo[3],
-        asGroup: false,
+        numberOfMember: 4,
         complete: true,
         created_at: '2021-01-01 00:00:00'
     }

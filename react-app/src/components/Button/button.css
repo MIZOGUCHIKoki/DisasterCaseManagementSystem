@@ -4,10 +4,12 @@
   border: 0;
   border-radius: 3em;
   font-weight: 700;
-  width: 150px;
+  width: 100%;
   line-height: 1;
+  height: 100%;
   text-align: center;
   font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 200%;
 }
 
 .storybook-button--primary {
@@ -17,8 +19,8 @@
 
 .storybook-button--secondary {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
-  background-color: transparent;
-  color: #333;
+  background-color: #6C757D;
+  color: white;
 }
 
 .storybook-button--small {
@@ -37,10 +39,12 @@
 }
 
 .storybook-button--pm {
-  width: 50px;
-  padding-right: 3px;
-  padding-left: 3px;
+  width: 30%;
+  padding: 3px 3px;
+  height: 100%;
+  line-height: 1.5;
   color: white;
   font-size: large;
+  text-align: center;
   /* text-align: center; */
 }

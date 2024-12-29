@@ -10,6 +10,9 @@ export interface HeaderProps {
 export const Header = ({ user = true }: HeaderProps) => (
   <header>
     <div className="storybook-header">
+      <h1>
+        {user ? '物資支給スタッフ' : '物資受取者'}
+      </h1>
       <div>
         {user ? (
           <>
@@ -19,12 +22,17 @@ export const Header = ({ user = true }: HeaderProps) => (
           </>
         ) : (
           <>
-            <h1>
-              受取
-            </h1>
+            <a href="/reception"
+              style={{
+                color: '#FF4d4d',
+                textDecoration: 'none',
+              }}
+            >
+              初めから
+            </a>
           </>
         )}
       </div>
     </div>
-  </header>
+  </header >
 );

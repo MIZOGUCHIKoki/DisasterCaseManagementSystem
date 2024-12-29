@@ -24,7 +24,7 @@ export default function WaitingQueue() {
                                 </a>
                             </td>
                             <td>
-                                {queue.asGroup ? (<div>はい</div>) : (<div>いいえ</div>)}
+                                {queue.numberOfMember ? (<div>はい</div>) : (<div>いいえ</div>)}
                             </td>
                             <td>
                                 {queue.created_at}

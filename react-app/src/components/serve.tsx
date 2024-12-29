@@ -96,9 +96,9 @@ export default function ServeScreen(): JSX.Element {
 
   const pushData = () => {
     console.log('SEND DATA');
-    if (givenData?.waitingQueue.asGroup) { // Group
+    if (givenData?.waitingQueue.numberOfMember !== 1) { // Group
       console.log('Group');
-      if (givenData.groupMember) {
+      if (givenData?.groupMember) {
         const data = memberIndex2id?.map((member) => {
           const data_serveLog: ServeLogType = {
             id: 0,
@@ -183,7 +183,7 @@ export default function ServeScreen(): JSX.Element {
       });
     }
   };
-  if (givenData.waitingQueue.asGroup && givenData.groupMember) {
+  if (givenData.waitingQueue.numberOfMember !== 1 && givenData.groupMember) {
     return (
       <div>
         <header className="header-serveScreen">

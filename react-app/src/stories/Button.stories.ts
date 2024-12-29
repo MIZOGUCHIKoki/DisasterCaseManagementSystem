@@ -30,23 +30,6 @@ export const Primary: Story = {
     label: 'Button',
   },
 };
-export const Plus: Story = {
-  args: {
-    primary: false,
-    type: true,
-    pm: true,
-    label: '＋',
-  },
-};
-
-export const Minus: Story = {
-  args: {
-    primary: false,
-    type: true,
-    pm: false,
-    label: '－',
-  },
-};
 
 export const Secondary: Story = {
   args: {

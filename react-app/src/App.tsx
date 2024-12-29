@@ -8,6 +8,8 @@ import WaitingQueue from './components/waitingQueue';
 import ServeScreen from './components/serve';
 import DefaultSetScreen from './components/defaultSetScreen';
 
+import { Header } from './components/Header/Header';
+
 function App(): JSX.Element {
   return (
     <div className="App">
@@ -15,9 +17,7 @@ function App(): JSX.Element {
         <Routes>
           <Route path='/reception' element={
             <div>
-              <header className='header-reception'>
-                <h1>受付</h1>
-              </header>
+              <Header user={false} />
               <QrCodeScanner />
             </div>
           } />

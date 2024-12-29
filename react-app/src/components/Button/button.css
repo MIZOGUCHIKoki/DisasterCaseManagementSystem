@@ -37,6 +37,10 @@
 }
 
 .storybook-button--pm {
-  /* width: 5px; */
-  padding: 12px;
+  width: 50px;
+  padding-right: 3px;
+  padding-left: 3px;
+  color: white;
+  font-size: large;
+  /* text-align: center; */
 }

@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
-import { Button } from './Button';
+import { Button } from '../components/Button/Button';
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: 'Example/Button',
+  title: 'Common/Button',
   component: Button,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
@@ -29,6 +28,23 @@ export const Primary: Story = {
   args: {
     primary: true,
     label: 'Button',
+  },
+};
+export const Plus: Story = {
+  args: {
+    primary: false,
+    type: true,
+    pm: true,
+    label: '＋',
+  },
+};
+
+export const Minus: Story = {
+  args: {
+    primary: false,
+    type: true,
+    pm: false,
+    label: '－',
   },
 };
 

@@ -1,72 +1,58 @@
-import React, { useState } from 'react';
-import { DB_WaitingQueueType } from './type/WaitingQueue';
-import StandInLine from './standInLine';
-import { person_groupMember } from './QrReader';
+import React, { useState, useEffect } from 'react';
 
-import { Button } from '../stories/Button';
+import { FetchedData_PersonAndGroup } from './QrReader';
 
-export default function AskAsGroup(props: person_groupMember): JSX.Element {
-    const [selected, setSelected] = useState<boolean | null>(null);
-    let asGroup = false;
-    const handleYes = (): void => {
-        console.log('Yes');
-        asGroup = true;
-        setSelected(true);
+import { Button } from './Button/Button';
+import { PM_Button } from './PM_Button/PM_Button';
+
+export default function AskAsGroup(props: FetchedData_PersonAndGroup): JSX.Element {
+    const [numberOfGroup, setNumberOfGroup] = useState<number>(0);
+    const receiveAlone = () => {
+        console.log('receiveAlone');
+        setNumberOfGroup(1);
     };
-    const handleNo = (): void => {
-        console.log('No');
-        setSelected(true);
-        asGroup = false;
+    const receiveGroup = () => {
+        console.log('receiveGroup');
+        setNumberOfGroup(props.groupMembers.length + 1);
     };
-    if (selected || props.person.group_id == null) {
-        if (props.person.group_id == null || !asGroup) { // 個人での受け取り
-            const data: DB_WaitingQueueType = {
-                id: 0,
-                person_id: props.person.id,
-                asGroup: asGroup,
-                complete: false,
-                created_at: ''
-            };
-            console.log(data);
-            /*
-                Send data to server as an individual
-            */
-        } else {  // グループでの受け取り
-            const data: DB_WaitingQueueType = {
-                id: 0,
-                person_id: props.person.id,
-                asGroup: asGroup,
-                complete: true,
-                created_at: ''
-            };
-            console.log(data);
-            /*
-                Send data to server as a group
-            */
-        }
-        return <StandInLine />;
-    }
+    const receiveNumber = (num: number) => {
+        console.log('receiveNumber', num);
+        setNumberOfGroup(num);
+    };
+    useEffect(() => {
+        setNumberOfGroup(props.groupMembers.length + 1);
+        console.log('numberOfGroup:', numberOfGroup);
+    }, []);
     return (
-        <div className='container-block'>
-            <h2>グループでのお受け取りをご希望ですか？</h2>
-            <h3>あなた</h3>
+        <div className='container'>
+            <div style={{ margin: '10px' }}>グループでのお受け取りをご希望ですか？</div>
+            <div style={{ margin: '10px' }}>あなた</div>
             <ul>
-                <li>ニックネーム: {props.person.nickName}</li>
+                <li>{props.person.nickName}</li>
             </ul>
-            <hr />
-            <h3>グループメンバー</h3>
+            <div style={{ margin: '10px' }}>グループメンバ</div>
             <ul>
                 {props.groupMembers.map((member, index) => (
-                    <li key={index}>ニックネーム: {member.nickName}</li>
+                    <li key={index}>{member.nickName}</li>
                 ))}
             </ul>
-            <div className='buttonGroup'>
-                <Button primary={false} onClick={handleNo} label="一人分のみ" />
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    margin: '10px',
+                }}
+            >
+                <Button primary={false} onClick={receiveAlone} label="一人分のみ" />
                 <div>
-                    <Button primary={false} onClick={() => { return; }} pm={true} label="＋" />
-                    <Button primary={false} onClick={() => { return; }} pm={true} label="ー" />
+                    <PM_Button context={numberOfGroup} type={true}
+                        onClick_plus={() => receiveNumber(numberOfGroup + 1)}
+                        onClick_minus={() => receiveNumber(numberOfGroup - 1)}
+                        onClick_decide={() => { return; }}
+                    />
                 </div>
-                <Button primary onClick={handleYes} label="グループの分も" />
+                <Button onClick={receiveGroup} label="グループの分" />
             </div>
         </div >
     );

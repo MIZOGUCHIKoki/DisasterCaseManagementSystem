@@ -6,60 +6,11 @@ h2 {
   text-align: left;
 }
 
-.header-reception {
-  background-color: #282c34;
-  /* min-height: 100vh; */
-  display: flex;
-  height: 20vh;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.header-serveScreen {
-  background-color: #282c34;
-  /* min-height: 100vh; */
-  display: flex;
-  height: 2cm;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-video {
-  /* position: absolute; */
-  top: 0;
-  left: 0;
-  width: auto;
-  height: auto;
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-
-canvas {
-  /* position: absolute; */
-  top: 0;
-  left: 0;
-  opacity: 0;
-  display: none;
-}
-
 .container {
-  display: flex;
-  height: 80vh;
-  justify-content: center;
+  height: 90vh;
 }
 
-.qr-reader {
-  align-items: center;
-  align-content: center;
-}
-
+/*
 .center {
   display: flex;
   justify-content: center;
@@ -153,4 +104,4 @@ tbody td a:hover {
 .serveTbl_one {
   width: 500px;
   margin-right: 20px;
-}
+} */

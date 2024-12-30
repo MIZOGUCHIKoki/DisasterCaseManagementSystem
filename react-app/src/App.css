@@ -10,39 +10,14 @@ h2 {
 .container {
   height: 94dvh;
   /* 100% - 6dvh */
-  overflow: scroll;
-}
-
-/*
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-}
-
-.container-block {
-  display: block;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-}
-
-
-.container {
-  font-family: Arial, sans-serif;
-  margin: 20px;
+  overflow-y: scroll;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-}
 
-.table_cols {
-  width: 300px;
-  flex-shrink: 0;
 }
 
 thead th {
@@ -64,25 +39,3 @@ tbody td {
   padding: 10px;
   text-align: left;
 }
-
-tbody td a {
-  text-decoration: none;
-  color: #007BFF;
-  font-weight: bold;
-}
-
-tbody td a:hover {
-  color: #0056b3;
-  text-decoration: underline;
-}
-
-.serveTbl {
-  width: 100%;
-  display: flex;
-  overflow-x: scroll;
-}
-
-.serveTbl_one {
-  width: 500px;
-  margin-right: 20px;
-} */

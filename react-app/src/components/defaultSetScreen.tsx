@@ -80,6 +80,17 @@ export default function DefaultSetScreen(): JSX.Element {
 
     return (
         <div className='container'>
+            <div
+                style={{
+                    margin: '10px',
+                }}
+            >
+                <Button
+                    primary={true}
+                    label='戻る'
+                    onClick={() => { window.location.href = '/staff'; }}
+                />
+            </div>
             <div style={{ margin: '5px' }}>
                 <table
                     style={{
@@ -104,12 +115,7 @@ export default function DefaultSetScreen(): JSX.Element {
                     <tbody>
                         {stockListState?.map((item, index: number) => {
                             return (
-                                <tr key={index}
-                                    style={{
-                                        backgroundColor: index % 2 === 0 ? '#f0f0f0' : 'white',
-
-                                    }}
-                                >
+                                <tr key={index}>
                                     <td>{item.stockList.name} {item.stockList.size}</td>
                                     <td style={{
                                         textAlign: 'center',

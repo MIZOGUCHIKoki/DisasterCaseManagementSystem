@@ -28,7 +28,7 @@ function App(): JSX.Element {
           } />
           <Route path='/default' element={
             <div>
-              <Header user={true} description={'1人当たりの数設定'} description_left='Reset' />
+              <Header user={true} description={'1人当たりの数設定'} description_left='前回の値' />
               <DefaultSetScreen />
             </div>
           } />

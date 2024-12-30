@@ -8,7 +8,9 @@ h2 {
 }
 
 .container {
-  height: 80vh;
+  height: 94dvh;
+  /* 100% - 6dvh */
+  overflow: scroll;
 }
 
 /*
@@ -24,28 +26,6 @@ h2 {
   justify-content: center;
   align-items: center;
   align-content: center;
-}
-
-.button {
-  background-color: rgb(231, 76, 60);
-  align-content: center;
-  color: white;
-  padding: 0.8rem;
-  border-radius: 0.4rem;
-  cursor: pointer;
-  width: 2cm;
-  height: 0.5cm;
-  box-shadow: inset;
-  text-align: center;
-}
-
-.buttonGroup {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  justify-content: space-between;
-  -webkit-overflow-scrolling: touch;
 }
 
 

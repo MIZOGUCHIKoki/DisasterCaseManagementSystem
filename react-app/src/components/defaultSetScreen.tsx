@@ -45,17 +45,18 @@ export default function DefaultSetScreen(): JSX.Element {
         const DefultData = (): DB_DefaultListType[] => {
             const defaultData: DB_DefaultListType[] = [];
             stockListState?.map((stockItem) => {
-                defaultData.push(
-                    {
-                        id: 0,
-                        stock_id: stockItem.stockList.id,
-                        amount: stockItem.amount
+                if (stockItem.amount > 0) {
+                    defaultData.push(
+                        {
+                            id: 0,
+                            stock_id: stockItem.stockList.id,
+                            amount: stockItem.amount
 
-                    });
+                        });
+                }
             });
             return defaultData;
         };
-        console.log('デフォルト値を設定');
         console.log(DefultData());
         window.location.href = '/staff';
     };
@@ -65,6 +66,7 @@ export default function DefaultSetScreen(): JSX.Element {
             if (!prevState) return prevState;
             return prevState.map((stockItem, i) => {
                 if (i === index) {
+                    if (!pm && stockItem.amount <= 0) return stockItem;
                     return {
                         ...stockItem,
                         amount: pm ? stockItem.amount + 1 : stockItem.amount - 1,
@@ -74,27 +76,45 @@ export default function DefaultSetScreen(): JSX.Element {
                 }
             });
         });
-        console.log('RESULT', pm ? '＋' : 'ー');
     };
 
     return (
         <div className='container'>
-            <div>
-                <table>
+            <div style={{ margin: '5px' }}>
+                <table
+                    style={{
+                        width: '100%',
+                        borderCollapse: 'collapse',
+                        borderSpacing: 0
+                    }}
+                >
                     <thead>
-                        <tr>
-                            <th style={{ width: '40%' }}>物資名</th>
-                            <th style={{ width: '30%' }}>サイズ</th>
+                        <tr
+                            style={{
+                                backgroundColor: '#4a6eda',
+                                color: 'white',
+                                padding: '10px',
+                                textAlign: 'center',
+                            }}
+                        >
+                            <th style={{ width: '70%' }}>物資名</th>
                             <th style={{ textAlign: 'center' }}>数量</th>
                         </tr>
                     </thead>
                     <tbody>
                         {stockListState?.map((item, index: number) => {
                             return (
-                                <tr key={index}>
-                                    <td>{item.stockList.name}</td>
-                                    <td>{item.stockList.size}</td>
-                                    <td style={{ textAlign: 'center' }}>
+                                <tr key={index}
+                                    style={{
+                                        backgroundColor: index % 2 === 0 ? '#f0f0f0' : 'white',
+
+                                    }}
+                                >
+                                    <td>{item.stockList.name} {item.stockList.size}</td>
+                                    <td style={{
+                                        textAlign: 'center',
+                                        height: '10dvh',
+                                    }}>
                                         <PM_Button
                                             context={stockListState[index].amount}
                                             type={false}

@@ -5,14 +5,32 @@ import { Button } from './Button/Button';
 
 export default function WaitingQueue(): JSX.Element {
     const [waitingQueue, setWaitingQueue] = useState<WaitingQueueType[]>([]);
+    const [fetchDataFlag, setFetchDataFlag] = useState<boolean>(false);
+    /* 
+        if (waitingQueue.length <= 3) {
+            numberOfMember = true;
+            FETCH DATA FROM DATABASE
+            numberOfMember = false;
+        } 
+    */
     useEffect(() => {
         /*
             FETCH DATA FROM DATABASE
         */
         const data: WaitingQueueType[] = waitingQueue_list;
         setWaitingQueue(data);
-        console.log('waitingQueue:', waitingQueue);
-    }, [waitingQueue]);
+        console.log('FETCH: waitingQueue:', waitingQueue);
+        setFetchDataFlag(false);
+    }, [fetchDataFlag]);
+    const post = (queue_id: number): void => {
+        console.log('POST: 受け取り完了:', queue_id);
+        console.log(waitingQueue.length);
+        // 受け取り完了処理
+        setWaitingQueue(waitingQueue.filter(queue => queue.id !== queue_id));
+        if (waitingQueue.length <= 3) {
+            setFetchDataFlag(true);
+        }
+    };
     // const cardWidth = (): number => {
     //     if (screen.width > 768) { // PC, tablet
     //         return 50;
@@ -54,8 +72,10 @@ export default function WaitingQueue(): JSX.Element {
                             style={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
-                                marginBottom: '10px',
-                                backgroundColor: '#f0f0f0',
+                                padding: '10px',
+                                backgroundColor: '#4a6eda',
+                                color: 'white',
+                                alignItems: 'center',
                             }}
                         >
                             <div>{queue.person_info.nickName}</div>
@@ -67,14 +87,16 @@ export default function WaitingQueue(): JSX.Element {
                                     <th
                                         style={{
                                             width: '80%',
-                                            textAlign: 'left'
+                                            textAlign: 'left',
+                                            backgroundColor: 'gray',
                                         }}
                                     >
                                         物資名</th>
                                     <th
                                         style={{
                                             width: '20%',
-                                            textAlign: 'center'
+                                            textAlign: 'center',
+                                            backgroundColor: 'gray',
                                         }}
                                     >
                                         数量
@@ -102,9 +124,11 @@ export default function WaitingQueue(): JSX.Element {
                         >
                             <Button
                                 onClick={() => {
-                                    console.log('complete');
+                                    // 受け取り完了処理
+                                    post(queue.id);
                                 }}
                                 label='受け取り完了'
+                                primary={true}
                             />
                         </div>
                     </div>

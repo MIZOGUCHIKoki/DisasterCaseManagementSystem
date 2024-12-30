@@ -51,5 +51,21 @@ export const waitingQueue: WaitingQueueType[] = [
         numberOfMember: 3,
         complete: false,
         created_at: '2021-01-02 00:00:00'
+    },
+    {
+        id: 4,
+        person_info: personInfo[2],
+        supplies_info: [
+            {
+                stock_info: stockList[2],
+                amount: 2
+            },
+            {
+                stock_info: stockList[3],
+                amount: 1
+            }],
+        numberOfMember: 3,
+        complete: false,
+        created_at: '2021-01-02 00:00:00'
     }
 ];

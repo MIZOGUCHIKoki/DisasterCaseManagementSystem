@@ -24,7 +24,7 @@ thead th {
   background-color: #4a6eda;
   color: white;
   padding: 10px;
-  text-align: left;
+  text-align: right;
 }
 
 tbody tr:nth-child(even) {
@@ -37,5 +37,4 @@ tbody tr:nth-child(odd) {
 
 tbody td {
   padding: 10px;
-  text-align: left;
 }

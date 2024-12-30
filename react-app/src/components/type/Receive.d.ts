@@ -1,7 +1,6 @@
-export type ServeLogType = {
+export type ReceiveType = {
     id: number,
     person_id: string,
-    received_person_id: string,
     receiveClassID: number,
     created_at: string,
 };

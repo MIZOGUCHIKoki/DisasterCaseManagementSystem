@@ -5,26 +5,51 @@ import { stockList } from './stockList';
 export const waitingQueue: WaitingQueueType[] = [
     {
         id: 1,
-        personInfo: personInfo[0],
-        numberOfMember: 1,
-        serveLog: [
+        person_info: personInfo[0],
+        supplies_info: [
             {
-                stockIO: [
-                    {
-                        id: 1,
-                        serveLog: [
-                            {
-                                id: 1,
-                                person_id: '1',
-                                received_person_id: '1',
-                                receiveClassID: 1,
-                                created_at: '2021-09-01T00:00:00.000Z'
-                            }
-                        ]
-                    }
-                ],
-                amount: 1,
-            }
+                stock_info: stockList[0],
+                amount: 1
+            }],
+        numberOfMember: 1,
+        complete: false,
+        created_at: '2021-01-01 00:00:00'
+    },
+    {
+        id: 2,
+        person_info: personInfo[1],
+        supplies_info: [
+            {
+                stock_info: stockList[1],
+                amount: 2
+            },
+            {
+                stock_info: stockList[2],
+                amount: 1
+            },
+            {
+                stock_info: stockList[1],
+                amount: 2
+            },
         ],
+        numberOfMember: 3,
+        complete: false,
+        created_at: '2021-01-02 00:00:00'
+    },
+    {
+        id: 3,
+        person_info: personInfo[2],
+        supplies_info: [
+            {
+                stock_info: stockList[1],
+                amount: 2
+            },
+            {
+                stock_info: stockList[3],
+                amount: 1
+            }],
+        numberOfMember: 3,
+        complete: false,
+        created_at: '2021-01-02 00:00:00'
     }
 ];

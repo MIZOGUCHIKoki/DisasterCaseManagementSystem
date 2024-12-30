@@ -13,13 +13,13 @@ export default function WaitingQueue(): JSX.Element {
         setWaitingQueue(data);
         console.log('waitingQueue:', waitingQueue);
     }, [waitingQueue]);
-    const cardWidth = (): number => {
-        if (screen.width > 768) { // PC, tablet
-            return 50;
-        } else { // Mobile
-            return 100;
-        }
-    };
+    // const cardWidth = (): number => {
+    //     if (screen.width > 768) { // PC, tablet
+    //         return 50;
+    //     } else { // Mobile
+    //         return 100;
+    //     }
+    // };
     return (
         <div className='container'
             style={{

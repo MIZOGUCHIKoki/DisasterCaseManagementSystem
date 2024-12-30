@@ -6,6 +6,9 @@ import { StockListType } from './type/StockList';
 import { stockList } from './testData/stockList';
 import { DB_DefaultListType } from './type/DefaultList';
 
+import { PM_Button } from './PM_Button/PM_Button';
+import { Button } from './Button/Button';
+
 export default function DefaultSetScreen(): JSX.Element {
     const [stockListState, setStockListState] = useState<{ stockList: StockListType; amount: number }[]>();
     useEffect(() => {
@@ -75,18 +78,14 @@ export default function DefaultSetScreen(): JSX.Element {
     };
 
     return (
-        <div className='container-block'>
-            <h2>デフォルト値設定画面</h2>
-            <button style={{ margin: '10px' }} onClick={onClick}>デフォルト値を設定</button>
+        <div className='container'>
             <div>
                 <table>
                     <thead>
                         <tr>
                             <th style={{ width: '40%' }}>物資名</th>
                             <th style={{ width: '30%' }}>サイズ</th>
-                            <th></th>
-                            <th style={{ textAlign: 'center' }}>Amount</th>
-                            <th></th>
+                            <th style={{ textAlign: 'center' }}>数量</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,20 +95,35 @@ export default function DefaultSetScreen(): JSX.Element {
                                     <td>{item.stockList.name}</td>
                                     <td>{item.stockList.size}</td>
                                     <td style={{ textAlign: 'center' }}>
-                                        <button onClick={() => onClickPM(false, index)}>ー</button>
-                                    </td>
-                                    <td style={{ textAlign: 'center' }}>
-                                        {item.amount} {item.stockList.unit}
-                                    </td>
-                                    <td style={{ textAlign: 'center' }}>
-                                        <button onClick={() => onClickPM(true, index)}>＋</button>
+                                        <PM_Button
+                                            context={stockListState[index].amount}
+                                            type={false}
+                                            onClick_plus={() => onClickPM(true, index)}
+                                            onClick_minus={() => onClickPM(false, index)}
+                                            unit={item.stockList.unit}
+                                        />
                                     </td>
                                 </tr>
                             );
                         })}
                     </tbody>
-
                 </table>
+            </div>
+            <div style={{
+                display: 'flex',
+                margin: '20px 10px',
+                justifyContent: 'flex-end',
+            }}>
+                <div
+                    style={{
+                        width: '30%',
+                    }}>
+                    <Button
+                        onClick={() => { onClick(); }}
+                        primary={true}
+                        label="決定"
+                    />
+                </div>
             </div>
         </div >
     );

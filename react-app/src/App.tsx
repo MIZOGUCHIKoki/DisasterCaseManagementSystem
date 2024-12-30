@@ -5,7 +5,6 @@ import './App.css';
 
 import QrCodeScanner from './components/QrReader';
 import WaitingQueue from './components/waitingQueue';
-import ServeScreen from './components/serve';
 import DefaultSetScreen from './components/defaultSetScreen';
 
 import { Header } from './components/Header/Header';
@@ -21,9 +20,18 @@ function App(): JSX.Element {
               <QrCodeScanner />
             </div>
           } />
-          <Route path='/staff' element={<WaitingQueue />} />
-          <Route path='/person/:person_id' element={<ServeScreen />} />
-          <Route path='/default' element={<DefaultSetScreen />} />
+          <Route path='/staff' element={
+            <div>
+              <Header user={true} description={'1人当たりの数設定'} />
+              <WaitingQueue />
+            </div>
+          } />
+          <Route path='/default' element={
+            <div>
+              <Header user={true} description={'1人当たりの数設定'} description_left='Reset' />
+              <DefaultSetScreen />
+            </div>
+          } />
         </Routes>
       </BrowserRouter>
     </div >

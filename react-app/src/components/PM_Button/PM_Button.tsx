@@ -15,7 +15,7 @@ export interface ButtonProps {
   /** Plus[-] click handler */
   onClick_minus: () => void;
   /** Decide click handler */
-  onClick_decide: () => void;
+  onClick_decide?: () => void;
   /** Unit inserted after Context */
   unit?: string;
   /** Label of decision */

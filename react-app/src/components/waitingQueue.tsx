@@ -31,13 +31,13 @@ export default function WaitingQueue(): JSX.Element {
             setFetchDataFlag(true);
         }
     };
-    // const cardWidth = (): number => {
-    //     if (screen.width > 768) { // PC, tablet
-    //         return 50;
-    //     } else { // Mobile
-    //         return 100;
-    //     }
-    // };
+    const cardWidth = (): number => {
+        if (screen.width > 768) { // PC, tablet
+            return 50;
+        } else { // Mobile
+            return 100;
+        }
+    };
     return (
         <div className='container'
             style={{
@@ -47,19 +47,20 @@ export default function WaitingQueue(): JSX.Element {
             {/* スクロールするカード */}
             <div
                 style={{
-                    display: 'block',
-                    // justifyContent: 'space-between',
-                    justifyContent: 'center',
-                    // overflowX: 'scroll',
-                    // width: `${waitingQueue.length * cardWidth()}vw`,
-                    width: '100%',
-                    height: '100%',
+                    // display: 'block',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    // justifyContent: 'center',
+                    overflowX: 'scroll',
+                    width: `${waitingQueue.length * cardWidth()}vw`,
+                    // width: '100%',
+                    // height: '100%',
                 }}
             >
                 {waitingQueue.map((queue: WaitingQueueType) => (
                     <div key={queue.id} style={{
-                        // width: `${cardWidth()}vw`, // カードの幅を指定
-                        width: '90%',
+                        width: `${cardWidth()}vw`, // カードの幅を指定
+                        // width: '90%',
                         margin: '10px 10px 20px 10px', // 各カードにマージンを追加
                         border: '1px solid #ccc', // 各カードにボーダーを追加
                         borderRadius: '8px', // 角を丸くする

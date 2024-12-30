@@ -1,25 +1,46 @@
 import React, { useState, useEffect } from 'react';
-
-import { FetchedData_PersonAndGroup } from './QrReader';
-
+import { personInfo, groupMembers } from './testData/personInfo';
 import { Button } from './Button/Button';
 import { PM_Button } from './PM_Button/PM_Button';
+import { PersonType } from './type/Person';
 
-export default function AskAsGroup(props: FetchedData_PersonAndGroup): JSX.Element {
+type FetchedData_PersonAndGroup = {
+    person: PersonType;
+    groupMembers: PersonType[];
+};
+
+type Props = {
+    person_id: string;
+}
+export default function AskAsGroup({ person_id }: Props): JSX.Element {
     const [numberOfGroup, setNumberOfGroup] = useState<number>(0);
     const [postState, setPostState] = useState<boolean>(false);
+    const [fetchedData, setFetchedData] = useState<FetchedData_PersonAndGroup | null>(null);
     useEffect(() => {
-        setNumberOfGroup(props.groupMembers.length + 1);
+        console.log('person_id:', person_id);
+        /*
+            FETCH DATA from API using the result
+        */
+        const fetchedData: FetchedData_PersonAndGroup = {
+            person: personInfo[0],
+            groupMembers: groupMembers
+        };
+        setFetchedData(fetchedData);
+        setNumberOfGroup(fetchedData.groupMembers.length + 1);
         console.log('numberOfGroup:', numberOfGroup);
     }, []);
     const post = () => {
         console.log('numberOfGroup_POST:', numberOfGroup);
         setPostState(true);
     };
-    return postState ? (
-        <div>
-
-        </div>
+    return postState || fetchedData === null ? (
+        fetchedData === null ? (
+            <div>
+                <div>読み込み中...</div>
+            </div>
+        ) : (
+            <div></div>
+        )
     )
         : (
             <div className='container'>
@@ -36,7 +57,7 @@ export default function AskAsGroup(props: FetchedData_PersonAndGroup): JSX.Eleme
                         }}>
                         <div style={{ margin: '10px' }}>あなた</div>
                         <ul>
-                            <li>{props.person.nickName}</li>
+                            <li>{fetchedData.person.nickName}</li>
                         </ul>
                     </div>
                     <div
@@ -46,7 +67,7 @@ export default function AskAsGroup(props: FetchedData_PersonAndGroup): JSX.Eleme
                     >
                         <div style={{ margin: '10px' }}>グループメンバ</div>
                         <ul>
-                            {props.groupMembers.map((member, index) => (
+                            {fetchedData.groupMembers.map((member, index) => (
                                 <li key={index}>
                                     {member.nickName}
                                 </li>
@@ -81,9 +102,9 @@ export default function AskAsGroup(props: FetchedData_PersonAndGroup): JSX.Eleme
                         }}
                     >
                         <Button onClick={() => {
-                            setNumberOfGroup(props.groupMembers.length + 1);
+                            setNumberOfGroup(fetchedData.groupMembers.length + 1);
                             post();
-                        }} label={`グループの分も （合計${props.groupMembers.length + 1}名分）`} />
+                        }} label={`グループの分も （合計${fetchedData.groupMembers.length + 1}名分）`} />
                     </div>
                 </div>
                 <div>

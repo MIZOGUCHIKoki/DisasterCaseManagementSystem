@@ -49,7 +49,7 @@ export default function DefaultSetScreen(): JSX.Element {
                     defaultData.push(
                         {
                             id: 0,
-                            stock_id: stockItem.stockList.id,
+                            stockList_id: stockItem.stockList.id,
                             amount: stockItem.amount
 
                         });

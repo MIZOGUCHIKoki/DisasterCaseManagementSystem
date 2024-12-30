@@ -3,6 +3,7 @@ import { personInfo, groupMembers } from './testData/personInfo';
 import { Button } from './Button/Button';
 import { PM_Button } from './PM_Button/PM_Button';
 import { PersonType } from './type/Person';
+import SelectSupplies from './selectSupplies';
 
 type FetchedData_PersonAndGroup = {
     person: PersonType;
@@ -39,7 +40,7 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                 <div>読み込み中...</div>
             </div>
         ) : (
-            <div></div>
+            <SelectSupplies />
         )
     )
         : (

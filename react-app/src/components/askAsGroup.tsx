@@ -28,10 +28,8 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
         };
         setFetchedData(fetchedData);
         setNumberOfGroup(fetchedData.groupMembers.length + 1);
-        console.log('numberOfGroup:', numberOfGroup);
     }, []);
     const post = () => {
-        console.log('numberOfGroup_POST:', numberOfGroup);
         setPostState(true);
     };
     return postState || fetchedData === null ? (
@@ -40,7 +38,10 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                 <div>読み込み中...</div>
             </div>
         ) : (
-            <SelectSupplies />
+            <SelectSupplies
+                person_id={fetchedData.person.id}
+                numberOfPerson={numberOfGroup}
+            />
         )
     )
         : (

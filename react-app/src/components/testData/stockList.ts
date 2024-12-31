@@ -2,7 +2,7 @@ import { StockListType } from '../type/StockList';
 
 export const stockList: StockListType[] = [
     {
-        id: 1,
+        id: 0,
         name: '水',
         size: '2L',
         unit: '本',
@@ -11,7 +11,7 @@ export const stockList: StockListType[] = [
         created_at: '2021-01-01 00:00:00'
     },
     {
-        id: 11,
+        id: 1,
         name: '水',
         size: '500ml',
         unit: '本',

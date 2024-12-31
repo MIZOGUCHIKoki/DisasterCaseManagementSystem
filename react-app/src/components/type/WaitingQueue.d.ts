@@ -5,12 +5,14 @@ export type WaitingQueueType = {
     id: number,
     person_info: PersonType,
     supplies_info: {
-        stock_info: StockListType,
+        stock_info: {
+            name: StockListType['name'],
+            unit: StockListType['unit']
+        },
         amount: number
     }[],
     numberOfMember: number,
-    complete: boolean,
-    created_at: string
+    complete: boolean
 };
 
 export type DB_WaitingQueueType = {

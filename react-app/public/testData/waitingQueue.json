@@ -1,0 +1,94 @@
+[
+  {
+    "id": 1,
+    "person_info": {
+      "nickName": "JohnDoe"
+    },
+    "numberOfMember": 4,
+    "supplies_info": [
+      {
+        "stock_info": {
+          "name": "Water Bottle",
+          "unit": "pcs"
+        },
+        "amount": 10
+      },
+      {
+        "stock_info": {
+          "name": "Canned Food",
+          "unit": "cans"
+        },
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "person_info": {
+      "nickName": "JaneSmith"
+    },
+    "numberOfMember": 2,
+    "supplies_info": [
+      {
+        "stock_info": {
+          "name": "Blanket",
+          "unit": "pcs"
+        },
+        "amount": 2
+      },
+      {
+        "stock_info": {
+          "name": "First Aid Kit",
+          "unit": "kits"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "person_info": {
+      "nickName": "Alice"
+    },
+    "numberOfMember": 3,
+    "supplies_info": [
+      {
+        "stock_info": {
+          "name": "Tent",
+          "unit": "sets"
+        },
+        "amount": 1
+      },
+      {
+        "stock_info": {
+          "name": "Flashlight",
+          "unit": "pcs"
+        },
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "person_info": {
+      "nickName": "Bob"
+    },
+    "numberOfMember": 1,
+    "supplies_info": [
+      {
+        "stock_info": {
+          "name": "Water Bottle",
+          "unit": "pcs"
+        },
+        "amount": 2
+      },
+      {
+        "stock_info": {
+          "name": "Canned Food",
+          "unit": "cans"
+        },
+        "amount": 1
+      }
+    ]
+  }
+]

@@ -1,10 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { waitingQueue as waitingQueue_list } from './testData/waitingQueue';
-import { WaitingQueueType } from './type/WaitingQueue';
 import { Button } from './Button/Button';
 
+import { WaitingQueueType } from './type/WaitingQueue';
+import { PersonType } from './type/Person';
+
+type fetchedQueueData = {
+    id: WaitingQueueType['id'];
+    person_info: {
+        nickName: PersonType['nickName'];
+    }
+    numberOfMember: WaitingQueueType['numberOfMember'];
+    supplies_info: {
+        stock_info: {
+            name: string;
+            unit: string;
+        },
+        amount: number;
+    }[];
+}
+
 export default function WaitingQueue(): JSX.Element {
-    const [waitingQueue, setWaitingQueue] = useState<WaitingQueueType[]>([]);
+    const [waitingQueue, setWaitingQueue] = useState<fetchedQueueData[]>([]);
     const [fetchDataFlag, setFetchDataFlag] = useState<boolean>(false);
     /* 
         if (waitingQueue.length <= 3) {
@@ -17,7 +34,7 @@ export default function WaitingQueue(): JSX.Element {
         /*
             FETCH DATA FROM DATABASE
         */
-        const data: WaitingQueueType[] = waitingQueue_list;
+        const data: fetchedQueueData[] = waitingQueue_list;
         setWaitingQueue(data);
         setFetchDataFlag(false);
     }, [fetchDataFlag]);
@@ -71,7 +88,7 @@ export default function WaitingQueue(): JSX.Element {
 
                 }}
             >
-                {waitingQueue.map((queue: WaitingQueueType) => (
+                {waitingQueue.map((queue: fetchedQueueData) => (
                     <div key={queue.id} style={{
                         ...cardWidth(),
                         margin: '10px 10px 30px 10px', // 各カードにマージンを追加

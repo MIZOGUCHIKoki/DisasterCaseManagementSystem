@@ -5,14 +5,23 @@ import { PM_Button } from './PM_Button/PM_Button';
 import { PersonType } from './type/Person';
 import SelectSupplies from './selectSupplies';
 
+
+// Fetched data type from API after QR code reading
 type FetchedData_PersonAndGroup = {
-    person: PersonType;
-    groupMembers: PersonType[];
+    personInfo: {
+        id: PersonType['id'];
+        nickName: PersonType['nickName'];
+    },
+    groupMembers: {
+        id: PersonType['id'];
+        nickName: PersonType['nickName'];
+    }[];
 };
 
 type Props = {
     person_id: string;
 }
+
 export default function AskAsGroup({ person_id }: Props): JSX.Element {
     const [numberOfGroup, setNumberOfGroup] = useState<number>(0);
     const [postState, setPostState] = useState<boolean>(false);
@@ -26,8 +35,24 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
             FETCH DATA from API using the result
         */
         const fetchedData: FetchedData_PersonAndGroup = {
-            person: personInfo[0],
-            groupMembers: groupMembers
+            personInfo: {
+                id: personInfo[0].id,
+                nickName: personInfo[0].nickName
+            },
+            groupMembers: [
+                {
+                    id: groupMembers[0].id,
+                    nickName: groupMembers[0].nickName
+                },
+                {
+                    id: groupMembers[1].id,
+                    nickName: groupMembers[1].nickName
+                },
+                {
+                    id: groupMembers[2].id,
+                    nickName: groupMembers[2].nickName
+                }
+            ]
         };
         setFetchedData(fetchedData);
         setNumberOfGroup(fetchedData.groupMembers.length + 1);
@@ -42,7 +67,7 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
             </div>
         ) : (
             <SelectSupplies
-                person_id={fetchedData.person.id}
+                person_id={fetchedData.personInfo.id}
                 numberOfPerson={numberOfGroup}
             />
         )
@@ -62,7 +87,7 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                         }}>
                         <div style={{ margin: '10px' }}>あなた</div>
                         <ul>
-                            <li>{fetchedData.person.nickName}</li>
+                            <li>{fetchedData.personInfo.nickName}</li>
                         </ul>
                     </div>
                     <div

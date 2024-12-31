@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { DB_DefaultListType } from './type/DefaultList';
 import { DB_defaultList } from './testData/defaultList';
+
 import { StockListType } from './type/StockList';
 import { stockList } from './testData/stockList';
 
@@ -12,6 +12,7 @@ import { PM_Button } from './PM_Button/PM_Button';
 
 import AskAsGroup from './askAsGroup';
 import StandInLine from './standInLine';
+import { DB_DefaultListType } from './type/DefaultList';
 
 type Props = {
   person_id: PersonType['id'];
@@ -27,19 +28,32 @@ type Props_send = {
   numberOfPerson: number;
 };
 
+export type fetchedData_defualtList_type = {
+  id: DB_DefaultListType['id'];
+  stockList_id: DB_DefaultListType['stockList_id'];
+  amount: DB_DefaultListType['amount'];
+};
+
+export type fetchedData_stockList_type = {
+  id: StockListType['id'];
+  name: StockListType['name'];
+  size: StockListType['size'];
+  unit: StockListType['unit'];
+};
+
 export default function SelectSupplies({ person_id, numberOfPerson }: Props): JSX.Element {
-  const [defaultListData, setDefaultListData] = useState<DB_DefaultListType[]>([]);
-  const [stockListData, setStockListData] = useState<StockListType[]>([]);
+  const [defaultListData, setDefaultListData] = useState<fetchedData_defualtList_type[]>([]);
+  const [stockListData, setStockListData] = useState<fetchedData_stockList_type[]>([]);
   const [stockAmount, setStockAmount] = useState<{ sockList_id: StockListType['id'], amount: number }[]>([]);
   const [askAsGroupFlag, setAskAsGroupFlag] = useState<boolean>(false);
   const [postFlag, setPostFlag] = useState<boolean>(false);
   useEffect(() => {
-    const fetchDefaultListData = (): DB_DefaultListType[] => {
-      return DB_defaultList; // デフォルトリストを取得
+    const fetchDefaultListData = (): fetchedData_defualtList_type[] => {
+      return DB_defaultList;
     };
 
-    const fetchStockListData = (): StockListType[] => {
-      return stockList; // 在庫リストを取得
+    const fetchStockListData = (): fetchedData_stockList_type[] => {
+      return stockList;
     };
 
     setDefaultListData(fetchDefaultListData());

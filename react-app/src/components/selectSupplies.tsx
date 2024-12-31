@@ -11,6 +11,7 @@ import { Button } from './Button/Button';
 import { PM_Button } from './PM_Button/PM_Button';
 
 import AskAsGroup from './askAsGroup';
+import StandInLine from './standInLine';
 
 type Props = {
   person_id: PersonType['id'];
@@ -31,6 +32,7 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
   const [stockListData, setStockListData] = useState<StockListType[]>([]);
   const [stockAmount, setStockAmount] = useState<{ sockList_id: StockListType['id'], amount: number }[]>([]);
   const [askAsGroupFlag, setAskAsGroupFlag] = useState<boolean>(false);
+  const [postFlag, setPostFlag] = useState<boolean>(false);
   useEffect(() => {
     const fetchDefaultListData = (): DB_DefaultListType[] => {
       return DB_defaultList; // デフォルトリストを取得
@@ -44,7 +46,6 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
     setStockListData(fetchStockListData());
   }, []);
 
-  // stockListData と defaultListData が更新されたら stockAmount を計算
   useEffect(() => {
     if (stockListData.length > 0 && defaultListData.length > 0) {
       const stockAmountData = stockListData.map((stockItem) => {
@@ -89,8 +90,6 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
   };
 
   const onClick_decide = () => {
-    console.log('決定');
-    console.log(stockAmount);
     const sendData = (): Props_send => {
       const stockList_Amount = stockAmount
         .filter((stockAmountItem) => stockAmountItem.amount > 0)
@@ -109,93 +108,97 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
       POST Process
     */
     console.log(sendData());
-
+    setPostFlag(true);
   };
 
   return (
-    (!askAsGroupFlag) ? (
-      <div className='container'>
-        <div
-          style={{
-            margin: '10px 10px 0px'
-          }}
-        >
+    (!postFlag) ? (
+      (!askAsGroupFlag) ? (
+        <div className='container'>
           <div
             style={{
-              marginBottom: '5px'
+              margin: '10px 10px 0px'
             }}
           >
-            <Button
-              primary={true}
-              label='決定'
-              onClick={() => {
-                onClick_decide();
+            <div
+              style={{
+                marginBottom: '5px'
               }}
-            />
+            >
+              <Button
+                primary={true}
+                label='決定'
+                onClick={() => {
+                  onClick_decide();
+                }}
+              />
+            </div>
+            <div>
+              <Button
+                label='戻る'
+                onClick={() => {
+                  setAskAsGroupFlag(true);
+                }}
+              />
+            </div>
           </div>
-          <div>
-            <Button
-              label='戻る'
-              onClick={() => {
-                setAskAsGroupFlag(true);
-              }}
-            />
-          </div>
+          <table>
+            <thead>
+              <tr>
+                <th
+                  style={{
+                    width: '70%',
+                    textAlign: 'left',
+                  }}
+                >
+                  物資名
+                </th>
+                <th
+                  style={{
+                    width: '30%',
+                    textAlign: 'center',
+                  }}
+                >数量</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stockList.map((item: StockListType, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{item.name} {item.size}</td>
+                    <td>
+                      <PM_Button
+                        context={
+                          stockAmount.find((stockAmountItem: {
+                            sockList_id: StockListType['id'],
+                            amount: number
+                          }) => stockAmountItem.sockList_id === item.id)?.amount || 0
+                        }
+                        type={false}
+                        unit={item.unit}
+                        onClick_minus={() => {
+                          onClick_pm(false, item.id);
+                        }}
+                        onClick_plus={() => {
+                          onClick_pm(true, item.id);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th
-                style={{
-                  width: '70%',
-                  textAlign: 'left',
-                }}
-              >
-                物資名
-              </th>
-              <th
-                style={{
-                  width: '30%',
-                  textAlign: 'center',
-                }}
-              >数量</th>
-            </tr>
-          </thead>
-          <tbody>
-            {stockList.map((item: StockListType, index) => {
-              return (
-                <tr key={index}>
-                  <td>{item.name} {item.size}</td>
-                  <td>
-                    <PM_Button
-                      context={
-                        stockAmount.find((stockAmountItem: {
-                          sockList_id: StockListType['id'],
-                          amount: number
-                        }) => stockAmountItem.sockList_id === item.id)?.amount || 0
-                      }
-                      type={false}
-                      unit={item.unit}
-                      onClick_minus={() => {
-                        onClick_pm(false, item.id);
-                      }}
-                      onClick_plus={() => {
-                        onClick_pm(true, item.id);
-                      }}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      ) : (
+        <div>
+          <AskAsGroup
+            person_id={person_id}
+          />
+        </div>
+      )
     ) : (
-      <div>
-        <AskAsGroup
-          person_id={person_id}
-        />
-      </div>
+      <StandInLine />
     )
   );
 }

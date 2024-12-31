@@ -19,12 +19,10 @@ export default function WaitingQueue(): JSX.Element {
         */
         const data: WaitingQueueType[] = waitingQueue_list;
         setWaitingQueue(data);
-        console.log('FETCH: waitingQueue:', waitingQueue);
         setFetchDataFlag(false);
     }, [fetchDataFlag]);
     const post = (queue_id: number): void => {
         console.log('POST: 受け取り完了:', queue_id);
-        console.log(waitingQueue.length);
         // 受け取り完了処理
         setWaitingQueue(waitingQueue.filter(queue => queue.id !== queue_id));
         if (waitingQueue.length <= 3) {

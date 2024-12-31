@@ -16,14 +16,12 @@ export default function DefaultSetScreen(): JSX.Element {
             /*
               Fetch default stock list from server
             */
-            console.log('FETCH DEFAULT STOCKLIST DATA');
             return defaultList;
         };
         const fetchStockListData = (): StockListType[] => {
             /*
               Fetch stock list from server
             */
-            console.log('FETCH STOCKLIST DATA');
             return stockList;
         };
         const fetchedStockList = fetchStockListData().map((stockList) => {
@@ -57,7 +55,7 @@ export default function DefaultSetScreen(): JSX.Element {
             });
             return defaultData;
         };
-        console.log(DefultData());
+
         window.location.href = '/staff';
     };
 

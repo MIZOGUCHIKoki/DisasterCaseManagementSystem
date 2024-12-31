@@ -18,7 +18,10 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
     const [postState, setPostState] = useState<boolean>(false);
     const [fetchedData, setFetchedData] = useState<FetchedData_PersonAndGroup | null>(null);
     useEffect(() => {
-        console.log('person_id:', person_id);
+        console.log(
+            'QR読み取り [person_id]:',
+            person_id
+        );
         /*
             FETCH DATA from API using the result
         */

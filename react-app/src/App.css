@@ -24,7 +24,7 @@ thead th {
   background-color: #4a6eda;
   color: white;
   padding: 10px;
-  text-align: right;
+  text-align: left;
 }
 
 tbody tr:nth-child(even) {

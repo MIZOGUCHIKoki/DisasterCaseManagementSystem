@@ -31,43 +31,56 @@ export default function WaitingQueue(): JSX.Element {
             setFetchDataFlag(true);
         }
     };
-    const cardWidth = (): number => {
+    const style = (): React.CSSProperties => {
         if (screen.width > 768) { // PC, tablet
-            return 50;
+            return {
+                display: 'flex',
+                justifyContent: 'space-between',
+                overflowX: 'scroll',
+                width: `${waitingQueue.length * 50}vw`,
+            };
         } else { // Mobile
-            return 100;
+            return {
+                display: 'block',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: 'auto',
+                height: 'auto',
+            };
+        }
+    };
+    const cardWidth = (): React.CSSProperties => {
+        if (screen.width > 768) { // PC, tablet
+            return {
+                width: '50vw', // カードの幅を指定
+                overflowY: 'scroll'
+            };
+        } else { // Mobile
+            return {
+                width: 'auto',
+            };
         }
     };
     return (
         <div className='container'
             style={{
-
             }}
         >
             {/* スクロールするカード */}
             <div
                 style={{
-                    // display: 'block',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    // justifyContent: 'center',
-                    overflowX: 'scroll',
-                    width: `${waitingQueue.length * cardWidth()}vw`,
-                    // width: '100%',
-                    // height: '100%',
+                    ...style(),
+
                 }}
             >
                 {waitingQueue.map((queue: WaitingQueueType) => (
                     <div key={queue.id} style={{
-                        width: `${cardWidth()}vw`, // カードの幅を指定
-                        // width: '90%',
-                        margin: '10px 10px 20px 10px', // 各カードにマージンを追加
+                        ...cardWidth(),
+                        margin: '10px 10px 30px 10px', // 各カードにマージンを追加
                         border: '1px solid #ccc', // 各カードにボーダーを追加
                         borderRadius: '8px', // 角を丸くする
                         padding: '10px', // 内側の余白を追加
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // 影を追加
-                        overflowY: 'scroll',
-                        height: 'auto',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)', // 影を追加
                     }}>
                         <div
                             style={{

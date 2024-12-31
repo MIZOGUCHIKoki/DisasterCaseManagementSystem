@@ -3,9 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { StockListType } from './type/StockList';
 import { DB_DefaultListType } from './type/DefaultList';
 
-import { DB_defaultList } from './testData/defaultList';
-import { stockList } from './testData/stockList';
-
 import { PM_Button } from './PM_Button/PM_Button';
 import { Button } from './Button/Button';
 
@@ -16,6 +13,7 @@ type fetchData_StockListType = {
     name: StockListType['name'];
     size: StockListType['size'];
     unit: StockListType['unit'];
+    janureID: StockListType['janureID'];
     amount: DB_DefaultListType['amount'];
 };
 
@@ -27,35 +25,42 @@ type postData_DefaultListType = {
 export default function DefaultSetScreen(): JSX.Element {
     const [stockListState, setStockListState] = useState<fetchData_StockListType[]>();
     useEffect(() => {
-        const fetchDefaultData = (): fetchedData_defualtList_type[] => {
-            /*
-              Fetch default stock list from server
-            */
-            return DB_defaultList;
-        };
-        const fetchStockListData = (): fetchedData_stockList_type[] => {
-            /*
-              Fetch stock list from server
-            */
-            return stockList;
-        };
-        const fetchedDefaultList = fetchDefaultData();
+        const fetchData = async () => {
+            try {
+                const fetchedDefaultList =
+                    await fetch(`/testData/defaultList.json?timestamp=${new Date().getTime()}`)
+                        .then(res => {
+                            if (!res.ok)
+                                throw new Error(`Failed to fetch defaultList: ${res.status}`);
+                            return res.json();
+                        });
 
-        const updatedStockList: fetchData_StockListType[] = fetchStockListData().map((stockItem) => {
-            const defaultItem = fetchedDefaultList.find((defaultList) => defaultList?.id === stockItem.id);
-            if (defaultItem) {
-                return {
-                    ...stockItem,
-                    amount: defaultItem.amount
-                };
-            } else {
-                return {
-                    ...stockItem,
-                    amount: 0
-                };
+                const fetchedStockList =
+                    await fetch(`/testData/stockList.json?timestamp=${new Date().getTime()}`)
+                        .then(res => {
+                            if (!res.ok)
+                                throw new Error(`Failed to fetch stockList: ${res.status}`);
+                            return res.json();
+                        });
+
+                const updatedStockList =
+                    fetchedStockList.map((stockItem: fetchedData_stockList_type) => {
+                        const defaultItem =
+                            fetchedDefaultList.find(
+                                (defaultList: fetchedData_defualtList_type) => defaultList?.stockList_id === stockItem.id
+                            );
+                        return {
+                            ...stockItem,
+                            amount: defaultItem ? defaultItem.amount : 0,
+                        };
+                    });
+                setStockListState(updatedStockList);
+            } catch (error) {
+                console.error('Error fetching data:', error);
             }
-        });
-        setStockListState(updatedStockList);
+        };
+
+        fetchData();
     }, []);
 
     const onClick = (): void => {

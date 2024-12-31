@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "stockList_id": 1,
+        "amount": 1
+    },
+    {
+        "id": 2,
+        "stockList_id": 2,
+        "amount": 2
+    },
+    {
+        "id": 3,
+        "stockList_id": 3,
+        "amount": 1
+    },
+    {
+        "id": 4,
+        "stockList_id": 0,
+        "amount": 10
+    }
+]

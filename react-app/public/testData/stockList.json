@@ -1,0 +1,30 @@
+[
+    {
+        "id": 0,
+        "name": "水",
+        "size": "2L",
+        "unit": "本",
+        "allergy": 0
+    },
+    {
+        "id": 1,
+        "name": "水",
+        "size": "500ml",
+        "unit": "本",
+        "allergy": 0
+    },
+    {
+        "id": 2,
+        "name": "牛乳",
+        "size": "1L",
+        "unit": "本",
+        "allergy": 0
+    },
+    {
+        "id": 3,
+        "name": "牛乳",
+        "size": "500ml",
+        "unit": "本",
+        "allergy": 0
+    }
+]

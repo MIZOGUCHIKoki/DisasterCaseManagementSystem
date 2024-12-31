@@ -4,120 +4,27 @@ h2 {
 
 .App {
   text-align: left;
-}
-
-.header-reception {
-  background-color: #282c34;
-  /* min-height: 100vh; */
-  display: flex;
-  height: 20vh;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.header-serveScreen {
-  background-color: #282c34;
-  /* min-height: 100vh; */
-  display: flex;
-  height: 2cm;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-video {
-  /* position: absolute; */
-  top: 0;
-  left: 0;
-  width: auto;
-  height: auto;
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-
-canvas {
-  /* position: absolute; */
-  top: 0;
-  left: 0;
-  opacity: 0;
-  display: none;
+  font-size: 1.5rem;
 }
 
 .container {
-  display: flex;
-  height: 80vh;
-  justify-content: center;
-}
-
-.qr-reader {
-  align-items: center;
-  align-content: center;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-}
-
-.container-block {
-  display: block;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-}
-
-.button {
-  background-color: rgb(231, 76, 60);
-  align-content: center;
-  color: white;
-  padding: 0.8rem;
-  border-radius: 0.4rem;
-  cursor: pointer;
-  width: 2cm;
-  height: 0.5cm;
-  box-shadow: inset;
-  text-align: center;
-}
-
-.buttonGroup {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  justify-content: space-between;
-  -webkit-overflow-scrolling: touch;
-}
-
-
-.container {
-  font-family: Arial, sans-serif;
-  margin: 20px;
+  height: 94dvh;
+  /* 100% - 6dvh */
+  overflow-y: scroll;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-}
 
-.table_cols {
-  width: 300px;
-  flex-shrink: 0;
 }
 
 thead th {
   background-color: #4a6eda;
   color: white;
   padding: 10px;
-  text-align: left;
+  text-align: right;
 }
 
 tbody tr:nth-child(even) {
@@ -130,27 +37,4 @@ tbody tr:nth-child(odd) {
 
 tbody td {
   padding: 10px;
-  text-align: left;
-}
-
-tbody td a {
-  text-decoration: none;
-  color: #007BFF;
-  font-weight: bold;
-}
-
-tbody td a:hover {
-  color: #0056b3;
-  text-decoration: underline;
-}
-
-.serveTbl {
-  width: 100%;
-  display: flex;
-  overflow-x: scroll;
-}
-
-.serveTbl_one {
-  width: 500px;
-  margin-right: 20px;
 }

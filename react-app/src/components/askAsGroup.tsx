@@ -1,67 +1,137 @@
-import React, { useState } from 'react';
-import { DB_WaitingQueueType } from './type/WaitingQueue';
-import StandInLine from './standInLine';
-import { person_groupMember } from './QrReader';
+import React, { useState, useEffect } from 'react';
+import { personInfo, groupMembers } from './testData/personInfo';
+import { Button } from './Button/Button';
+import { PM_Button } from './PM_Button/PM_Button';
+import { PersonType } from './type/Person';
+import SelectSupplies from './selectSupplies';
 
-export default function AskAsGroup(props: person_groupMember): JSX.Element {
-    const [selected, setSelected] = useState<boolean | null>(null);
-    let asGroup = false;
-    const handleYes = () => {
-        console.log('Yes');
-        asGroup = true;
-        setSelected(true);
+type FetchedData_PersonAndGroup = {
+    person: PersonType;
+    groupMembers: PersonType[];
+};
+
+type Props = {
+    person_id: string;
+}
+export default function AskAsGroup({ person_id }: Props): JSX.Element {
+    const [numberOfGroup, setNumberOfGroup] = useState<number>(0);
+    const [postState, setPostState] = useState<boolean>(false);
+    const [fetchedData, setFetchedData] = useState<FetchedData_PersonAndGroup | null>(null);
+    useEffect(() => {
+        console.log(
+            'QR読み取り [person_id]:',
+            person_id
+        );
+        /*
+            FETCH DATA from API using the result
+        */
+        const fetchedData: FetchedData_PersonAndGroup = {
+            person: personInfo[0],
+            groupMembers: groupMembers
+        };
+        setFetchedData(fetchedData);
+        setNumberOfGroup(fetchedData.groupMembers.length + 1);
+    }, []);
+    const post = () => {
+        setPostState(true);
     };
-    const handleNo = () => {
-        console.log('No');
-        setSelected(true);
-        asGroup = false;
-    };
-    if (selected || props.person.group_id == null) {
-        if (props.person.group_id == null || !asGroup) { // 個人での受け取り
-            const data: DB_WaitingQueueType = {
-                id: 0,
-                person_id: props.person.id,
-                asGroup: asGroup,
-                complete: false,
-                created_at: ''
-            };
-            console.log(data);
-            /*
-                Send data to server as an individual
-            */
-        } else {  // グループでの受け取り
-            const data: DB_WaitingQueueType = {
-                id: 0,
-                person_id: props.person.id,
-                asGroup: asGroup,
-                complete: true,
-                created_at: ''
-            };
-            console.log(data);
-            /*
-                Send data to server as a group
-            */
-        }
-        return <StandInLine />;
-    }
-    return (
-        <div className='container-block'>
-            <h2>グループでのお受け取りをご希望ですか？</h2>
-            <h3>あなた</h3>
-            <ul>
-                <li>ニックネーム: {props.person.nickName}</li>
-            </ul>
-            <hr />
-            <h3>グループメンバー</h3>
-            <ul>
-                {props.groupMembers.map((member, index) => (
-                    <li key={index}>ニックネーム: {member.nickName}</li>
-                ))}
-            </ul>
-            <div className='buttonGroup'>
-                <span onClick={handleYes} className='button' style={{ backgroundColor: '#336699' }}>はい</span>
-                <span onClick={handleNo} className='button' style={{ backgroundColor: 'rgb(231, 76, 60)' }}>いいえ</span>
+    return postState || fetchedData === null ? (
+        fetchedData === null ? (
+            <div>
+                <div>読み込み中...</div>
             </div>
-        </div >
-    );
+        ) : (
+            <SelectSupplies
+                person_id={fetchedData.person.id}
+                numberOfPerson={numberOfGroup}
+            />
+        )
+    )
+        : (
+            <div className='container'>
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        width: '100%',
+                    }}
+                >
+                    <div
+                        style={{
+                            width: '50%',
+                        }}>
+                        <div style={{ margin: '10px' }}>あなた</div>
+                        <ul>
+                            <li>{fetchedData.person.nickName}</li>
+                        </ul>
+                    </div>
+                    <div
+                        style={{
+                            width: '50%',
+                        }}
+                    >
+                        <div style={{ margin: '10px' }}>グループメンバ</div>
+                        <ul>
+                            {fetchedData.groupMembers.map((member, index) => (
+                                <li key={index}>
+                                    {member.nickName}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+                <div
+                    style={{
+
+                    }}
+                >
+                    <div style={{ margin: '10px' }}>何人分受け取りますか？</div>
+                    <div
+                        style={{
+                            margin: '10px 10px',
+                            height: '60px'
+                        }}>
+                        <Button
+                            primary={false}
+                            onClick={() => {
+                                setNumberOfGroup(1);
+                                post();
+                            }}
+                            label="一人分のみ"
+                        />
+                    </div>
+                    <div
+                        style={{
+                            margin: '10px 10px',
+                            height: '60px'
+                        }}
+                    >
+                        <Button onClick={() => {
+                            setNumberOfGroup(fetchedData.groupMembers.length + 1);
+                            post();
+                        }} label={`グループの分も （合計${fetchedData.groupMembers.length + 1}名分）`} />
+                    </div>
+                </div>
+                <div>
+                    <div
+                        style={{
+                            margin: '10px 10px',
+                            height: '60px'
+                        }}
+                    >
+                        <hr />
+                        <PM_Button context={numberOfGroup} type={true}
+                            onClick_plus={() => { setNumberOfGroup(numberOfGroup + 1); }}
+                            onClick_minus={() => {
+                                if (numberOfGroup > 1)
+                                    setNumberOfGroup(numberOfGroup - 1);
+                            }}
+                            onClick_decide={() => { post(); }}
+                            unit='人'
+                            label_decision='任意に決める'
+                        />
+                    </div>
+                </div>
+            </div >
+        );
 }

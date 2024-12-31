@@ -6,7 +6,20 @@ export default function StandInLine(): JSX.Element {
     }, 5000);
     return (
         <div className="container">
-            <h2 className="center">列にお並びください</h2>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%',
+                    height: '100vh',
+                    fontSize: '2em',
+                    color: '#69639A',
+                    fontWeight: '700',
+                }}
+            >
+                列にお並びください
+            </div>
         </div>
     );
 }

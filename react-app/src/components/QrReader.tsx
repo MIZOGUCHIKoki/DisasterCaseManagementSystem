@@ -15,13 +15,12 @@ export default function QrCodeScanner(): JSX.Element {
         setResult(result);
     };
     return (
-        <div>
-            {result ?
-                (<AskAsGroup
-                    person_id={result}
-                />) :
-                (< QR_Reader onQRCodeDetected={handleQrResult} />)
-            }
-        </div>
+        (result) ?
+            (<AskAsGroup
+                person_id={result}
+            />) :
+            (
+                < QR_Reader onQRCodeDetected={handleQrResult} />
+            )
     );
 }

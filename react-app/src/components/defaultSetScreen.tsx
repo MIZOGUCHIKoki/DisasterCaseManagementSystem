@@ -55,7 +55,7 @@ export default function DefaultSetScreen(): JSX.Element {
             });
             return defaultData;
         };
-
+        console.log('POST: デフォルト設定:', DefultData());
         window.location.href = '/staff';
     };
 

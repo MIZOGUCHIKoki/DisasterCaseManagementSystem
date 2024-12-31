@@ -76,10 +76,16 @@ export default function QR_Reader(props: QR_ReaderProps): JSX.Element {
     return (
         <div className='qr-reader-container container'>
             {!result && (
-                <div>
+                <div
+                    style={{
+                        textAlign: 'center',
+                    }}
+                >
                     <video ref={videoRef} autoPlay playsInline muted />
                     <canvas ref={canvasRef} />
-                    <div style={{ textAlign: 'center' }} >QRコードを読み取ってください</div>
+                    <div style={{ textAlign: 'center' }} >
+                        QRコードを読み取ってください
+                    </div>
                 </div>
             )
             }

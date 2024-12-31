@@ -4,6 +4,7 @@ import { Button } from './Button/Button';
 
 import { WaitingQueueType } from './type/WaitingQueue';
 import { PersonType } from './type/Person';
+import { StockListType } from './type/StockList';
 
 type fetchedQueueData = {
     id: WaitingQueueType['id'];
@@ -13,12 +14,13 @@ type fetchedQueueData = {
     numberOfMember: WaitingQueueType['numberOfMember'];
     supplies_info: {
         stock_info: {
-            name: string;
-            unit: string;
+            name: StockListType['name'];
+            unit: StockListType['unit'];
         },
         amount: number;
     }[];
 }
+
 
 export default function WaitingQueue(): JSX.Element {
     const [waitingQueue, setWaitingQueue] = useState<fetchedQueueData[]>([]);
@@ -31,12 +33,23 @@ export default function WaitingQueue(): JSX.Element {
         } 
     */
     useEffect(() => {
-        /*
-            FETCH DATA FROM DATABASE
-        */
-        const data: fetchedQueueData[] = waitingQueue_list;
-        setWaitingQueue(data);
-        setFetchDataFlag(false);
+        const fetchData = async () => {
+            try {
+                const fetchedData = await
+                    fetch(`/testData/waitingQueue.json?timestamp=${new Date().getTime()}`)
+                        .then(res => {
+                            if (!res.ok)
+                                throw new Error(`Failed to fetch waitingQueue: ${res.status}`);
+                            return res.json();
+                        });
+                const data: fetchedQueueData[] = fetchedData;
+                setWaitingQueue(data);
+                setFetchDataFlag(false);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
     }, [fetchDataFlag]);
     const post = (queue_id: number): void => {
         console.log('POST: 受け取り完了:', queue_id);

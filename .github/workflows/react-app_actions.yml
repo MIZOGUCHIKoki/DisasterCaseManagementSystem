@@ -6,12 +6,12 @@ on:
       - 'react-app/**/*.tsx'
       - 'react-app/**/*.ts'
       - 'react-app/package*.json'
-
+      - '.github/workflows/react-app_actions.yml'
   workflow_dispatch:
   
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: ./react-app
@@ -35,7 +35,7 @@ jobs:
         run: docker run --rm -v $(pwd):/app -w /app react npm i && npm run lint
 
   type-check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: ./react-app
@@ -50,7 +50,7 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('react-app/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
-              
+
       - name: Build Docker image
         run: docker build -t react .
           

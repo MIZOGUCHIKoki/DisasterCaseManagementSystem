@@ -6,6 +6,7 @@ on:
       - 'python/**/*.py'
       - 'python/poetry.lock'
       - 'python/pyproject.toml'
+      - '.github/workflows/python_actions.yml'
   workflow_dispatch:
 
 jobs:

@@ -12,47 +12,74 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: ./react-app
     steps:
-
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Docker chache for npm
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Cache Docker layers
         uses: actions/cache@v3
         with:
-          path: $HOME/.cache/npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('react-app/package-lock.json') }}
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-react-${{ hashFiles('react-app/Dockerfile') }}
           restore-keys: |
-            ${{ runner.os }}-npm-
-      
-      - name: Build Docker image
-        run: docker build -t react .
-          
-      - name: Start a container
-        run: docker run --rm -v $(pwd):/app -w /app react npm install && npm run lint
+            ${{ runner.os }}-buildx-react-
 
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: react-app/
+          file: react-app/Dockerfile
+          push: false
+          tags: react
+          load: true
+          cache-from: type=local,src=/tmp/.buildx-cache-react
+          cache-to: type=local,dest=/tmp/.buildx-cache-react-new
+
+      - name: Run Docker container with pytest
+        run: |
+          docker run --rm -v $(pwd)/python:/app -w /app npm install && npm run lint
+          
+      - name: Move caches
+        run: |
+          rm -rf /tmp/.buildx-cache-react
+          mv /tmp/.buildx-cache-react-new /tmp/.buildx-cache-react
+  
   type-check:
     runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: ./react-app
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Docker chache for npm
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Cache Docker layers
         uses: actions/cache@v3
         with:
-          path: $HOME/.cache/npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('react-app/package-lock.json') }}
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-react-${{ hashFiles('react-app/Dockerfile') }}
           restore-keys: |
-            ${{ runner.os }}-npm-
+            ${{ runner.os }}-buildx-react-
 
       - name: Build Docker image
-        run: docker build -t react .
+        uses: docker/build-push-action@v6
+        with:
+          context: react-app/
+          file: react-app/Dockerfile
+          push: false
+          tags: react
+          load: true
+          cache-from: type=local,src=/tmp/.buildx-cache-react
+          cache-to: type=local,dest=/tmp/.buildx-cache-react-new
 
-      - name: Start a container
-        run: docker run --rm -v $(pwd):/app -w /app react npm install && npm run type-check 
+      - name: Run Docker container with pytest
+        run: |
+          docker run --rm -v $(pwd)/python:/app -w /app npm install && npm run type-check
+          
+      - name: Move caches
+        run: |
+          rm -rf /tmp/.buildx-cache-react
+          mv /tmp/.buildx-cache-react-new /tmp/.buildx-cache-react

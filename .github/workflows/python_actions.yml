@@ -26,12 +26,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-python-
 
-      # - name: Build Docker image
-      #   id: build
-      #   run: |
-      #     pwd && ls -al
-      #     docker buildx build --file python/Dockerfile --tag app:latest --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache-new --progress=plain --load python/
-
       - name: Build Docker image
         uses: docker/build-push-action@v6
         with:
@@ -40,8 +34,8 @@ jobs:
           push: false
           tags: python
           load: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          cache-from: type=local,src=/tmp/.buildx-cache-python
+          cache-to: type=local,dest=/tmp/.buildx-cache-python-new
 
       - name: Run Docker container with pytest
         run: |
@@ -49,5 +43,5 @@ jobs:
           
       - name: Move caches
         run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          rm -rf /tmp/.buildx-cache-python
+          mv /tmp/.buildx-cache-python-new /tmp/.buildx-cache-python

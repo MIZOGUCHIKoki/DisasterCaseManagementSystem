@@ -41,7 +41,7 @@ jobs:
           docker images
           cd python/
           docker images
-          docker run --rm -v $(pwd):/app -w /app my_python pytest
+          docker run --rm -v $(pwd):/app -w /app buildx-stable-1 pytest
       
       - name: Move caches
         run: |

@@ -26,21 +26,26 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-python-
 
-      - name: Build Docker image
-        id: build
-        run: |
-          pwd && ls -al
-          docker buildx build --file python/Dockerfile --tag app:latest --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache-new --progress=plain --load python/
+      # - name: Build Docker image
+      #   id: build
+      #   run: |
+      #     pwd && ls -al
+      #     docker buildx build --file python/Dockerfile --tag app:latest --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache-new --progress=plain --load python/
 
-      - name: List Docker images (for debugging)
-        run: |
-          docker images
-          docker buildx ls
-          docker ps -a
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: python/
+          file: python/Dockerfile
+          push: false
+          tags: python
+          load: true
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
 
       - name: Run Docker container with pytest
         run: |
-          docker run --rm -v $(pwd)/python:/app -w /app app:latest pytest
+          docker run --rm -v $(pwd)/python:/app -w /app  pytest
           
       - name: Move caches
         run: |

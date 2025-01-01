@@ -24,4 +24,4 @@ jobs:
         run: docker build -t python .
           
       - name: Start a container
-        run: docker run --rm -v $(pwd):/app -w /app python poetry install ; pytest
+        run: docker run --rm -v $(pwd):/app -w /app python poetry install --no-root ; pytest

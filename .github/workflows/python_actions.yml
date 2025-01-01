@@ -1,46 +1,41 @@
-name: python actions
+name: Build and Cache Docker Image
 
 on:
   push:
     paths:
-      - 'python/**/*.py'
-      - 'python/poetry.lock'
-      - 'python/pyproject.toml'
-      - '.github/workflows/python_actions.yml'
+      - 'react-app/**'
+      - 'react-app/Dockerfile'
+      - '.github/workflows/docker-cache.yml'
   workflow_dispatch:
 
 jobs:
-  pytest:
+  build:
     runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: ./python
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Create dir for cache
-        run: mkdir -p $HOME/.cache/pypoetry
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: Set up Docker cache for poetry
+      - name: Cache Docker layers
         uses: actions/cache@v3
-        id: cache
         with:
-          path: $HOME/.cache/pypoetry
-          key: ${{ runner.os }}-poetry-${{ hashFiles('python/poetry.lock', 'python/pyproject.toml') }}
+          path: ~/.cache/docker
+          key: ${{ runner.os }}-docker-${{ hashFiles('Dockerfile', 'package*.json') }}
           restore-keys: |
-            ${{ runner.os }}-poetry-
+            ${{ runner.os }}-docker-
 
-      - name: Build Docker image
-        run: |
-          docker build -t python .
-      
-      - name: Start and run tests
-        run: |
-          docker run --rm -v $(pwd):/app -w /app python sh -c "poetry run pytest"
-
-      - name: Save Docker cache for poetry
-        uses: actions/cache@v3
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
         with:
-          path: $HOME/.cache/pypoetry
-          key: ${{ steps.cache.outputs.cache-primary-key }}
+          context: ./react-app
+          file: ./react-app/Dockerfile
+          push: false
+          tags: react-app:latest
+          cache-from: type=local,source=${{ github.workspace }}/.docker/cache
+          cache-to: type=local,dest=${{ github.workspace }}/.docker/cache
+
+      - name: Run Docker container
+        run: |
+          docker run --rm react-app:latest npm install && npm run lint

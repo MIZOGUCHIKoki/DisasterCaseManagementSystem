@@ -19,13 +19,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: make dir for cache
-        run: mkdir -p /tmp/.buildx-cache-react
-        
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
-          path: /tmp/.buildx-cache
+          path: /tmp/.buildx-cache-react
           key: ${{ runner.os }}-buildx-react-${{ hashFiles('react-app/Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-buildx-react-
@@ -62,7 +59,7 @@ jobs:
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
-          path: /tmp/.buildx-cache
+          path: /tmp/.buildx-cache-react
           key: ${{ runner.os }}-buildx-react-${{ hashFiles('react-app/Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-buildx-react-

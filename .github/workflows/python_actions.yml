@@ -37,4 +37,4 @@ jobs:
       
       - name: Check cache
         run: |
-          ls -la $HOME/.cache/pypoetry
+          ls -la $HOME/

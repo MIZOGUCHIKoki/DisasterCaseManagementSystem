@@ -15,8 +15,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Cache Docker layers
         uses: actions/cache@v3
@@ -32,7 +32,7 @@ jobs:
           context: python/
           file: python/Dockerfile
           push: false
-          tags: python:latest
+          tags: my_python
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
@@ -40,7 +40,7 @@ jobs:
         run: |
           cd python/
           docker images
-          docker run --rm -v $(pwd):/app -w /app python:latest pytest
+          docker run --rm -v $(pwd):/app -w /app my_python pytest
       
       - name: Move caches
         run: |

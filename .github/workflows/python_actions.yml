@@ -23,8 +23,10 @@ jobs:
 
       - name: Make directory for Docker cache
         run: mkdir -p $HOME/.cache/python
+
       - name: show directory
-        run: ls -la .
+        run: ls -la 
+        
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
@@ -40,8 +42,8 @@ jobs:
           file: ./Dockerfile
           push: false
           tags: python:latest
-          cache-from: type=local,source=${{ github.workspace }}/.cache/python
-          cache-to: type=local,dest=${{ github.workspace }}/.cache/python
+          cache-from: type=local,source=$HOME/.cache/python
+          cache-to: type=local,dest=$HOME/.cache/python
 
       - name: Run Docker container
         run: |

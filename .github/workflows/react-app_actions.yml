@@ -55,4 +55,4 @@ jobs:
         run: docker build -t react .
 
       - name: Start a container
-        run: docker run --rm -v $(pwd):/app -w /app react npm list && npm run type-check 
+        run: docker run --rm -v $(pwd):/app -w /app react npm install && npm run type-check 

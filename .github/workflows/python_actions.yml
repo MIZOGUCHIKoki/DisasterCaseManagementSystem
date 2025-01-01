@@ -29,7 +29,7 @@ jobs:
       - name: Build Docker image
         id: build
         run: |
-          docker buildx build --file python/Dockerfile --tag app:latest --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache-new --progress=plain python/
+          docker build build --file python/Dockerfile --tag app:latest --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache-new --progress=plain python/
 
       - name: List Docker images (for debugging)
         run: |

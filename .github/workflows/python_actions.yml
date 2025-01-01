@@ -9,8 +9,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  pytest:
     runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ./python
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -19,25 +22,25 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Make directory for Docker cache
-        run: mkdir -p ~/.docker/cache
+        run: mkdir -p ${{ github.workflow }}/.cache/python
 
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
-          path: ~/.cache/docker
-          key: ${{ runner.os }}-docker-${{ hashFiles('Dockerfile') }}
+          path: ${{ github.workspace }}.cache/python
+          key: ${{ runner.os }}-python-${{ hashFiles('Dockerfile') }}
           restore-keys: |
-            ${{ runner.os }}-docker-
+            ${{ runner.os }}-python-
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./react-app
-          file: ./react-app/Dockerfile
+          context: .
+          file: ./Dockerfile
           push: false
-          tags: react-app:latest
-          cache-from: type=local,source=${{ github.workspace }}/.docker/cache
-          cache-to: type=local,dest=${{ github.workspace }}/.docker/cache
+          tags: python:latest
+          cache-from: type=local,source=${{ github.workspace }}/.cache/python
+          cache-to: type=local,dest=${{ github.workspace }}/.cache/python
 
       - name: Run Docker container
         run: |

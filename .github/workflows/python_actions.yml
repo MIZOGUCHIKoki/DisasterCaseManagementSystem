@@ -27,7 +27,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-python-${{ hashFiles('./Dockerfile') }}
+          key: ${{ runner.os }}-buildx-python-${{ hashFiles('Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-buildx-python-
 

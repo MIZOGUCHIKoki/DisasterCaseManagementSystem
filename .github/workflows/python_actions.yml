@@ -21,7 +21,7 @@ jobs:
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
-          path: /tmp/.buildx-cache
+          path: /tmp/.buildx-cache-python
           key: ${{ runner.os }}-buildx-python-${{ hashFiles('python/Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-buildx-python-

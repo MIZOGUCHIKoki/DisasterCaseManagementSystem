@@ -20,6 +20,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set up Docker chache for npm
+        uses: actions/ache@v3
+        with:
+          path: /root/.chache/npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('react-app/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      
       - name: Build Docker image
         run: docker build -t react .
           
@@ -35,6 +43,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set up Docker chache for npm
+        uses: actions/ache@v3
+        with:
+          path: /root/.chache/npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('react-app/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+              
       - name: Build Docker image
         run: docker build -t react .
           

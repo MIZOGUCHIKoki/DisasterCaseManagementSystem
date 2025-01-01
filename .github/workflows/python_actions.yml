@@ -6,9 +6,8 @@ on:
       - 'python/**/*.py'
       - 'python/poetry.lock'
       - 'python/pyproject.toml'
-
   workflow_dispatch:
-  
+
 jobs:
   pytest:
     runs-on: ubuntu-latest
@@ -16,12 +15,21 @@ jobs:
       run:
         working-directory: ./python
     steps:
-      
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
+      - name: Set up Docker cache for poetry
+        uses: actions/cache@v3
+        with:
+          path: /root/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('python/poetry.lock', 'python/pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
       - name: Build Docker image
-        run: docker build -t python .
-          
-      - name: Start a container
-        run: docker run --rm -v $(pwd):/app -w /app python poetry install --no-root && poetry show && pytest
+        run: |
+          docker build -t python .
+      
+      - name: Start and run tests
+        run: |
+          docker run --rm -v $(pwd):/app -w /app python poetry install --no-root && poetry show && poetry run pytest

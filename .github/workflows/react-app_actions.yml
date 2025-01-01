@@ -23,7 +23,7 @@ jobs:
       - name: Set up Docker chache for npm
         uses: actions/cache@v3
         with:
-          path: $HOME/.cache/pypoetry
+          path: $HOME/.cache/npm
           key: ${{ runner.os }}-npm-${{ hashFiles('react-app/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
@@ -46,7 +46,7 @@ jobs:
       - name: Set up Docker chache for npm
         uses: actions/cache@v3
         with:
-          path: $HOME/.cache/pypoetry
+          path: $HOME/.cache/npm
           key: ${{ runner.os }}-npm-${{ hashFiles('react-app/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-

@@ -22,7 +22,7 @@ jobs:
       - name: Set up Docker cache for poetry
         uses: actions/cache@v3
         with:
-          path: /root/.cache/pypoetry
+          path: $HOME/.cache/pypoetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('python/poetry.lock', 'python/pyproject.toml') }}
           restore-keys: |
             ${{ runner.os }}-poetry-

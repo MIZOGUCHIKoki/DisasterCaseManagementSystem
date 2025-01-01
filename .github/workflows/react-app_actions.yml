@@ -38,9 +38,9 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache-react
           cache-to: type=local,dest=/tmp/.buildx-cache-react-new
 
-      - name: Run Docker container with pytest
+      - name: Run Docker container with linter
         run: |
-          docker run --rm -v $(pwd)/python:/app -w /app npm install && npm run lint
+          docker run --rm -v $(pwd)/python:/app -w /app react npm install && npm run lint
           
       - name: Move caches
         run: |
@@ -75,9 +75,9 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache-react
           cache-to: type=local,dest=/tmp/.buildx-cache-react-new
 
-      - name: Run Docker container with pytest
+      - name: Run Docker container with type-check
         run: |
-          docker run --rm -v $(pwd)/python:/app -w /app npm install && npm run type-check
+          docker run --rm -v $(pwd)/python:/app -w /app npm react install && npm run type-check
           
       - name: Move caches
         run: |

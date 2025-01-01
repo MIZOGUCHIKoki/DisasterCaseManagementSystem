@@ -25,8 +25,12 @@ jobs:
         run: mkdir -p $HOME/.cache/python
 
       - name: show directory
-        run: ls -la 
-        
+        run: |
+          ls -la .
+          ls -la $HOME/
+          ls -la $HOME/.cache
+
+
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
@@ -48,3 +52,9 @@ jobs:
       - name: Run Docker container
         run: |
           docker run --rm react-app:latest npm install && npm run lint
+
+      - name: show directory
+        run: |
+          ls -la .
+          ls -la $HOME/
+          ls -la $HOME/.cache

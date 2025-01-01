@@ -37,7 +37,7 @@ jobs:
           context: python/
           file: python/Dockerfile
           push: false
-          tags: python
+          tags: python:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
@@ -45,7 +45,7 @@ jobs:
         run: |
           cd python/
           docker images
-          docker run --rm -v $(pwd):/app -w /app python pytest
+          docker run --rm -v $(pwd):/app -w /app python:latest pytest
       
       - name: Move caches
         run: |

@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: python/
-          file: python/Dockerfile
+          file: Dockerfile
           push: false
           tags: my_python
           cache-from: type=local,src=/tmp/.buildx-cache

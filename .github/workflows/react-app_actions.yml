@@ -8,7 +8,7 @@ on:
       - 'react-app/package*.json'
       - '.github/workflows/react-app_actions.yml'
   workflow_dispatch:
-  
+
 jobs:
   lint:
     runs-on: ubuntu-24.04

@@ -23,7 +23,8 @@ jobs:
 
       - name: Make directory for Docker cache
         run: mkdir -p ${{ github.workflow }}/.cache/python
-
+      - name: show directory
+        run: ls -la .
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:

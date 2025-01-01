@@ -21,11 +21,13 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: list ls
+        run: ls -al
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-python-${{ hashFiles('Dockerfile') }}
+          key: ${{ runner.os }}-buildx-python-${{ hashFiles('./Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-buildx-python-
 

@@ -19,42 +19,31 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Make directory for Docker cache
-        run: mkdir -p $HOME/.cache/python
-
-      - name: show directory
-        run: |
-          ls -la .
-          ls -la $HOME/
-          ls -la $HOME/.cache
-
+        uses: docker/setup-buildx-action@v3
 
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
-          path: $HOME/.cache/python
-          key: ${{ runner.os }}-python-${{ hashFiles('Dockerfile') }}
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-python-${{ hashFiles('Dockerfile') }}
           restore-keys: |
-            ${{ runner.os }}-python-
+            ${{ runner.os }}-buildx-python-
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
           push: false
-          tags: python:latest
-          cache-from: type=local,source=$HOME/.cache/python
-          cache-to: type=local,dest=$HOME/.cache/python
+          tags: python
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
 
       - name: Run Docker container
         run: |
-          docker run --rm react-app:latest npm install && npm run lint
-
-      - name: show directory
+          docker run --rm python pytest
+      
+      - name: Move caches
         run: |
-          ls -la .
-          ls -la $HOME/
-          ls -la $HOME/.cache
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache

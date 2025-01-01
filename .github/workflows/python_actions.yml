@@ -32,7 +32,7 @@ jobs:
           context: python/
           file: python/Dockerfile
           push: false
-          tags: my_python
+          tags: user/app:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
@@ -41,7 +41,7 @@ jobs:
           docker images
           cd python/
           docker images
-          docker run --rm -v $(pwd):/app -w /app buildx-stable-1 pytest
+          docker run --rm -v $(pwd):/app -w /app user/app:latest pytest
       
       - name: Move caches
         run: |

@@ -35,6 +35,8 @@ jobs:
       - name: List Docker images (for debugging)
         run: |
           docker images
+          docker buildx ls
+          docker ps -a
 
       - name: Run Docker container with pytest
         run: |

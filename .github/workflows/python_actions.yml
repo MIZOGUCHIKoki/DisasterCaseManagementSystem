@@ -11,7 +11,7 @@ on:
 
 jobs:
   pytest:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: ./python
@@ -33,4 +33,4 @@ jobs:
       
       - name: Start and run tests
         run: |
-          docker run --rm -v $(pwd):/app -w /app python poetry install --no-root && poetry show && poetry run pytest
+          docker run --rm -v $(pwd):/app -w /app python sh -c "poetry install --no-root && poetry show && poetry run pytest"

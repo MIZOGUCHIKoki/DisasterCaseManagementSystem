@@ -2,12 +2,10 @@ name: react-app actions
 
 on:
   push:
-    branches:
-      - 'master'
-      - 'feature/**'
     paths:
       - 'react-app/**/*.tsx'
       - 'react-app/**/*.ts'
+      - 'react-app/package*.json'
 
   workflow_dispatch:
   
@@ -18,25 +16,15 @@ jobs:
       run:
         working-directory: ./react-app
     steps:
-      # Checkout the code from the repository
+
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Node.js (ensure the version matches your project requirements)
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'  # Update with the correct version if necessary
+      - name: Build Docker image
+        run: docker build -t react .
           
-      # Install dependencies
-      - name: Install dependencies
-        run: |
-          npm install
-
-      # Run ESLint
-      - name: Run ESLint
-        run: |
-          npm run lint
+      - name: Start a container
+        run: docker run --rm -v $(pwd):/app -w /app react npm run lint
 
   type-check:
     runs-on: ubuntu-latest
@@ -44,22 +32,11 @@ jobs:
       run:
         working-directory: ./react-app
     steps:
-      # Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Node.js (ensure the version matches your project requirements)
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'  # Update with the correct version if necessary
+      - name: Build Docker image
+        run: docker build -t react .
           
-      # Install dependencies
-      - name: Install dependencies
-        run: |
-          npm install
-
-      # Run TypeScript
-      - name: Run TypeScript
-        run: |
-          npx tsc --noEmit
+      - name: Start a container
+        run: docker run --rm -v $(pwd):/app -w /app react npm run type-check

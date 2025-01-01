@@ -77,7 +77,7 @@ jobs:
 
       - name: Run Docker container with type-check
         run: |
-          docker run --rm -v $(pwd)/python:/app -w /app npm react install && npm run type-check
+          docker run --rm -v $(pwd)/python:/app -w /app react npm install && npm run type-check
           
       - name: Move caches
         run: |

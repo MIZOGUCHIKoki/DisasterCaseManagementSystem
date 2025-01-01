@@ -19,12 +19,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Create dir for cache
+        run: mkdir -p $HOME/.cache/pypoetry
+
       - name: Set up Docker cache for poetry
         uses: actions/cache/restore@v4
         id: cache
         with:
           path: $HOME/.cache/pypoetry
-          key: ${{ runner.os }}-poetry-${{ hashFiles('python/poetry.lock', 'python/pyproject.toml') }}
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock', 'pyproject.toml', 'Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-poetry-
 
@@ -35,9 +38,6 @@ jobs:
       - name: Start and run tests
         run: |
           docker run --rm -v $(pwd):/app -w /app python sh -c "poetry run pytest"
-          
-      - name: Create dir for cache
-        run: mkdir -p $HOME/.cache/pypoetry
 
       - name: Save Docker cache for poetry
         uses: actions/cache/save@v4

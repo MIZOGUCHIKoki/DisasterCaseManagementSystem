@@ -35,7 +35,10 @@ jobs:
       - name: Start and run tests
         run: |
           docker run --rm -v $(pwd):/app -w /app python sh -c "poetry run pytest"
-      
+          
+      - name: Create dir for cache
+        run: mkdir -p $HOME/.cache/pypoetry
+
       - name: Save Docker cache for poetry
         uses: actions/cache/save@v4
         with:

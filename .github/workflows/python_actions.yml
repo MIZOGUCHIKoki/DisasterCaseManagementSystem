@@ -26,21 +26,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-python-
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: python/
-          file: python/Dockerfile
-          push: false
-          tags: app:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+      - name: Build Docker image
+        id: build
+        run: |
+          docker buildx build --file python/Dockerfile --tag app:latest --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache-new --progress=plain python/
 
-      - name: Run Docker container
+      - name: List Docker images (for debugging)
         run: |
           docker images
+
+      - name: Run Docker container with pytest
+        run: |
           docker run --rm -v $(pwd)/python:/app -w /app app:latest pytest
-      
+          
       - name: Move caches
         run: |
           rm -rf /tmp/.buildx-cache

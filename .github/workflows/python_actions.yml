@@ -22,7 +22,7 @@ jobs:
       - name: Set up Docker cache for poetry
         uses: actions/cache@v3
         with:
-          path: ~/.cache/pypoetry
+          path: $HOME/.cache/pypoetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('python/poetry.lock', 'python/pyproject.toml') }}
           restore-keys: |
             ${{ runner.os }}-poetry-
@@ -34,3 +34,7 @@ jobs:
       - name: Start and run tests
         run: |
           docker run --rm -v $(pwd):/app -w /app python sh -c "poetry run pytest"
+      
+      - name: Check cache
+        run: |
+          ls -la $HOME/.cache/pypoetry

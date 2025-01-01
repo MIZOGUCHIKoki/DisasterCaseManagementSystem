@@ -24,7 +24,7 @@ jobs:
         run: docker build -t react .
           
       - name: Start a container
-        run: docker run --rm -v $(pwd):/app -w /app react npm run lint
+        run: docker run --rm -v $(pwd):/app -w /app react npm i ; npm run lint
 
   type-check:
     runs-on: ubuntu-latest
@@ -39,4 +39,4 @@ jobs:
         run: docker build -t react .
           
       - name: Start a container
-        run: docker run --rm -v $(pwd):/app -w /app react npm run type-check
+        run: docker run --rm -v $(pwd):/app -w /app react npm i ; npm run type-check

@@ -40,18 +40,14 @@ jobs:
 
       - name: Run Docker container with linter
         run: |
-          ls -al
-          ls -al react-app 
-          ls -al $(pwd)/react-app
-          echo $(pwd)
-          docker run --rm -v $(pwd)/react-app:/app -w /app react npm install && npm run lint
+          docker run --rm -v $(pwd)/react-app:/app -w /app react sh -c "npm install && npm run lint"
           
       - name: Move caches
         run: |
           rm -rf /tmp/.buildx-cache-react
           mv /tmp/.buildx-cache-react-new /tmp/.buildx-cache-react
   
-  type-check:
+  type-check_tsc:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
@@ -81,7 +77,7 @@ jobs:
 
       - name: Run Docker container with type-check
         run: |
-          docker run --rm -v $(pwd)/react-app:/app -w /app react npm install && npm run type-check
+          docker run --rm -v $(pwd)/react-app:/app -w /app react sh -c "npm install && npm run type-check"
           
       - name: Move caches
         run: |

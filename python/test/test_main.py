@@ -3,8 +3,23 @@ from model import SuppliesRequest
 from main import app  # FastAPIアプリケーションが定義されているファイルをインポート
 import pytest
 import subprocess
+import sqlite3
+from db_setup import setup_db_person, setup_db_stockList, setup_db_serveLog, setup_db_stockIO, open_db, setup_db_defaultList
+
+database = "dataBase.db"
 
 client = TestClient(app)
+@pytest.fixture(scope="module", autouse=True)
+def setup_db():
+    conn = open_db(database)
+    setup_db_person(conn)
+    setup_db_stockList(conn)
+    setup_db_serveLog(conn)
+    setup_db_stockIO(conn)
+    setup_db_defaultList(conn)
+    conn.close()
+    yield
+    subprocess.run(["rm", "dataBase.db"], text=True)
 
 # テスト用データ
 person_id_Group = "1147d50765e7bbf4aa732e3273113c85" # has group id

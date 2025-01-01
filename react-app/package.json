@@ -7,6 +7,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .ts,.tsx",
+    "type-check": "tsc --noEmit",
     "storybook": "storybook dev -p 3001 --no-open",
     "build-storybook": "storybook build"
   },

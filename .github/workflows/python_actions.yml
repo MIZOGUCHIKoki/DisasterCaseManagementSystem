@@ -2,11 +2,10 @@ name: python actions
 
 on:
   push:
-    branches:
-      - 'master'
-      - 'feature/**'
     paths:
       - 'python/**/*.py'
+      - 'python/poetry.lock'
+      - 'python/pyproject.toml'
 
   workflow_dispatch:
   
@@ -17,7 +16,7 @@ jobs:
       run:
         working-directory: ./python
     steps:
-      # Checkout the code from the repository
+      
       - name: Checkout code
         uses: actions/checkout@v3
       
@@ -25,4 +24,4 @@ jobs:
         run: docker build -t python .
           
       - name: Start a container
-        run: docker run --rm -v $(pwd):/app -w /app python python3 pytest
+        run: docker run --rm -v $(pwd):/app -w /app python pytest

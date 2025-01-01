@@ -45,7 +45,7 @@ jobs:
 
       - name: Run Docker container with pytest
         run: |
-          docker run --rm -v $(pwd)/python:/app -w /app  pytest
+          docker run --rm -v $(pwd)/python:/app -w /app python pytest
           
       - name: Move caches
         run: |

@@ -5,12 +5,11 @@ def make_testData_person(conn: sqlite3.Connection) -> None:
     cur.executemany('''
         INSERT INTO person (id, nickName, group_id, age, allergy, remarks_food, remarks_other) VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', [
-        ('c4ca4238a0b923820dcc509a6f75849b','おみおみー', None, 25, 0, 'ピーナッツアレルギー', '埃ダメ'),   # 1
-        ('c81e728d9d4c2f636f067f89cc14862c','ムサリーの', 1, 30, 1, 'Gluten allergy, Prefers vegetarian', ''), # 2
-        ('eccbc87e4b5ce2fe28308fd9f2a7baf3','田中氏', 1, 22, 0, 'Lactose intolerance', 'Has pets'), # 3
-        ('a87ff679a2f3e71d9181a67b7542122c','チャンさく', 2, 28, 0, '', ''), # 4
-        ('e4da3b7fbbce2345d7772b0674a318d5','みかきん', 1, 30, 1, 'Gluten allergy, Prefers vegetarian', ''), # 5
-        ('1679091c5a880faf6fb5e6087eb1b2dc','さよねぇ', 2, 28, 0, '', '') # 6
+        ('1147d50765e7bbf4aa732e3273113c85','おみおみー', 1, 25, 0, 'ピーナッツアレルギー', '埃ダメ'),   # 1
+        ('1679091c5a880faf6fb5e6087eb1b2dc','武蔵', 1, 25, 0, 'なし', 'なし'),   # 2
+        ('c81e728d9d4c2f636f067f89cc14862c','愛美', 1, 25, 0, 'なし', 'なし'),   # 3
+        ('c9f0f895fb98ab9159f51fd0297e236d','さく', 1, 25, 0, 'なし', 'なし'),   # 4
+        ('c51ce410c124a10e0db5e4b97fc2af39','三上', None, 25, 0, 'なし', 'なし'),   # 5
     ])
     conn.commit()
 
@@ -18,14 +17,13 @@ def make_testData_person(conn: sqlite3.Connection) -> None:
 def make_testData_serveLog(conn: sqlite3.Connection) -> None:
     cur: sqlite3.Cursor = conn.cursor()
     cur.executemany('''
-        INSERT INTO serveLog (person_id, asGroup, receiveClassID) VALUES (?, ?, ?)
+        INSERT INTO serveLog (person_id, numberOfPerson, receiveClassID) VALUES (?, ?, ?)
     ''', [
-        ('1679091c5a880faf6fb5e6087eb1b2dc', True, 1),
-        ('1679091c5a880faf6fb5e6087eb1b2dc', True, 1),
-        ('1679091c5a880faf6fb5e6087eb1b2dc', True, 2),
-        ('c81e728d9d4c2f636f067f89cc14862c', False, 3),
-        ('c81e728d9d4c2f636f067f89cc14862c', False, 1),
-        ('e4da3b7fbbce2345d7772b0674a318d5', True, 2)
+        ('1147d50765e7bbf4aa732e3273113c85', 2, 0),   # 1
+        ('1679091c5a880faf6fb5e6087eb1b2dc', 1, 0),   # 2
+        ('c81e728d9d4c2f636f067f89cc14862c', 1, 0),   # 3
+        ('c9f0f895fb98ab9159f51fd0297e236d', 1, 0),   # 4
+        ('c51ce410c124a10e0db5e4b97fc2af39', 1, 0)
     ])
     conn.commit()
 
@@ -51,29 +49,15 @@ def make_testData_stockIO(conn: sqlite3.Connection) -> None:
     cur.executemany('''
         INSERT INTO stockIO (stockList_id, serveLog_id, amount) VALUES (?, ?, ?)
     ''',[
-        (1, None, 100),
-        (2, None, 100),
-        (3, None, 100),
-        (4, None, 100),
-        (5, None, 100),
-        (6, None, 100),
-        (7, None, 100),
-        (8, None, 100),
-        (9, None, 100),
-        (1, 1, -1),
-        (2, 2, -2),
-        (3, 3, -3),
-        (4, 4, -4),
-        (5, None, 100),
-        (6, 2, -1),
-        (7, 3, -1),
-        (8, 3, -1),
-        (9, 1, -1)
+        (1,1,10),
+        (2,1,20)
     ])
     conn.commit()
 
 def open_db(fileName:str) -> sqlite3.Connection:
     conn:sqlite3.Connection = sqlite3.connect(fileName)
+    conn.execute("PRAGMA foreign_keys = ON;")
+    print(conn.execute("PRAGMA foreign_keys").fetchone())
     return conn
 
 def setup_db_person(conn: sqlite3.Connection) -> None:
@@ -88,11 +72,9 @@ def setup_db_person(conn: sqlite3.Connection) -> None:
         allergy INTEGER NOT NULL default 0,
         remarks_food TEXT,
         remarks_other TEXT,
-        created_at TEXT NOT NULL DEFAULT (DATETIME('now', '+9 hours')),
-        updated_at TEXT NOT NULL DEFAULT (DATETIME('now', '+9 hours'))
+        created_at TEXT NOT NULL DEFAULT (DATETIME('now', '+9 hours'))
     )
     ''')
-    conn.execute('PRAGMA foreign_keys = ON')
     conn.commit()
     make_testData_person(conn)
 
@@ -103,13 +85,12 @@ def setup_db_serveLog(conn: sqlite3.Connection) -> None:
     CREATE TABLE IF NOT EXISTS serveLog (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         person_id TEXT NOT NULL,
-        asGroup BOOLEAN NOT NULL DEFAULT FALSE,
+        numberOfPerson INTEGER NOT NULL DEFAULT 1,
         receiveClassID INTEGER NOT NULL DEFAULT 0,
         created_at TEXT NOT NULL DEFAULT (DATETIME('now', '+9 hours')),
         FOREIGN KEY (person_id) REFERENCES person(id)
     )
     ''')
-    conn.execute('PRAGMA foreign_keys = ON')
     conn.commit()
     make_testData_serveLog(conn)
 
@@ -128,7 +109,6 @@ def setup_db_stockList(conn: sqlite3.Connection) -> None:
         created_at TEXT NOT NULL DEFAULT (DATETIME('now', '+9 hours'))
     )
     ''')
-    conn.execute('PRAGMA foreign_keys = ON')
     conn.commit()
     make_testData_stockList(conn)
     
@@ -147,7 +127,21 @@ def setup_db_stockIO(conn: sqlite3.Connection) -> None:
         FOREIGN KEY (stockList_id) REFERENCES stockList(id)
     )
     ''')
-    conn.execute('PRAGMA foreign_keys = ON')
     conn.commit()
     make_testData_stockIO(conn)
     # If serveLog_id is NULL, it means that the stock is imported from the outside.
+
+def setup_db_defaultList(conn: sqlite3.Connection) -> None:
+    cur:sqlite3.Cursor = conn.cursor()
+    cur.execute('DROP TABLE IF EXISTS defaultList')
+    cur.execute('''
+    CREATE TABLE IF NOT EXISTS defaultList (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        stockList_id INTEGER NOT NULL,
+        amount INTEGER NOT NULL,
+        created_at TEXT NOT NULL DEFAULT (DATETIME('now', '+9 hours')),
+        FOREIGN KEY (stockList_id) REFERENCES stockList(id)
+    )
+    ''')
+    conn.commit()
+    conn.close()

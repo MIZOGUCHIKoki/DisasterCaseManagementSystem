@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+from model import SuppliesRequest
 from main import app  # FastAPIアプリケーションが定義されているファイルをインポート
 import pytest
 import subprocess
@@ -6,55 +7,66 @@ import subprocess
 client = TestClient(app)
 
 # テスト用データ
-person_id = "c4ca4238a0b923820dcc509a6f75849b"
-asGroup = False
-receiveClassID = 1
+person_id_Group = "1147d50765e7bbf4aa732e3273113c85" # has group id
+person_id_nonGroup = "c51ce410c124a10e0db5e4b97fc2af39" # has no group id
+
+
 forServeLog = {
-    "person_id": person_id,
-    "asGroup": asGroup,
-    "receiveClassID": receiveClassID,
-    "created_at": ""
+    "person_id": "1147d50765e7bbf4aa732e3273113c85",
+    "stockList_Amount": [
+        {
+            "stockList_id": 1,
+            "amount":10
+        },{
+            "stockList_id": 2,
+            "amount":20
+        }
+    ],
+    "numberOfPerson": 2
 }
-forStockIO = [
-    {
-        "serveLog_id": None,
-        "stockList_id": 1,
-        "amount": 1,
-        "created_at": ""
-    },
-    {
-        "serveLog_id": None,
-        "stockList_id": 2,
-        "amount": 2,
-        "created_at": ""
-    },
-    {
-        "serveLog_id": None,
-        "stockList_id": 3,
-        "amount": 3,
-        "created_at": ""
-    },
-    {
-        "serveLog_id": None,
-        "stockList_id": 9,
-        "amount": 100,
-        "created_at": ""
-    }
-]
 
 
 
 def test_create_serveLog():
-    response = client.post("/serveLog/", json={"serveLog": forServeLog, "stockIO": forStockIO})
+    response = client.post("/request/", json=forServeLog)
     print(response.json())
     # ステータスコードが200（成功）であることを確認
     assert response.status_code == 200
     # レスポンスの内容が正しいことを確認
 
-# POSTリクエストを送信して、レスポンスを検証
-def test_get_person():
-    response = client.get(f"/person/{person_id}")
-    print(response.json())
-    # ステータスコードが200（成功）であることを確認
+
+def test_get_person_Group():
+    response = client.get(f"/person/{person_id_Group}")
+    
     assert response.status_code == 200
-    # レスポンスの内容が正しいことを確認
+    assert response.json() == {
+        "personInfo": {
+          "id": "1147d50765e7bbf4aa732e3273113c85",
+          "nickName": "おみおみー",
+        },
+        "groupMember": [
+          {
+            "id": "1679091c5a880faf6fb5e6087eb1b2dc",
+            "nickName": "武蔵"
+          },
+          {
+            "id": "c81e728d9d4c2f636f067f89cc14862c",
+            "nickName": "愛美"
+          },
+          {
+            "id": "c9f0f895fb98ab9159f51fd0297e236d",
+            "nickName": "さく"
+          }
+        ]
+    }
+def test_get_person_nonGroup():
+    response = client.get(f"/person/{person_id_nonGroup}")
+    
+    assert response.status_code == 200
+    assert response.json() == {
+        "person": {
+          "id": "c51ce410c124a10e0db5e4b97fc2af39",
+          "nickName": "三上",
+        },
+        "groupMember": []
+    }

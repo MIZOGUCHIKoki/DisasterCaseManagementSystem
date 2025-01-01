@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
-import { DB_defaultList } from './testData/defaultList';
-
+// Import data types
 import { StockListType } from './type/StockList';
-import { stockList } from './testData/stockList';
-
 import { PersonType } from './type/Person';
+import { DB_DefaultListType } from './type/DefaultList';
 
+// Import components
 import { Button } from './Button/Button';
 import { PM_Button } from './PM_Button/PM_Button';
 
+// Import screens
 import AskAsGroup from './askAsGroup';
 import StandInLine from './standInLine';
-import { DB_DefaultListType } from './type/DefaultList';
 
 type Props = {
   person_id: PersonType['id'];
@@ -48,16 +47,31 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
   const [askAsGroupFlag, setAskAsGroupFlag] = useState<boolean>(false);
   const [postFlag, setPostFlag] = useState<boolean>(false);
   useEffect(() => {
-    const fetchDefaultListData = (): fetchedData_defualtList_type[] => {
-      return DB_defaultList;
-    };
+    const fetchData = async () => {
+      try {
+        const fetchedDefaultList =
+          await fetch(`/testData/defaultList.json?timestamp=${new Date().getTime()}`)
+            .then(res => {
+              if (!res.ok)
+                throw new Error(`Failed to fetch defaultList: ${res.status}`);
+              return res.json();
+            });
 
-    const fetchStockListData = (): fetchedData_stockList_type[] => {
-      return stockList;
-    };
+        const fetchedStockList =
+          await fetch(`/testData/stockList.json?timestamp=${new Date().getTime()}`)
+            .then(res => {
+              if (!res.ok)
+                throw new Error(`Failed to fetch stockList: ${res.status}`);
+              return res.json();
+            });
 
-    setDefaultListData(fetchDefaultListData());
-    setStockListData(fetchStockListData());
+        setStockListData(fetchedStockList);
+        setDefaultListData(fetchedDefaultList);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -176,7 +190,7 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
               </tr>
             </thead>
             <tbody>
-              {stockList.map((item: StockListType, index) => {
+              {stockListData.map((item: fetchedData_stockList_type, index) => {
                 return (
                   <tr key={index}>
                     <td>{item.name} {item.size}</td>

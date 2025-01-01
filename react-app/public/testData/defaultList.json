@@ -18,5 +18,10 @@
         "id": 4,
         "stockList_id": 0,
         "amount": 10
+    },
+    {
+        "id": 5,
+        "stockList_id": 4,
+        "amount": 5
     }
 ]

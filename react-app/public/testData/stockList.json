@@ -26,5 +26,12 @@
         "size": "500ml",
         "unit": "本",
         "allergy": 0
+    },
+    {
+        "id": 4,
+        "name": "牛乳",
+        "size": "200ml",
+        "unit": "本",
+        "allergy": 0
     }
 ]

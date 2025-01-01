@@ -33,4 +33,4 @@ jobs:
       
       - name: Start and run tests
         run: |
-          docker run --rm -v $(pwd):/app -w /app python sh -c "poetry install --no-root && poetry show && poetry run pytest"
+          docker run --rm -v $(pwd):/app -w /app python sh -c "poetry run pytest"

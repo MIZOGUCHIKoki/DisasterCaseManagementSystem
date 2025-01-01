@@ -42,6 +42,8 @@ jobs:
         run: |
           ls -al
           ls -al react-app 
+          ls -al $(pwd)/react-app
+          echo $(pwd)
           docker run --rm -v $(pwd)/react-app:/app -w /app react npm install && npm run lint
           
       - name: Move caches

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { waitingQueue as waitingQueue_list } from './testData/waitingQueue';
 import { Button } from './Button/Button';
 
 import { WaitingQueueType } from './type/WaitingQueue';

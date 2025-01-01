@@ -13,4 +13,4 @@ jobs:
             - name: make directory
               run: | 
                 mkdir -p $HOME/.cache/pypoetry
-                mkrdir -p $HOME/.cache/npm
+                mkdir -p $HOME/.cache/npm

@@ -40,7 +40,7 @@ jobs:
 
       - name: Run Docker container with linter
         run: |
-          docker run --rm -v $(pwd)/python:/app -w /app react npm install && npm run lint
+          docker run --rm -v $(pwd)/react-app:/app -w /app react npm install && npm run lint
           
       - name: Move caches
         run: |
@@ -77,7 +77,7 @@ jobs:
 
       - name: Run Docker container with type-check
         run: |
-          docker run --rm -v $(pwd)/python:/app -w /app react npm install && npm run type-check
+          docker run --rm -v $(pwd)/react-app:/app -w /app react npm install && npm run type-check
           
       - name: Move caches
         run: |

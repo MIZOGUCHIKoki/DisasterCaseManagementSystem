@@ -11,9 +11,6 @@ on:
 jobs:
   pytest:
     runs-on: ubuntu-24.04
-    # defaults:
-    #   run:
-    #     working-directory: ./python
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -30,7 +27,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-python-${{ hashFiles('Dockerfile') }}
+          key: ${{ runner.os }}-buildx-python-${{ hashFiles('python/Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-buildx-python-
 
@@ -38,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
+          file: python/Dockerfile
           push: false
           tags: python
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -46,7 +43,8 @@ jobs:
 
       - name: Run Docker container
         run: |
-          docker run --rm python pytest
+          cd python/
+          docker run --rm -v $(pwd):/app -w /app python pytest
       
       - name: Move caches
         run: |

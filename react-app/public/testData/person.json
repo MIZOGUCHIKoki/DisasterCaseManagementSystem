@@ -1,0 +1,24 @@
+{
+    "personInfo": {
+        "id": 1,
+        "nickName": "John Doe"
+    },
+    "groupMember": [
+        {
+            "id": 2,
+            "nickName": "Mary Jane"
+        },
+        {
+            "id": 3,
+            "nickName": "Peter Parker"
+        },
+        {
+            "id": 4,
+            "nickName": "Tony Stark"
+        },
+        {
+            "id": 5,
+            "nickName": "Bruce Wayne"
+        }
+    ]
+}

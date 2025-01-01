@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 
 import { Button } from './Button/Button';
 
-import { WaitingQueueType } from './type/WaitingQueue';
+import { DB_WaitingQueueType } from './type/WaitingQueue';
 import { PersonType } from './type/Person';
 import { StockListType } from './type/StockList';
 
 type fetchedQueueData = {
-    id: WaitingQueueType['id'];
+    id: DB_WaitingQueueType['id'];
     person_info: {
         nickName: PersonType['nickName'];
     }
-    numberOfMember: WaitingQueueType['numberOfMember'];
+    numberOfMember: DB_WaitingQueueType['numberOfMember'];
     supplies_info: {
         stock_info: {
             name: StockListType['name'];

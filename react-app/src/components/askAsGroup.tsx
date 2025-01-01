@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { personInfo, groupMembers } from './testData/personInfo';
 import { Button } from './Button/Button';
 import { PM_Button } from './PM_Button/PM_Button';
 import { PersonType } from './type/Person';
 import SelectSupplies from './selectSupplies';
-
 
 // Fetched data type from API after QR code reading
 type FetchedData_PersonAndGroup = {
@@ -12,7 +10,7 @@ type FetchedData_PersonAndGroup = {
         id: PersonType['id'];
         nickName: PersonType['nickName'];
     },
-    groupMembers: {
+    groupMember: {
         id: PersonType['id'];
         nickName: PersonType['nickName'];
     }[];
@@ -26,137 +24,112 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
     const [numberOfGroup, setNumberOfGroup] = useState<number>(0);
     const [postState, setPostState] = useState<boolean>(false);
     const [fetchedData, setFetchedData] = useState<FetchedData_PersonAndGroup | null>(null);
+
     useEffect(() => {
-        console.log(
-            'QR読み取り [person_id]:',
-            person_id
-        );
-        /*
-            FETCH DATA from API using the result
-        */
-        const fetchedData: FetchedData_PersonAndGroup = {
-            personInfo: {
-                id: personInfo[0].id,
-                nickName: personInfo[0].nickName
-            },
-            groupMembers: [
-                {
-                    id: groupMembers[0].id,
-                    nickName: groupMembers[0].nickName
-                },
-                {
-                    id: groupMembers[1].id,
-                    nickName: groupMembers[1].nickName
-                },
-                {
-                    id: groupMembers[2].id,
-                    nickName: groupMembers[2].nickName
-                }
-            ]
+        console.log('QR読み取り [person_id]:', person_id);
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`/testData/person.json?timestamp=${new Date().getTime()}`);
+                if (!response.ok) throw new Error(`Failed to fetch person: ${response.status}`);
+                const data: FetchedData_PersonAndGroup = await response.json();
+                setFetchedData(data);
+                setNumberOfGroup(data.groupMember.length + 1); // Include the person themselves
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
-        setFetchedData(fetchedData);
-        setNumberOfGroup(fetchedData.groupMembers.length + 1);
-    }, []);
+
+        fetchData();
+    }, [person_id]); // Add person_id as a dependency so it fetches new data when person_id changes
+
     const post = () => {
         setPostState(true);
     };
-    return postState || fetchedData === null ? (
-        fetchedData === null ? (
+
+    // If data is still loading or postState is true, render the loading state or next step
+    if (postState || fetchedData === null) {
+        return (
             <div>
-                <div>読み込み中...</div>
+                {fetchedData === null ? (
+                    <div>読み込み中...</div>
+                ) : (
+                    <SelectSupplies
+                        person_id={fetchedData.personInfo.id}
+                        numberOfPerson={numberOfGroup}
+                    />
+                )}
             </div>
-        ) : (
-            <SelectSupplies
-                person_id={fetchedData.personInfo.id}
-                numberOfPerson={numberOfGroup}
-            />
-        )
-    )
-        : (
-            <div className='container'>
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        width: '100%',
-                    }}
-                >
-                    <div
-                        style={{
-                            width: '50%',
-                        }}>
-                        <div style={{ margin: '10px' }}>あなた</div>
+        );
+    }
+
+    return (
+        <div className="container">
+            <div style={{ display: 'flex', alignItems: 'flex-start', width: '100%' }}>
+                <div style={{ width: '50%' }}>
+                    <div style={{ margin: '10px' }}>あなた</div>
+                    {/* Ensure fetchedData is not null or undefined */}
+                    {fetchedData && fetchedData.personInfo ? (
                         <ul>
                             <li>{fetchedData.personInfo.nickName}</li>
                         </ul>
-                    </div>
-                    <div
-                        style={{
-                            width: '50%',
-                        }}
-                    >
-                        <div style={{ margin: '10px' }}>グループメンバ</div>
+                    ) : (
+                        <div>データがありません</div>
+                    )}
+                </div>
+                <div style={{ width: '50%' }}>
+                    <div style={{ margin: '10px' }}>グループメンバ</div>
+                    {/* Check for null or undefined groupMember */}
+                    {fetchedData && fetchedData.groupMember.length > 0 ? (
                         <ul>
-                            {fetchedData.groupMembers.map((member, index) => (
-                                <li key={index}>
-                                    {member.nickName}
-                                </li>
+                            {fetchedData.groupMember.map((member, index) => (
+                                <li key={index}>{member.nickName}</li>
                             ))}
                         </ul>
-                    </div>
+                    ) : (
+                        <div>グループメンバーがありません</div>
+                    )}
                 </div>
-                <div
-                    style={{
-
-                    }}
-                >
-                    <div style={{ margin: '10px' }}>何人分受け取りますか？</div>
-                    <div
-                        style={{
-                            margin: '10px 10px',
-                            height: '60px'
-                        }}>
-                        <Button
-                            primary={false}
-                            onClick={() => {
-                                setNumberOfGroup(1);
-                                post();
-                            }}
-                            label="一人分のみ"
-                        />
-                    </div>
-                    <div
-                        style={{
-                            margin: '10px 10px',
-                            height: '60px'
-                        }}
-                    >
-                        <Button onClick={() => {
-                            setNumberOfGroup(fetchedData.groupMembers.length + 1);
+            </div>
+            <div>
+                <div style={{ margin: '10px' }}>何人分受け取りますか？</div>
+                <div style={{ margin: '10px 10px', height: '60px' }}>
+                    <Button
+                        primary={false}
+                        onClick={() => {
+                            setNumberOfGroup(1);
                             post();
-                        }} label={`グループの分も （合計${fetchedData.groupMembers.length + 1}名分）`} />
-                    </div>
-                </div>
-                <div>
-                    <div
-                        style={{
-                            margin: '10px 10px',
-                            height: '60px'
                         }}
-                    >
-                        <hr />
-                        <PM_Button context={numberOfGroup} type={true}
-                            onClick_plus={() => { setNumberOfGroup(numberOfGroup + 1); }}
-                            onClick_minus={() => {
-                                if (numberOfGroup > 1)
-                                    setNumberOfGroup(numberOfGroup - 1);
-                            }}
-                            onClick_decide={() => { post(); }}
-                            unit='人'
-                            label_decision='任意に決める'
-                        />
-                    </div>
+                        label="一人分のみ"
+                    />
                 </div>
-            </div >
-        );
+                <div style={{ margin: '10px 10px', height: '60px' }}>
+                    <Button
+                        onClick={() => {
+                            if (fetchedData) {
+                                setNumberOfGroup(fetchedData.groupMember.length + 1);
+                                post();
+                            }
+                        }}
+                        label={`グループの分も （合計${fetchedData?.groupMember.length + 1}名分）`}
+                    />
+                </div>
+            </div>
+            <div>
+                <div style={{ margin: '10px 10px', height: '60px' }}>
+                    <hr />
+                    <PM_Button
+                        context={numberOfGroup}
+                        type={true}
+                        onClick_plus={() => setNumberOfGroup(numberOfGroup + 1)}
+                        onClick_minus={() => {
+                            if (numberOfGroup > 1) setNumberOfGroup(numberOfGroup - 1);
+                        }}
+                        onClick_decide={() => post()}
+                        unit="人"
+                        label_decision="任意に決める"
+                    />
+                </div>
+            </div>
+        </div>
+    );
 }

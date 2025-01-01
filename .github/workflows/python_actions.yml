@@ -44,6 +44,7 @@ jobs:
       - name: Run Docker container
         run: |
           cd python/
+          docker images
           docker run --rm -v $(pwd):/app -w /app python pytest
       
       - name: Move caches

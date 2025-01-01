@@ -1,4 +1,4 @@
-name: Build and Cache Docker Image
+name: python actions
 
 on:
   push:
@@ -38,6 +38,7 @@ jobs:
 
       - name: Run Docker container
         run: |
+          docker images
           cd python/
           docker images
           docker run --rm -v $(pwd):/app -w /app my_python pytest

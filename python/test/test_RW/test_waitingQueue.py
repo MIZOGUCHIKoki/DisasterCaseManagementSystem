@@ -17,7 +17,7 @@ forServeLog = {
 
 
 class TestWaitingQueue:
-    def test_post_waitingQueue(self, client):
+    @pytest.mark.asyncio
+    async def test_post_waitingQueue(self, client):
         response = client.post("/waitingQueue/", json=forServeLog)
-        print(response.json())
         assert response.status_code == 200

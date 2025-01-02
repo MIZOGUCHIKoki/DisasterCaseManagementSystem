@@ -1,4 +1,5 @@
 import sqlite3
+import os
 
 def make_testData_person(conn: sqlite3.Connection) -> None:
     cur: sqlite3.Cursor = conn.cursor()
@@ -128,7 +129,7 @@ def setup_db_stockIO(conn: sqlite3.Connection) -> None:
     )
     ''')
     conn.commit()
-    # make_testData_stockIO(conn)
+    make_testData_stockIO(conn)
     # If serveLog_id is NULL, it means that the stock is imported from the outside.
 
 def setup_db_defaultList(conn: sqlite3.Connection) -> None:

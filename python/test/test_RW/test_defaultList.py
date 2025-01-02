@@ -2,7 +2,8 @@ import pytest
 
 class TestDefaultList:
 
-    def test_get_defaultList(self, client):
+    @pytest.mark.asyncio
+    async def test_get_defaultList(self, client):
         response = client.get("/defaultList/")
         assert response.status_code == 200
         assert response.json() == [

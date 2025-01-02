@@ -5,10 +5,9 @@ person_id_Group = "1147d50765e7bbf4aa732e3273113c85" # has group id
 person_id_nonGroup = "c51ce410c124a10e0db5e4b97fc2af39" # has no group id
 
 class TestPerson:
-
-  def test_get_person_Group(selft, client):
+  @pytest.mark.asyncio
+  async def test_get_person_Group(selft, client):
       response = client.get(f"/person/{person_id_Group}")
-
       assert response.status_code == 200
       assert response.json() == {
           "personInfo": {
@@ -30,9 +29,9 @@ class TestPerson:
             }
           ]
       }
-  def test_get_person_nonGroup(selft, client):
+  @pytest.mark.asyncio 
+  async def test_get_person_nonGroup(selft, client):
       response = client.get(f"/person/{person_id_nonGroup}")
-
       assert response.status_code == 200
       assert response.json() == {
           "person": {

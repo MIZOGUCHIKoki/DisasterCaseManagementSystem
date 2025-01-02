@@ -18,7 +18,7 @@ type Props = {
   numberOfPerson: number;
 };
 
-type Props_send = {
+type post_waintngQueue = {
   person_id: PersonType['id'];
   stockList_Amount: {
     stockList_id: StockListType['id'],
@@ -117,7 +117,7 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
   };
 
   const onClick_decide = () => {
-    const sendData = (): Props_send => {
+    const sendData = (): post_waintngQueue => {
       const stockList_Amount = stockAmount
         .filter((stockAmountItem) => stockAmountItem.amount > 0)
         .map((stockAmountItem) => ({
@@ -134,8 +134,21 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
     /*
       POST Process
     */
-    console.log(sendData());
-    setPostFlag(true);
+    const PostData = async (): Promise<void> => {
+      try {
+        await fetch(`${process.env.REACT_APP_API_ADDR}/waitingQueue`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(sendData())
+        });
+
+      } catch (error) {
+        console.error('Error posting data:', error);
+      }
+    };
+    PostData().then(() => { setPostFlag(true); });
   };
 
   return (

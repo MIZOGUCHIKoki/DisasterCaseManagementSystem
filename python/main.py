@@ -76,7 +76,7 @@ async def get_defaultList():
         return []
     return dict_defaultList
 
-@app.post('/request')
+@app.post('/waitingQueue')
 async def request_stock(suppliesRequest: SuppliesRequest) -> None:
     serveLog: ServeLog = ServeLog(
         person_id = suppliesRequest.person_id,

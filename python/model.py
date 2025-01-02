@@ -42,4 +42,3 @@ class SuppliesRequest(BaseModel):
 class DefualtList(BaseModel):
     stockList_id: int
     amount: int
-    defaultAmount: int

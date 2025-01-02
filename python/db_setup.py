@@ -54,15 +54,18 @@ def make_testData_stockIO(conn: sqlite3.Connection) -> None:
     ])
     conn.commit()
 
-def open_db(fileName:str) -> sqlite3.Connection:
-    conn:sqlite3.Connection = sqlite3.connect(fileName)
-    conn.execute("PRAGMA foreign_keys = ON;")
-    print(conn.execute("PRAGMA foreign_keys").fetchone())
-    return conn
+def make_testData_defaultList(conn: sqlite3.Connection) -> None:
+    cur: sqlite3.Cursor = conn.cursor()
+    cur.executemany('''
+        INSERT INTO defaultList (stockList_id, amount) VALUES (?, ?)
+    ''',[
+        (1, 10),
+        (2, 20)
+    ])
+    conn.commit()
 
 def setup_db_person(conn: sqlite3.Connection) -> None:
     cur:sqlite3.Cursor = conn.cursor()
-    cur.execute('DROP TABLE IF EXISTS person')
     cur.execute('''
     CREATE TABLE IF NOT EXISTS person (
         id TEXT PRIMARY KEY NOT NULL,
@@ -80,7 +83,6 @@ def setup_db_person(conn: sqlite3.Connection) -> None:
 
 def setup_db_serveLog(conn: sqlite3.Connection) -> None:
     cur: sqlite3.Cursor = conn.cursor()
-    cur.execute('DROP TABLE IF EXISTS serveLog')
     cur.execute('''
     CREATE TABLE IF NOT EXISTS serveLog (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -97,7 +99,6 @@ def setup_db_serveLog(conn: sqlite3.Connection) -> None:
 
 def setup_db_stockList(conn: sqlite3.Connection) -> None:
     cur:sqlite3.Cursor = conn.cursor()
-    cur.execute('DROP TABLE IF EXISTS stockList')
     cur.execute('''
     CREATE TABLE IF NOT EXISTS stockList (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -115,7 +116,6 @@ def setup_db_stockList(conn: sqlite3.Connection) -> None:
 
 def setup_db_stockIO(conn: sqlite3.Connection) -> None:
     cur:sqlite3.Cursor = conn.cursor()
-    cur.execute('DROP TABLE IF EXISTS stockIO')
     cur.execute('''
     CREATE TABLE IF NOT EXISTS stockIO (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -128,12 +128,11 @@ def setup_db_stockIO(conn: sqlite3.Connection) -> None:
     )
     ''')
     conn.commit()
-    make_testData_stockIO(conn)
+    # make_testData_stockIO(conn)
     # If serveLog_id is NULL, it means that the stock is imported from the outside.
 
 def setup_db_defaultList(conn: sqlite3.Connection) -> None:
     cur:sqlite3.Cursor = conn.cursor()
-    cur.execute('DROP TABLE IF EXISTS defaultList')
     cur.execute('''
     CREATE TABLE IF NOT EXISTS defaultList (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -144,4 +143,26 @@ def setup_db_defaultList(conn: sqlite3.Connection) -> None:
     )
     ''')
     conn.commit()
-    conn.close()
+    make_testData_defaultList(conn)
+
+
+def initialize_database(conn:sqlite3.Connection) -> None:
+    conn.execute("PRAGMA foreign_keys = OFF;")
+    cur:sqlite3.Cursor = conn.cursor()
+    cur.execute('DROP TABLE IF EXISTS person')
+    cur.execute('DROP TABLE IF EXISTS serveLog')
+    cur.execute('DROP TABLE IF EXISTS stockList')
+    cur.execute('DROP TABLE IF EXISTS stockIO')
+    cur.execute('DROP TABLE IF EXISTS defaultList')
+    conn.commit()
+
+def setup_database(conn: sqlite3.Connection) -> None:
+    initialize_database(conn)
+    conn.execute("PRAGMA foreign_keys = ON;")
+    print (conn.execute("PRAGMA foreign_keys").fetchone())
+    setup_db_person(conn)
+    setup_db_serveLog(conn)
+    setup_db_stockList(conn)
+    setup_db_stockIO(conn)
+    setup_db_defaultList(conn)
+    print("Database setup")

@@ -2,24 +2,26 @@ from fastapi.testclient import TestClient
 from model import SuppliesRequest
 from main import app  # FastAPIアプリケーションが定義されているファイルをインポート
 import pytest
-import subprocess
+import os
 import sqlite3
-from db_setup import setup_db_person, setup_db_stockList, setup_db_serveLog, setup_db_stockIO, open_db, setup_db_defaultList
+from databases import Database
+from db_setup import setup_database
 
-database = "dataBase.db"
+database = Database("sqlite:///dataBase.db")
 
-client = TestClient(app)
-@pytest.fixture(scope="module", autouse=True)
-def setup_db():
-    conn = open_db(database)
-    setup_db_person(conn)
-    setup_db_stockList(conn)
-    setup_db_serveLog(conn)
-    setup_db_stockIO(conn)
-    setup_db_defaultList(conn)
-    conn.close()
-    yield
-    subprocess.run(["rm", "dataBase.db"], text=True)
+client = TestClient(app)  # テスト用のクライアントを作成
+# @pytest.fixture(scope="function", autouse=True)
+# def setup_db():
+#     database.connect()
+
+#     conn:sqlite3.Connection = database.connection()
+#     setup_database(conn)
+
+#     yield  # テスト実行
+
+#     # 非同期データベース接続を閉じる
+#     conn.close()
+#     database.disconnect()
 
 # テスト用データ
 person_id_Group = "1147d50765e7bbf4aa732e3273113c85" # has group id
@@ -30,7 +32,7 @@ forServeLog = {
     "person_id": "1147d50765e7bbf4aa732e3273113c85",
     "stockList_Amount": [
         {
-            "stockList_id": 1,
+            "stockList_id": 100,
             "amount":10
         },{
             "stockList_id": 2,
@@ -42,7 +44,7 @@ forServeLog = {
 
 
 
-def test_create_serveLog():
+def test_post_serveLog():
     response = client.post("/request/", json=forServeLog)
     print(response.json())
     # ステータスコードが200（成功）であることを確認

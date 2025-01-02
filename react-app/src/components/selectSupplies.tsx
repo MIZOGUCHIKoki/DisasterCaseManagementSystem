@@ -28,7 +28,6 @@ type Props_send = {
 };
 
 export type fetchedData_defualtList_type = {
-  id: DB_DefaultListType['id'];
   stockList_id: DB_DefaultListType['stockList_id'];
   amount: DB_DefaultListType['amount'];
 };
@@ -50,7 +49,7 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
     const fetchData = async () => {
       try {
         const fetchedDefaultList =
-          await fetch(`/testData/defaultList.json?timestamp=${new Date().getTime()}`)
+          await fetch(`${process.env.REACT_APP_API_ADDR}/defaultList?timestamp=${new Date().getTime()}`)
             .then(res => {
               if (!res.ok)
                 throw new Error(`Failed to fetch defaultList: ${res.status}`);
@@ -58,7 +57,7 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
             });
 
         const fetchedStockList =
-          await fetch(`/testData/stockList.json?timestamp=${new Date().getTime()}`)
+          await fetch(`${process.env.REACT_APP_API_ADDR}/stockList?timestamp=${new Date().getTime()}`)
             .then(res => {
               if (!res.ok)
                 throw new Error(`Failed to fetch stockList: ${res.status}`);

@@ -1,19 +1,21 @@
-import subprocess
 import sqlite3
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import uvicorn
-from model import SuppliesRequest, ServeLog, StockIO
-from db_setup import setup_db_person, setup_db_stockList, setup_db_serveLog, setup_db_stockIO, open_db, setup_db_defaultList
+from model import SuppliesRequest, ServeLog, StockIO, StockList
+from db_setup import setup_database
 from databases import Database
-from datetime import datetime
+import os
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await database.connect()
     print("Database connected")
+    setup_database(sqlite3.connect(database_path))
+
     yield
+
     await database.disconnect()
     print("Database disconnected")
 
@@ -54,6 +56,26 @@ async def get_person(person_id: str):
         del dict_person["group_id"]
         return {"person": dict_person, "groupMember": []}
 
+@app.get('/stockList')
+async def get_stockList():
+    query_stockList:str = "SELECT id, name, size, unit FROM stockList"
+    stockList = await database.fetch_all(query=query_stockList)
+    dict_stockList = [
+        dict(stock) for stock in stockList
+    ]
+    return dict_stockList
+
+@app.get('/defaultList/')
+async def get_defaultList():
+    query_defaultList:str = "SELECT stockList_id, amount FROM defaultList"
+    defaultList = await database.fetch_all(query=query_defaultList)
+    dict_defaultList = [
+        dict(default) for default in defaultList
+    ]
+    if len(dict_defaultList) == 0:
+        return []
+    return dict_defaultList
+
 @app.post('/request')
 async def request_stock(suppliesRequest: SuppliesRequest) -> None:
     serveLog: ServeLog = ServeLog(
@@ -76,13 +98,5 @@ async def request_stock(suppliesRequest: SuppliesRequest) -> None:
         await database.execute(query = query_insertStockIO, values = dict(stockIO))
 
 if __name__ == "__main__":
-    subprocess.run(["rm", database_path])
-    conn:sqlite3.Connection = open_db(database_path)
-    setup_db_person(conn)
-    setup_db_stockList(conn)
-    setup_db_serveLog(conn)
-    setup_db_stockIO(conn)
-    setup_db_defaultList(conn)
-    conn.close()
-
+    # os.remove("dataBase.db")
     uvicorn.run("main:app", host="0.0.0.0", port=4000,log_level="info",reload = True)

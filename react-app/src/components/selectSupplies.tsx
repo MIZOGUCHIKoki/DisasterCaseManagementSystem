@@ -18,7 +18,7 @@ type Props = {
   numberOfPerson: number;
 };
 
-type Props_send = {
+type post_waintngQueue = {
   person_id: PersonType['id'];
   stockList_Amount: {
     stockList_id: StockListType['id'],
@@ -28,7 +28,6 @@ type Props_send = {
 };
 
 export type fetchedData_defualtList_type = {
-  id: DB_DefaultListType['id'];
   stockList_id: DB_DefaultListType['stockList_id'];
   amount: DB_DefaultListType['amount'];
 };
@@ -50,7 +49,7 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
     const fetchData = async () => {
       try {
         const fetchedDefaultList =
-          await fetch(`/testData/defaultList.json?timestamp=${new Date().getTime()}`)
+          await fetch(`${process.env.REACT_APP_API_ADDR}/defaultList?timestamp=${new Date().getTime()}`)
             .then(res => {
               if (!res.ok)
                 throw new Error(`Failed to fetch defaultList: ${res.status}`);
@@ -58,7 +57,7 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
             });
 
         const fetchedStockList =
-          await fetch(`/testData/stockList.json?timestamp=${new Date().getTime()}`)
+          await fetch(`${process.env.REACT_APP_API_ADDR}/stockList?timestamp=${new Date().getTime()}`)
             .then(res => {
               if (!res.ok)
                 throw new Error(`Failed to fetch stockList: ${res.status}`);
@@ -118,7 +117,7 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
   };
 
   const onClick_decide = () => {
-    const sendData = (): Props_send => {
+    const sendData = (): post_waintngQueue => {
       const stockList_Amount = stockAmount
         .filter((stockAmountItem) => stockAmountItem.amount > 0)
         .map((stockAmountItem) => ({
@@ -135,8 +134,21 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
     /*
       POST Process
     */
-    console.log(sendData());
-    setPostFlag(true);
+    const PostData = async (): Promise<void> => {
+      try {
+        await fetch(`${process.env.REACT_APP_API_ADDR}/waitingQueue`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(sendData())
+        });
+
+      } catch (error) {
+        console.error('Error posting data:', error);
+      }
+    };
+    PostData().then(() => { setPostFlag(true); });
   };
 
   return (

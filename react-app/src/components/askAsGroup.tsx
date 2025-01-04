@@ -27,20 +27,31 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
 
     useEffect(() => {
         console.log('QR読み取り [person_id]:', person_id);
-        const fetchData = async () => {
+        const fetchData = async (): Promise<void> => {
             try {
                 console.log(process.env.REACT_APP_API_ADDR);
-                const response = await fetch(`${process.env.REACT_APP_API_ADDR}/person/${person_id}?timestamp=${new Date().getTime()}`);
-                if (!response.ok) throw new Error(`Failed to fetch person: ${response.status}`);
-                const data: FetchedData_PersonAndGroup = await response.json();
-                setFetchedData(data);
-                setNumberOfGroup(data.groupMember.length + 1); // Include the person themselves
+                // const response = await fetch(`${process.env.REACT_APP_API_ADDR}/person/${person_id}?timestamp=${new Date().getTime()}`);
+                // if (!response.ok) throw new Error(`Failed to fetch person: ${response.status}`);
+                // const data: FetchedData_PersonAndGroup = await response.json();
+                // setFetchedData(data);
+                // setNumberOfGroup(data.groupMember.length + 1); // Include the person themselves
+                const response: Promise<Response> = fetch(`${process.env.REACT_APP_API_ADDR}/person/${person_id}?timestamp=${new Date().getTime()}`);
+                response.then((res) => {
+                    if (!res.ok) throw new Error(`Failed to fetch person: ${res.status}`);
+                    const data: Promise<FetchedData_PersonAndGroup> = res.json();
+                    data.then((data) => {
+                        setFetchedData(data);
+                        setNumberOfGroup(data.groupMember.length + 1); // Include the person themselves
+                    });
+                });
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
 
-        fetchData();
+        fetchData()
+            .then(() => { console.log('success'); })
+            .catch((err) => { console.log(err); }); // Promise<void>
     }, [person_id]); // Add person_id as a dependency so it fetches new data when person_id changes
 
     const post = () => {

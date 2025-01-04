@@ -17,10 +17,6 @@ type fetchData_StockListType = {
     amount: DB_DefaultListType['amount'];
 };
 
-type postData_DefaultListType = {
-    stockList_id: DB_DefaultListType['stockList_id'];
-    amount: DB_DefaultListType['amount'];
-};
 
 export default function DefaultSetScreen(): JSX.Element {
     const [stockListState, setStockListState] = useState<fetchData_StockListType[]>();
@@ -28,7 +24,7 @@ export default function DefaultSetScreen(): JSX.Element {
         const fetchData = async () => {
             try {
                 const fetchedDefaultList =
-                    await fetch(`/testData/defaultList.json?timestamp=${new Date().getTime()}`)
+                    await fetch(`${process.env.REACT_APP_API_ADDR}/defaultList/?timestamp=${new Date().getTime()}`)
                         .then(res => {
                             if (!res.ok)
                                 throw new Error(`Failed to fetch defaultList: ${res.status}`);
@@ -36,14 +32,14 @@ export default function DefaultSetScreen(): JSX.Element {
                         });
 
                 const fetchedStockList =
-                    await fetch(`/testData/stockList.json?timestamp=${new Date().getTime()}`)
+                    await fetch(`${process.env.REACT_APP_API_ADDR}/stockList?timestamp=${new Date().getTime()}`)
                         .then(res => {
                             if (!res.ok)
                                 throw new Error(`Failed to fetch stockList: ${res.status}`);
                             return res.json();
                         });
 
-                const updatedStockList =
+                const updatedStockList: fetchData_StockListType[] =
                     fetchedStockList.map((stockItem: fetchedData_stockList_type) => {
                         const defaultItem =
                             fetchedDefaultList.find(
@@ -64,8 +60,8 @@ export default function DefaultSetScreen(): JSX.Element {
     }, []);
 
     const onClick = (): void => {
-        const DefultData = (): postData_DefaultListType[] => {
-            const defaultData: postData_DefaultListType[] = [];
+        const DefultData = (): fetchedData_defualtList_type[] => {
+            const defaultData: fetchedData_defualtList_type[] = [];
             stockListState?.map((stockItem) => {
                 if (stockItem.amount > 0) {
                     defaultData.push(

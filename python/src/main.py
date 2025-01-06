@@ -3,25 +3,19 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import uvicorn
-from model import SuppliesRequest, ServeLog, StockIO, StockList
-from db_setup import setup_database
-from databases import Database
+from model.setting import Session
 import os
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
-    await database.connect()
+def lifespan(app: FastAPI):
+    db = Session()
     print("Database connected")
-    setup_database(sqlite3.connect(database_path))
-
-    yield
-
-    await database.disconnect()
-    print("Database disconnected")
+    try :
+        yield db
+    finally:
+        db.close()
 
 app:FastAPI = FastAPI(lifespan = lifespan)
-database = Database("sqlite:///dataBase.db")
-database_path = "dataBase.db"
 
 app.add_middleware(
     CORSMiddleware,

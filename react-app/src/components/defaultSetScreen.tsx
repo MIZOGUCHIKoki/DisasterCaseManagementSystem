@@ -1,56 +1,31 @@
 import React, { useState, useEffect } from 'react';
 
 import { StockListType } from './type/StockList';
-import { DB_DefaultListType } from './type/DefaultList';
 
 import { PM_Button } from './PM_Button/PM_Button';
 import { Button } from './Button/Button';
 
-import { fetchedData_defualtList_type, fetchedData_stockList_type } from './selectSupplies';
+import { fetchedData_stock_amount } from './selectSupplies';
 
-type fetchData_StockListType = {
-    id: StockListType['id'];
-    name: StockListType['name'];
-    size: StockListType['size'];
-    unit: StockListType['unit'];
-    janureID: StockListType['janureID'];
-    amount: DB_DefaultListType['amount'];
-};
-
+type post_defaultList = {
+    stock_list_id: StockListType['id'];
+    amount: number;
+}
 
 export default function DefaultSetScreen(): JSX.Element {
-    const [stockListState, setStockListState] = useState<fetchData_StockListType[]>();
+    const [stockListState, setStockListState] = useState<fetchedData_stock_amount[]>();
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const fetchedDefaultList =
-                    await fetch(`${process.env.REACT_APP_API_ADDR}/defaultList/?timestamp=${new Date().getTime()}`)
+                const fetchData =
+                    await fetch(`${process.env.REACT_APP_API_ADDR}/defaultList?timestamp=${new Date().getTime()}`)
                         .then(res => {
                             if (!res.ok)
                                 throw new Error(`Failed to fetch defaultList: ${res.status}`);
                             return res.json();
                         });
 
-                const fetchedStockList =
-                    await fetch(`${process.env.REACT_APP_API_ADDR}/stockList?timestamp=${new Date().getTime()}`)
-                        .then(res => {
-                            if (!res.ok)
-                                throw new Error(`Failed to fetch stockList: ${res.status}`);
-                            return res.json();
-                        });
-
-                const updatedStockList: fetchData_StockListType[] =
-                    fetchedStockList.map((stockItem: fetchedData_stockList_type) => {
-                        const defaultItem =
-                            fetchedDefaultList.find(
-                                (defaultList: fetchedData_defualtList_type) => defaultList?.stock_list_id === stockItem.id
-                            );
-                        return {
-                            ...stockItem,
-                            amount: defaultItem ? defaultItem.amount : 0,
-                        };
-                    });
-                setStockListState(updatedStockList);
+                setStockListState(fetchData);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -58,30 +33,43 @@ export default function DefaultSetScreen(): JSX.Element {
 
         fetchData();
     }, []);
+    const DefultData = (): post_defaultList[] => {
+        const defaultData: post_defaultList[] = [];
+        stockListState?.map((stockItem: fetchedData_stock_amount) => {
+            if (stockItem.amount > 0) {
+                defaultData.push(
+                    {
+                        stock_list_id: stockItem.id,
+                        amount: stockItem.amount
+                    });
+            }
+        });
+        return defaultData;
+    };
 
     const onClick = (): void => {
-        const DefultData = (): fetchedData_defualtList_type[] => {
-            const defaultData: fetchedData_defualtList_type[] = [];
-            stockListState?.map((stockItem) => {
-                if (stockItem.amount > 0) {
-                    defaultData.push(
-                        {
-                            stock_list_id: stockItem.id,
-                            amount: stockItem.amount
 
-                        });
-                }
+        const postData = async (): Promise<void> => {
+            await fetch(`${process.env.REACT_APP_API_ADDR}/defaultList`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(DefultData()),
             });
-            return defaultData;
         };
-        console.log('POST: デフォルト設定:', DefultData());
-        window.location.href = '/staff';
+        postData()
+            .then(() => {
+                // console.log(DefultData());
+                window.location.href = '/staff';
+            })
+            .catch((err) => { console.log(err); });
     };
 
     const onClickPM = (pm: boolean, index: number) => {
-        setStockListState((prevState) => {
+        setStockListState((prevState): fetchedData_stock_amount[] | undefined => {
             if (!prevState) return prevState;
-            return prevState.map((stockItem, i) => {
+            return prevState.map((stockItem: fetchedData_stock_amount, i) => {
                 if (i === index) {
                     if (!pm && stockItem.amount <= 0) return stockItem;
                     return {
@@ -121,6 +109,27 @@ export default function DefaultSetScreen(): JSX.Element {
                         primary={false}
                         label='スタッフの画面へ'
                         onClick={() => { window.location.href = '/staff'; }}
+                    />
+                </div>
+                <div
+                    style={{
+                        marginTop: '10px'
+                    }}
+                >
+                    <Button
+                        primary={false}
+                        label='すべて0に設定'
+                        onClick={() => {
+                            setStockListState((prevState): fetchedData_stock_amount[] | undefined => {
+                                if (!prevState) return prevState;
+                                return prevState.map((stockItem: fetchedData_stock_amount) => {
+                                    return {
+                                        ...stockItem,
+                                        amount: 0,
+                                    };
+                                });
+                            });
+                        }}
                     />
                 </div>
             </div>

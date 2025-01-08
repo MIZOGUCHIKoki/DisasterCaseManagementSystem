@@ -19,4 +19,6 @@ Base = declarative_base()
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     async with async_session_factory() as session:  
+        from sqlalchemy import text
+        await session.execute(text("PRAGMA foreign_keys = ON;"))
         yield session

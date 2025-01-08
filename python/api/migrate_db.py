@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from datetime import datetime
+from sqlalchemy.sql import text
 
 from models.default_list import Base
 from models.person import Base
@@ -9,6 +10,9 @@ from models.stock_list import Base
 from models.person import Person
 from models.stock_list import StockList
 from models.default_list import DefaultList
+from models.receive_log import ReceiveLog
+from models.stock_io import StockIO
+
 
 DB_URL = "sqlite:///./test.db"
 engine = create_engine(
@@ -31,6 +35,8 @@ def reset_database():
 if __name__ == "__main__":
     reset_database()
     session = Session()
+    
+    session.execute(text('PRAGMA foreign_keys = ON;'))
     session.add_all([
         Person(
             id='1147d50765e7bbf4aa732e3273113c85',
@@ -98,8 +104,22 @@ if __name__ == "__main__":
     session.commit()
 
     session.add_all([
-        DefaultList(stock_list_id=1, amount=2, isAccept=False),
-        DefaultList(stock_list_id=3, amount=4, isAccept=False),
-        DefaultList(stock_list_id=5, amount=6, isAccept=False)
+        DefaultList(stock_list_id=1, amount=2, isAccepted=True),
+        DefaultList(stock_list_id=3, amount=4, isAccepted=True),
+        DefaultList(stock_list_id=5, amount=6, isAccepted=True)
     ])
     session.commit()
+
+    session.add_all([
+        ReceiveLog(person_id='1147d50765e7bbf4aa732e3273113c85', receive_class=1, number_of_people=1)
+    ])
+    session.commit()
+
+    session.add_all([
+        StockIO(stock_list_id=1, receive_log_id=None, amount=10),
+        StockIO(stock_list_id=1, receive_log_id=1, amount=2),
+        StockIO(stock_list_id=3, receive_log_id=1, amount=4),
+    ])
+    session.commit()
+
+    

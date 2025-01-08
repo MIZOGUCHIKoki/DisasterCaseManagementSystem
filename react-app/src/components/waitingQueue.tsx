@@ -8,15 +8,14 @@ import { StockListType } from './type/StockList';
 
 type fetchedQueueData = {
     id: DB_WaitingQueueType['id'];
-    person_info: {
+    person: {
         nick_name: PersonType['nick_name'];
     }
-    numberOfMember: DB_WaitingQueueType['numberOfPerson'];
-    supplies_info: {
-        stock_info: {
-            name: StockListType['name'];
-            unit: StockListType['unit'];
-        },
+    number_of_people: DB_WaitingQueueType['number_of_people'];
+    supplies: {
+        name: StockListType['name'];
+        size: StockListType['size'];
+        unit: StockListType['unit'];
         amount: number;
     }[];
 }
@@ -27,16 +26,16 @@ export default function WaitingQueue(): JSX.Element {
     const [fetchDataFlag, setFetchDataFlag] = useState<boolean>(false);
     /* 
         if (waitingQueue.length <= 3) {
-            numberOfMember = true;
+            number_of_people = true;
             FETCH DATA FROM DATABASE
-            numberOfMember = false;
+            number_of_people = false;
         } 
     */
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const fetchedData = await
-                    fetch(`/testData/waitingQueue.json?timestamp=${new Date().getTime()}`)
+                    fetch(`${process.env.REACT_APP_API_ADDR}/receive_log?timestamp=${new Date().getTime()}`)
                         .then(res => {
                             if (!res.ok)
                                 throw new Error(`Failed to fetch waitingQueue: ${res.status}`);
@@ -52,8 +51,16 @@ export default function WaitingQueue(): JSX.Element {
         fetchData();
     }, [fetchDataFlag]);
     const post = (queue_id: number): void => {
-        console.log('POST: 受け取り完了:', queue_id);
-        // 受け取り完了処理
+        const postData = async (): Promise<void> => {
+            await fetch(`${process.env.REACT_APP_API_ADDR}/receive_log/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: queue_id }),
+            });
+        };
+        postData();
         setWaitingQueue(waitingQueue.filter(queue => queue.id !== queue_id));
         if (waitingQueue.length <= 3) {
             setFetchDataFlag(true);
@@ -120,8 +127,8 @@ export default function WaitingQueue(): JSX.Element {
                                 alignItems: 'center',
                             }}
                         >
-                            <div>{queue.person_info.nick_name}</div>
-                            <div>{queue.numberOfMember}人分</div>
+                            <div>{queue.person.nick_name}</div>
+                            <div>{queue.number_of_people}人分</div>
                         </div>
                         <table>
                             <thead>
@@ -146,14 +153,14 @@ export default function WaitingQueue(): JSX.Element {
                                 </tr>
                             </thead>
                             <tbody>
-                                {queue.supplies_info.map((supply, index) => (
+                                {queue.supplies.map((supply, index) => (
                                     <tr key={index}>
-                                        <td>{supply.stock_info.name}</td>
+                                        <td>{supply.name} {supply.size}</td>
                                         <td
                                             style={{
                                                 textAlign: 'center'
                                             }}
-                                        >{supply.amount} {supply.stock_info.unit}</td>
+                                        >{supply.amount} {supply.unit}</td>
                                     </tr>
                                 ))}
                             </tbody>

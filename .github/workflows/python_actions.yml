@@ -45,3 +45,39 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache-python
           mv /tmp/.buildx-cache-python-new /tmp/.buildx-cache-python
+  pyright:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache-python
+          key: ${{ runner.os }}-buildx-python-${{ hashFiles('python/Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-python-
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: python/
+          file: python/Dockerfile
+          push: false
+          tags: python
+          load: true
+          cache-from: type=local,src=/tmp/.buildx-cache-python
+          cache-to: type=local,dest=/tmp/.buildx-cache-python-new
+
+      - name: Run Docker container with pytest
+        run: |
+          docker run --rm -v $(pwd)/python:/app -w /app python pyright
+          
+      - name: Move caches
+        run: |
+          rm -rf /tmp/.buildx-cache-python
+          mv /tmp/.buildx-cache-python-new /tmp/.buildx-cache-python

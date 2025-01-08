@@ -15,7 +15,7 @@ import StandInLine from './standInLine';
 
 type Props = {
   person_id: PersonType['id'];
-  numberOfPerson: number;
+  number_of_people: number;
 };
 
 type post_waintngQueue = {
@@ -24,48 +24,42 @@ type post_waintngQueue = {
     stock_list_id: StockListType['id'],
     amount: number
   }[];
-  numberOfPerson: number;
+  number_of_people: number;
 };
 
-export type fetchedData_defualtList_type = {
-  stock_list_id: DB_DefaultListType['stock_list_id'];
-  amount: DB_DefaultListType['amount'];
-};
-
-export type fetchedData_stockList_type = {
+export type fetchedData_stock_amount = {
   id: StockListType['id'];
   name: StockListType['name'];
   size: StockListType['size'];
   unit: StockListType['unit'];
+  allergy: StockListType['allergy'];
+  janure_id: StockListType['janure_id'];
+  amount: DB_DefaultListType['amount'];
 };
 
-export default function SelectSupplies({ person_id, numberOfPerson }: Props): JSX.Element {
-  const [defaultListData, setDefaultListData] = useState<fetchedData_defualtList_type[]>([]);
-  const [stockListData, setStockListData] = useState<fetchedData_stockList_type[]>([]);
-  const [stockAmount, setStockAmount] = useState<{ sockList_id: StockListType['id'], amount: number }[]>([]);
+export default function SelectSupplies({ person_id, number_of_people }: Props): JSX.Element {
+  const [fetchDataState, setFetchDataState] = useState<fetchedData_stock_amount[]>([]);
   const [askAsGroupFlag, setAskAsGroupFlag] = useState<boolean>(false);
   const [postFlag, setPostFlag] = useState<boolean>(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedDefaultList =
+        const fetchedData_stock_amount =
           await fetch(`${process.env.REACT_APP_API_ADDR}/defaultList?timestamp=${new Date().getTime()}`)
-            .then(res => {
-              if (!res.ok)
-                throw new Error(`Failed to fetch defaultList: ${res.status}`);
-              return res.json();
-            });
-
-        const fetchedStockList =
-          await fetch(`${process.env.REACT_APP_API_ADDR}/stockList?timestamp=${new Date().getTime()}`)
             .then(res => {
               if (!res.ok)
                 throw new Error(`Failed to fetch stockList: ${res.status}`);
               return res.json();
             });
-
-        setStockListData(fetchedStockList);
-        setDefaultListData(fetchedDefaultList);
+        setFetchDataState(fetchedData_stock_amount);
+        setFetchDataState((prev) => {
+          return prev.map((item) => {
+            return {
+              ...item,
+              amount: item.amount * number_of_people
+            };
+          });
+        });
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -73,62 +67,47 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (stockListData.length > 0 && defaultListData.length > 0) {
-      const stockAmountData = stockListData.map((stockItem) => {
-        const defaultItem = defaultListData.find((item) => item.stock_list_id === stockItem.id);
-        return {
-          sockList_id: stockItem.id,
-          amount: defaultItem ? defaultItem.amount * numberOfPerson : 0,
-        };
-      });
-
-      setStockAmount(stockAmountData);
-    }
-  }, [stockListData, defaultListData]);
-
-  const onClick_pm = (pm: boolean, stock_list_id: StockListType['id']) => {
-    const newStockAmount: { sockList_id: StockListType['id'], amount: number }[] = [];
-    stockAmount.map((stockAmountItem: { sockList_id: StockListType['id'], amount: number }) => {
-      if (stockAmountItem.sockList_id === stock_list_id) {
+  const onClick_pm = (pm: boolean, item_id: fetchedData_stock_amount['id']) => {
+    const newFetchDataState = fetchDataState.map((item) => {
+      if (item.id === item_id) {
         if (pm) {
-          newStockAmount.push({
-            sockList_id: stock_list_id,
-            amount: stockAmountItem.amount + 1
-          });
+          return {
+            ...item,
+            amount: item.amount + 1
+          };
         } else {
-          if (stockAmountItem.amount - 1 < 0) {
-            newStockAmount.push({
-              sockList_id: stock_list_id,
-              amount: stockAmountItem.amount
-            });
+          if (item.amount - 1 < 0) {
+            return {
+              ...item,
+              amount: item.amount
+            };
           } else {
-            newStockAmount.push({
-              sockList_id: stock_list_id,
-              amount: stockAmountItem.amount - 1
-            });
+            return {
+              ...item,
+              amount: item.amount - 1
+            };
           }
         }
       } else {
-        newStockAmount.push(stockAmountItem);
+        return item;
       }
     });
-    setStockAmount(newStockAmount);
+    setFetchDataState(newFetchDataState);
   };
 
   const onClick_decide = () => {
     const sendData = (): post_waintngQueue => {
-      const stockList_Amount = stockAmount
+      const stockList_Amount = fetchDataState
         .filter((stockAmountItem) => stockAmountItem.amount > 0)
         .map((stockAmountItem) => ({
-          stock_list_id: stockAmountItem.sockList_id,
+          stock_list_id: stockAmountItem.id,
           amount: stockAmountItem.amount,
         }));
 
       return {
         person_id: person_id,
         stockList_Amount: stockList_Amount,
-        numberOfPerson: numberOfPerson,
+        number_of_people: number_of_people,
       };
     };
     /*
@@ -136,19 +115,25 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
     */
     const PostData = async (): Promise<void> => {
       try {
-        await fetch(`${process.env.REACT_APP_API_ADDR}/waitingQueue`, {
+        await fetch(`${process.env.REACT_APP_API_ADDR}/stock_io`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(sendData())
+        }).then((res) => {
+          if (!res.ok) {
+            throw new Error(`Failed to post data: ${res.status}`);
+          }
         });
-
+        setPostFlag(true);
       } catch (error) {
         console.error('Error posting data:', error);
+        console.log(sendData());
+        setPostFlag(false);
       }
     };
-    PostData().then(() => { setPostFlag(true); });
+    PostData();
   };
 
   return (
@@ -202,18 +187,13 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
               </tr>
             </thead>
             <tbody>
-              {stockListData.map((item: fetchedData_stockList_type, index) => {
+              {fetchDataState.map((item: fetchedData_stock_amount, index) => {
                 return (
                   <tr key={index}>
                     <td>{item.name} {item.size}</td>
                     <td>
                       <PM_Button
-                        context={
-                          stockAmount.find((stockAmountItem: {
-                            sockList_id: StockListType['id'],
-                            amount: number
-                          }) => stockAmountItem.sockList_id === item.id)?.amount || 0
-                        }
+                        context={item.amount}
                         type={false}
                         unit={item.unit}
                         onClick_minus={() => {

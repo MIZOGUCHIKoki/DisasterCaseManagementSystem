@@ -6,11 +6,11 @@ import SelectSupplies from './selectSupplies';
 
 // Fetched data type from API after QR code reading
 type FetchedData_PersonAndGroup = {
-    personInfo: {
+    person_info: {
         id: PersonType['id'];
         nick_name: PersonType['nick_name'];
     },
-    groupMember: {
+    group_member: {
         id: PersonType['id'];
         nick_name: PersonType['nick_name'];
     }[];
@@ -41,7 +41,7 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                     const data: Promise<FetchedData_PersonAndGroup> = res.json();
                     data.then((data) => {
                         setFetchedData(data);
-                        setNumberOfGroup(data.groupMember.length + 1); // Include the person themselves
+                        setNumberOfGroup(data.group_member.length + 1); // Include the person themselves
                     });
                 });
             } catch (error) {
@@ -66,8 +66,8 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                     <div>読み込み中...</div>
                 ) : (
                     <SelectSupplies
-                        person_id={fetchedData.personInfo.id}
-                        numberOfPerson={numberOfGroup}
+                        person_id={fetchedData.person_info.id}
+                        number_of_people={numberOfGroup}
                     />
                 )}
             </div>
@@ -80,9 +80,9 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                 <div style={{ width: '50%' }}>
                     <div style={{ margin: '10px' }}>あなた</div>
                     {/* Ensure fetchedData is not null or undefined */}
-                    {fetchedData && fetchedData.personInfo ? (
+                    {fetchedData && fetchedData.person_info ? (
                         <ul>
-                            <li>{fetchedData.personInfo.nick_name}</li>
+                            <li>{fetchedData.person_info.nick_name}</li>
                         </ul>
                     ) : (
                         <div>データがありません</div>
@@ -91,9 +91,9 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                 <div style={{ width: '50%' }}>
                     <div style={{ margin: '10px' }}>グループメンバ</div>
                     {/* Check for null or undefined groupMember */}
-                    {fetchedData && fetchedData.groupMember.length > 0 ? (
+                    {fetchedData && fetchedData.group_member.length > 0 ? (
                         <ul>
-                            {fetchedData.groupMember.map((member, index) => (
+                            {fetchedData.group_member.map((member, index) => (
                                 <li key={index}>{member.nick_name}</li>
                             ))}
                         </ul>
@@ -118,11 +118,11 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                     <Button
                         onClick={() => {
                             if (fetchedData) {
-                                setNumberOfGroup(fetchedData.groupMember.length + 1);
+                                setNumberOfGroup(fetchedData.group_member.length + 1);
                                 post();
                             }
                         }}
-                        label={`グループの分も （合計${fetchedData?.groupMember.length + 1}名分）`}
+                        label={`グループの分も （合計${fetchedData?.group_member.length + 1}名分）`}
                     />
                 </div>
             </div>

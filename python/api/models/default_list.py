@@ -8,5 +8,5 @@ class DefaultList(Base):
     id = Column(Integer, primary_key=True,autoincrement=True)
     stock_list_id = Column(Integer,ForeignKey("stock_list.id") ,nullable=False)
     amount = Column(Integer, nullable=False, default=0)
-    isAccept = Column(Boolean, nullable=False, default=False)
+    isAccepted = Column(Boolean, nullable=False, default=False)
     created_at = Column(DateTime, server_default=func.now())

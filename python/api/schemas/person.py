@@ -19,12 +19,9 @@ class PersonResponse(BaseModel):
 
 
 class PersonGroupMember(BaseModel):
-    personInfo: PersonResponse  # その人物の基本情報
-    groupMember: List[PersonResponse]  # グループメンバーのリスト
+    person_info: PersonResponse  # その人物の基本情報
+    group_member: List[PersonResponse]  # グループメンバーのリスト
 
 
 class Person(PersonBase):
     pass
-
-class PersonList(BaseModel):
-    persons: List[PersonBase]  # 人物のリスト

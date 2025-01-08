@@ -4,6 +4,6 @@ export type StockListType = {
     size: string,
     unit: string,
     allergy: number,
-    janureID: number
+    janure_id: number
     created_at: string
 };

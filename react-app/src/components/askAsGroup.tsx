@@ -8,11 +8,11 @@ import SelectSupplies from './selectSupplies';
 type FetchedData_PersonAndGroup = {
     personInfo: {
         id: PersonType['id'];
-        nickName: PersonType['nickName'];
+        nick_name: PersonType['nick_name'];
     },
     groupMember: {
         id: PersonType['id'];
-        nickName: PersonType['nickName'];
+        nick_name: PersonType['nick_name'];
     }[];
 };
 
@@ -82,7 +82,7 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                     {/* Ensure fetchedData is not null or undefined */}
                     {fetchedData && fetchedData.personInfo ? (
                         <ul>
-                            <li>{fetchedData.personInfo.nickName}</li>
+                            <li>{fetchedData.personInfo.nick_name}</li>
                         </ul>
                     ) : (
                         <div>データがありません</div>
@@ -94,7 +94,7 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                     {fetchedData && fetchedData.groupMember.length > 0 ? (
                         <ul>
                             {fetchedData.groupMember.map((member, index) => (
-                                <li key={index}>{member.nickName}</li>
+                                <li key={index}>{member.nick_name}</li>
                             ))}
                         </ul>
                     ) : (

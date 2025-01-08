@@ -12,7 +12,7 @@ export type StockIOType = {
 export type DB_StockIOType = {
     id: number,
     serveLog_id: number,
-    stockList_id: number,
+    stock_list_id: number,
     amount: number,
     created_at: string
 };

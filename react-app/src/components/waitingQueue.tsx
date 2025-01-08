@@ -9,9 +9,9 @@ import { StockListType } from './type/StockList';
 type fetchedQueueData = {
     id: DB_WaitingQueueType['id'];
     person_info: {
-        nickName: PersonType['nickName'];
+        nick_name: PersonType['nick_name'];
     }
-    numberOfMember: DB_WaitingQueueType['numberOfMember'];
+    numberOfMember: DB_WaitingQueueType['numberOfPerson'];
     supplies_info: {
         stock_info: {
             name: StockListType['name'];
@@ -120,7 +120,7 @@ export default function WaitingQueue(): JSX.Element {
                                 alignItems: 'center',
                             }}
                         >
-                            <div>{queue.person_info.nickName}</div>
+                            <div>{queue.person_info.nick_name}</div>
                             <div>{queue.numberOfMember}人分</div>
                         </div>
                         <table>

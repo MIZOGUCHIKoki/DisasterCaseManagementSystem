@@ -25,3 +25,20 @@ services:
     depends_on:
       - react
     tty: true
+
+#   db:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile # カスタム Dockerfile を使用
+#     platform: linux/x86_64 # M1 Mac 環境で必要
+#     environment:
+#       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes' # root アカウントをパスワードなしで作成
+#       MYSQL_DATABASE: 'demo' # 初期データベースとして demo を設定
+#       TZ: 'Asia/Tokyo' # タイムゾーンを日本時間に設定
+#     volumes:
+#       - mysql_data:/var/lib/mysql # 永続化データ用ボリューム
+#     ports:
+#       - 33306:3306 # ホストのポート 33306 をコンテナの 3306 にマッピング
+
+# volumes:
+#   mysql_data:

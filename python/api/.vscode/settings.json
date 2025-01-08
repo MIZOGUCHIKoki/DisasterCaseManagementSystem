@@ -1,0 +1,7 @@
+{
+    "python.analysis.extraPaths": [
+        "/usr/local/lib/python3.13/site-packages"
+    ],
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "strict",
+}

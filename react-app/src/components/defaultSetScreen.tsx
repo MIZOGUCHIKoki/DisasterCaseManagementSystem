@@ -43,7 +43,7 @@ export default function DefaultSetScreen(): JSX.Element {
                     fetchedStockList.map((stockItem: fetchedData_stockList_type) => {
                         const defaultItem =
                             fetchedDefaultList.find(
-                                (defaultList: fetchedData_defualtList_type) => defaultList?.stockList_id === stockItem.id
+                                (defaultList: fetchedData_defualtList_type) => defaultList?.stock_list_id === stockItem.id
                             );
                         return {
                             ...stockItem,
@@ -66,7 +66,7 @@ export default function DefaultSetScreen(): JSX.Element {
                 if (stockItem.amount > 0) {
                     defaultData.push(
                         {
-                            stockList_id: stockItem.id,
+                            stock_list_id: stockItem.id,
                             amount: stockItem.amount
 
                         });

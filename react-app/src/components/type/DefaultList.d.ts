@@ -9,6 +9,6 @@ export type DefaultListType = {
 
 export type DB_DefaultListType = {
     id: number,
-    stockList_id: StockListType['id'],
+    stock_list_id: StockListType['id'],
     amount: number
 };

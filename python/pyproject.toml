@@ -12,6 +12,9 @@ uvicorn = "^0.32.1"
 basemodel = "^20190604.1625"
 pytest = "^8.3.3"
 sqlalchemy = "^2.0.36"
+asyncio = "^3.4.3"
+aiosqlite = "^0.20.0"
+greenlet = "^3.1.1"
 
 
 [build-system]

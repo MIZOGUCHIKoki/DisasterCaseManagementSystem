@@ -1,6 +1,6 @@
 export type PersonType = {
     id: string,
-    nickName: string,
+    nick_name: string,
     group_id: number | null,
     age: number,
     allergy: number,

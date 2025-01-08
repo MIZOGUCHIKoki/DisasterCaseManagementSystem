@@ -21,14 +21,14 @@ type Props = {
 type post_waintngQueue = {
   person_id: PersonType['id'];
   stockList_Amount: {
-    stockList_id: StockListType['id'],
+    stock_list_id: StockListType['id'],
     amount: number
   }[];
   numberOfPerson: number;
 };
 
 export type fetchedData_defualtList_type = {
-  stockList_id: DB_DefaultListType['stockList_id'];
+  stock_list_id: DB_DefaultListType['stock_list_id'];
   amount: DB_DefaultListType['amount'];
 };
 
@@ -76,7 +76,7 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
   useEffect(() => {
     if (stockListData.length > 0 && defaultListData.length > 0) {
       const stockAmountData = stockListData.map((stockItem) => {
-        const defaultItem = defaultListData.find((item) => item.stockList_id === stockItem.id);
+        const defaultItem = defaultListData.find((item) => item.stock_list_id === stockItem.id);
         return {
           sockList_id: stockItem.id,
           amount: defaultItem ? defaultItem.amount * numberOfPerson : 0,
@@ -87,24 +87,24 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
     }
   }, [stockListData, defaultListData]);
 
-  const onClick_pm = (pm: boolean, stockList_id: StockListType['id']) => {
+  const onClick_pm = (pm: boolean, stock_list_id: StockListType['id']) => {
     const newStockAmount: { sockList_id: StockListType['id'], amount: number }[] = [];
     stockAmount.map((stockAmountItem: { sockList_id: StockListType['id'], amount: number }) => {
-      if (stockAmountItem.sockList_id === stockList_id) {
+      if (stockAmountItem.sockList_id === stock_list_id) {
         if (pm) {
           newStockAmount.push({
-            sockList_id: stockList_id,
+            sockList_id: stock_list_id,
             amount: stockAmountItem.amount + 1
           });
         } else {
           if (stockAmountItem.amount - 1 < 0) {
             newStockAmount.push({
-              sockList_id: stockList_id,
+              sockList_id: stock_list_id,
               amount: stockAmountItem.amount
             });
           } else {
             newStockAmount.push({
-              sockList_id: stockList_id,
+              sockList_id: stock_list_id,
               amount: stockAmountItem.amount - 1
             });
           }
@@ -121,7 +121,7 @@ export default function SelectSupplies({ person_id, numberOfPerson }: Props): JS
       const stockList_Amount = stockAmount
         .filter((stockAmountItem) => stockAmountItem.amount > 0)
         .map((stockAmountItem) => ({
-          stockList_id: stockAmountItem.sockList_id,
+          stock_list_id: stockAmountItem.sockList_id,
           amount: stockAmountItem.amount,
         }));
 

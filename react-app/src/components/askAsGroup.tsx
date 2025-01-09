@@ -110,9 +110,9 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                                 boxSizing: 'border-box',
                                 width: 'auto'
                             }}>
-                            {fetchedData.group_member.map((member, index) => (
+                            {fetchedData.group_member.map((member) => (
                                 <div
-                                    key={index}
+                                    key={member.nick_name}
                                     style={{
                                         boxSizing: 'border-box',
                                         height: '40px',

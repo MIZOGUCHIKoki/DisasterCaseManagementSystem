@@ -28,10 +28,10 @@ export const PersonIcon = ({ id }: PersonIconProps): JSX.Element => {
                 justifyContent: 'space-between',
             }}
         >
-            {numbers.map((num) => {
+            {numbers.map((num, index) => {
                 return (
                     <img
-                        key={num}
+                        key={`${id}-${index}`}
                         src={`${process.env.PUBLIC_URL}/asset/${genFileName(num)}`}
                         style={{
                             width: 'auto',

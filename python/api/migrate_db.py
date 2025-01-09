@@ -11,9 +11,6 @@ from models.stock_io import Base
 
 from models.person import Person
 from models.stock_list import StockList
-from models.default_list import DefaultList
-from models.receive_log import ReceiveLog
-from models.stock_io import StockIO
 
 
 DB_URL = "sqlite:///./dataBase.db"

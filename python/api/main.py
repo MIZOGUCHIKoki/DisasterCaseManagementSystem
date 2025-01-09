@@ -14,8 +14,9 @@ app.include_router(receive_log.router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-            "https://localhost:3000",
-            "http://localhost:3000"
+            "https://192.168.24.57:3000",
+            "https://192.168.24.59:3000",
+            "https://192.168.24.55:3000",
         ],  # 許可するオリジンを設定
     allow_credentials=True,
     allow_methods=["*"],  # 許可するHTTPメソッド
@@ -23,4 +24,11 @@ app.add_middleware(
 )
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=4000, reload=True)
+    uvicorn.run(
+        "main:app", 
+        host="0.0.0.0", 
+        port=4000, 
+        reload=True, 
+        ssl_keyfile="../crt/server.key", 
+        ssl_certfile="../crt/server.crt"
+    )

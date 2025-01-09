@@ -29,7 +29,7 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
         console.log('QR読み取り [person_id]:', person_id);
         const fetchData = async (): Promise<void> => {
             try {
-                console.log(process.env.REACT_APP_API_ADDR);
+                // console.log(process.env.REACT_APP_API_ADDR);
                 // const response = await fetch(`${process.env.REACT_APP_API_ADDR}/person/${person_id}?timestamp=${new Date().getTime()}`);
                 // if (!response.ok) throw new Error(`Failed to fetch person: ${response.status}`);
                 // const data: FetchedData_PersonAndGroup = await response.json();

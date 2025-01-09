@@ -171,7 +171,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='19',
-            nick_name='武藤 悟',
+            nick_name='10, 1, 1',
             group_id=9,
             age=52,
             allergy=1,

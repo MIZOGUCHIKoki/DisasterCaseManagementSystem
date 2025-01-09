@@ -666,24 +666,4 @@ if __name__ == "__main__":
         StockList(name='パスタアレルギーフリー', size=None, unit='個', allergy=0, janure_id=2)
     ])
     session.commit()
-
-    session.add_all([
-        DefaultList(stock_list_id=1, amount=2, isAccepted=True),
-        DefaultList(stock_list_id=3, amount=4, isAccepted=True),
-        DefaultList(stock_list_id=5, amount=6, isAccepted=True)
-    ])
-    session.commit()
-
-    session.add_all([
-        ReceiveLog(person_id='1147d50765e7bbf4aa732e3273113c85', receive_class=1, number_of_people=1)
-    ])
-    session.commit()
-
-    session.add_all([
-        StockIO(stock_list_id=1, receive_log_id=None, amount=10),
-        StockIO(stock_list_id=1, receive_log_id=1, amount=2),
-        StockIO(stock_list_id=3, receive_log_id=1, amount=4),
-    ])
-    session.commit()
-
     

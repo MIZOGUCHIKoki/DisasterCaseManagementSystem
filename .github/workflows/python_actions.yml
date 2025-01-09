@@ -39,7 +39,7 @@ jobs:
 
       - name: Run Docker container with pytest
         run: |
-          docker run --rm -v $(pwd)/python:/app -w /app python pytest
+          docker run --rm -v $(pwd)/python:/app -w /app python sh -c "cd api/ && pytest"
           
       - name: Move caches
         run: |
@@ -75,7 +75,7 @@ jobs:
 
       - name: Run Docker container with pyright
         run: |
-          docker run --rm -v $(pwd)/python:/app -w /app python sh -c "cd api/ && pyright"
+          docker run --rm -v $(pwd)/python:/app -w /app python pyright
           
       - name: Move caches
         run: |

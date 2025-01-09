@@ -8,6 +8,8 @@ from models.person import Base
 from models.stock_list import Base
 from models.receive_log import Base
 from models.stock_io import Base
+from models.qr_read import Base
+
 
 from models.person import Person
 from models.stock_list import StockList

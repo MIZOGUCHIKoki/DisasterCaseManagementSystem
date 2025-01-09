@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'python/**'
-      - 'react-app/Dockerfile'
+      - 'python/Dockerfile'
       - '.github/workflows/python_actions.yml'
   workflow_dispatch:
 
@@ -75,7 +75,7 @@ jobs:
 
       - name: Run Docker container with pyright
         run: |
-          docker run --rm -v $(pwd)/python:/app -w /app python pyright
+          docker run --rm -v $(pwd)/python:/app -w /app python sh -c "cd api/ && pyright"
           
       - name: Move caches
         run: |

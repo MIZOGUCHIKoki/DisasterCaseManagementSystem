@@ -3,9 +3,15 @@ from pytest_asyncio import fixture # type: ignore
 from httpx import AsyncClient, ASGITransport
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from ..db import get_db, Base
-from ..main import app
 
-ASYNC_DB_URL = "sqlite+aiosqlite:///:memory:"
+from ..main import app
+from models.default_list import Base
+from models.person import Base
+from models.stock_list import Base
+from models.receive_log import Base
+from models.stock_io import Base
+
+ASYNC_DB_URL = "sqlite+aiosqlite:///./dataBase.db"
 
 @fixture(scope="session", autouse=True) # type: ignore
 async def async_client() -> AsyncClient: # type: ignore

@@ -6,6 +6,8 @@ from sqlalchemy.sql import text
 from models.default_list import Base
 from models.person import Base
 from models.stock_list import Base
+from models.receive_log import Base
+from models.stock_io import Base
 
 from models.person import Person
 from models.stock_list import StockList
@@ -14,7 +16,7 @@ from models.receive_log import ReceiveLog
 from models.stock_io import StockIO
 
 
-DB_URL = "sqlite:///./test.db"
+DB_URL = "sqlite:///./dataBase.db"
 engine = create_engine(
     DB_URL,
     echo = True

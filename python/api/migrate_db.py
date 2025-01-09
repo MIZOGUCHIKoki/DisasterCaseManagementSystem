@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from datetime import datetime
 from sqlalchemy.sql import text
+from datetime import datetime
 
 from models.default_list import Base
 from models.person import Base
@@ -290,10 +290,7 @@ if __name__ == "__main__":
             remarks_food='なし',
             remarks_other='なし',
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        )
-        from datetime import datetime
-
-        # グループ1 (4人)
+        ),
         Person(
             id='26',
             nick_name='田中 太郎',

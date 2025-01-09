@@ -3,7 +3,7 @@ name: python actions
 on:
   push:
     paths:
-      - 'react-app/**'
+      - 'python/**'
       - 'react-app/Dockerfile'
       - '.github/workflows/python_actions.yml'
   workflow_dispatch:

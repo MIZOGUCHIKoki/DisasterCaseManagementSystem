@@ -1,0 +1,3 @@
+[submodule "react-app/public/asset"]
+	path = react-app/public/asset
+	url = git@github.com:shikidalab/COACHES_ASSET.git

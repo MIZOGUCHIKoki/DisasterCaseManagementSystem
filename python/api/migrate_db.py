@@ -39,7 +39,56 @@ if __name__ == "__main__":
     
     session.execute(text('PRAGMA foreign_keys = ON;'))
     session.add_all([
-            
+        Person(
+            id='1',
+            nick_name='1,2,3',
+            group_id=None,
+            age=46,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='2',
+            nick_name='4,5,6',
+            group_id=None,
+            age=6,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='3',
+            nick_name='7,8,9',
+            group_id=None,
+            age=29,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='4',
+            nick_name='10,1,2',
+            group_id=None,
+            age=14,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='5',
+            nick_name='赤堀 雅代',
+            group_id=None,
+            age=7,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
         Person(
             id='6',
             nick_name='笠井 直子',
@@ -137,56 +186,6 @@ if __name__ == "__main__":
             age=25,
             allergy=1,
             remarks_food='りんご',
-            remarks_other='なし',
-            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        ),
-        Person(
-            id='1',
-            nick_name='松枝 忠良',
-            group_id=None,
-            age=46,
-            allergy=0,
-            remarks_food='なし',
-            remarks_other='なし',
-            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        ),
-        Person(
-            id='2',
-            nick_name='中原 勉',
-            group_id=None,
-            age=6,
-            allergy=0,
-            remarks_food='なし',
-            remarks_other='なし',
-            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        ),
-        Person(
-            id='3',
-            nick_name='宇野 憲二',
-            group_id=None,
-            age=29,
-            allergy=0,
-            remarks_food='なし',
-            remarks_other='なし',
-            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        ),
-        Person(
-            id='4',
-            nick_name='及川 華織',
-            group_id=None,
-            age=14,
-            allergy=0,
-            remarks_food='なし',
-            remarks_other='なし',
-            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        ),
-        Person(
-            id='5',
-            nick_name='赤堀 雅代',
-            group_id=None,
-            age=7,
-            allergy=0,
-            remarks_food='なし',
             remarks_other='なし',
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
@@ -568,7 +567,7 @@ if __name__ == "__main__":
         # グループ9 (4人)
         Person(
             id='52',
-            nick_name='井上 剛',
+            nick_name='1, 2, 2',
             group_id=9,
             age=43,
             allergy=0,
@@ -578,7 +577,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='53',
-            nick_name='原田 直樹',
+            nick_name='1,1,1',
             group_id=9,
             age=29,
             allergy=0,
@@ -588,7 +587,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='54',
-            nick_name='小川 あかり',
+            nick_name='2,3,1',
             group_id=9,
             age=38,
             allergy=0,
@@ -598,7 +597,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='55',
-            nick_name='野田 泰輔',
+            nick_name='10,2,1',
             group_id=9,
             age=31,
             allergy=0,
@@ -648,11 +647,6 @@ if __name__ == "__main__":
             remarks_other='なし',
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
-    
-
-
-        
-
     ])
     session.commit()
     session.add_all([

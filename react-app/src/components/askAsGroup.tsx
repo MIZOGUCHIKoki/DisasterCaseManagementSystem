@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from './Button/Button';
 import { PM_Button } from './PM_Button/PM_Button';
 import { PersonType } from './type/Person';
+import { PersonIcon } from './PersonIcon/PersonIcon';
 import SelectSupplies from './selectSupplies';
 
 // Fetched data type from API after QR code reading
@@ -76,14 +77,24 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
 
     return (
         <div className="container">
-            <div style={{ display: 'flex', alignItems: 'flex-start', width: '100%' }}>
-                <div style={{ width: '50%' }}>
+            <div style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                width: 'auto',
+                margin: '10px 10px 0px 10px'
+            }}>
+                <div style={{ width: '50%', }}>
                     <div style={{ margin: '10px' }}>あなた</div>
                     {/* Ensure fetchedData is not null or undefined */}
                     {fetchedData && fetchedData.person_info ? (
-                        <ul>
-                            <li>{fetchedData.person_info.nick_name}</li>
-                        </ul>
+                        <div style={{
+                            height: '40px',
+                            border: '3px solid black',
+                            borderRadius: '5px',
+                            boxSizing: 'border-box',
+                        }}>
+                            <PersonIcon id={fetchedData.person_info.nick_name} />
+                        </div>
                     ) : (
                         <div>データがありません</div>
                     )}
@@ -92,13 +103,31 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                     <div style={{ margin: '10px' }}>グループメンバ</div>
                     {/* Check for null or undefined groupMember */}
                     {fetchedData && fetchedData.group_member.length > 0 ? (
-                        <ul>
+                        <div
+                            style={{
+                                marginLeft: '10px',
+                                display: 'block',
+                                boxSizing: 'border-box',
+                                width: 'auto'
+                            }}>
                             {fetchedData.group_member.map((member, index) => (
-                                <li key={index}>{member.nick_name}</li>
+                                <div
+                                    key={index}
+                                    style={{
+                                        boxSizing: 'border-box',
+                                        height: '40px',
+                                        border: '3px solid black',
+                                        width: 'auto',
+                                        borderRadius: '5px',
+                                        marginBottom: '8px'
+                                    }}
+                                >
+                                    <PersonIcon id={member.nick_name} />
+                                </div>
                             ))}
-                        </ul>
+                        </div>
                     ) : (
-                        <div>グループメンバーがありません</div>
+                        <div style={{ marginLeft: '10px', fontSize: '1rem' }}>メンバーなし</div>
                     )}
                 </div>
             </div>

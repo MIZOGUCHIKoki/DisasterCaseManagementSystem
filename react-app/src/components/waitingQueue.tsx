@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { Button } from './Button/Button';
+import { PersonIcon } from './PersonIcon/PersonIcon';
 
 import { DB_WaitingQueueType } from './type/WaitingQueue';
 import { PersonType } from './type/Person';
@@ -127,7 +128,15 @@ export default function WaitingQueue(): JSX.Element {
                                 alignItems: 'center',
                             }}
                         >
-                            <div>{queue.person.nick_name}</div>
+                            <div
+                                style={{
+                                    backgroundColor: 'white',
+                                    height: '40px',
+                                    width: '50%',
+                                }}
+                            >
+                                <PersonIcon id={queue.person.nick_name} />
+                            </div>
                             <div>{queue.number_of_people}人分</div>
                         </div>
                         <table>

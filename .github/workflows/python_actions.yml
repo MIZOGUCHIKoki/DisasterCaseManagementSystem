@@ -73,7 +73,7 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache-python
           cache-to: type=local,dest=/tmp/.buildx-cache-python-new
 
-      - name: Run Docker container with pytest
+      - name: Run Docker container with pyright
         run: |
           docker run --rm -v $(pwd)/python:/app -w /app python pyright
           

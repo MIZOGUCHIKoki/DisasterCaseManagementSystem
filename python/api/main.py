@@ -15,9 +15,10 @@ app.include_router(qr_read.router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-            "https://192.168.24.57:3000",
-            "https://192.168.24.55:3000",
-            "https://192.168.24.46:3000",
+        "https://localhost:3000",
+        "https://192.168.10.20:3000",
+        "https://192.168.10.30:3000",
+        "https://192.168.10.5;3000"
         ],  # 許可するオリジンを設定
     allow_credentials=True,
     allow_methods=["*"],  # 許可するHTTPメソッド

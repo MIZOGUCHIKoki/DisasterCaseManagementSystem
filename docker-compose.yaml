@@ -12,6 +12,7 @@ services:
     environment:
       - WATCHPACK_POLLING=true
     tty: true
+    command: /bin/bash -c "npm i && HTTPS=true npm run start"
 
   python:
     build:
@@ -25,6 +26,7 @@ services:
     depends_on:
       - react
     tty: true
+    command: /bin/bash -c "poetry install --no-root && cd api && python3  migrate_db.py && python3 main.py"
 
 #   db:
 #     build:

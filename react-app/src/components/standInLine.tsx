@@ -18,7 +18,7 @@ export default function StandInLine(): JSX.Element {
                     fontWeight: '700',
                 }}
             >
-                列にお並びください
+                完了しました
             </div>
         </div>
     );

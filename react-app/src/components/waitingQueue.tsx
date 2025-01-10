@@ -185,7 +185,7 @@ export default function WaitingQueue(): JSX.Element {
                                     // 受け取り完了処理
                                     post(queue.id);
                                 }}
-                                label='受け取り完了'
+                                label='受け渡し完了'
                                 primary={true}
                             />
                         </div>

@@ -8,7 +8,7 @@ RUN apt-get update
 RUN apt-get install -y libsqlite3-dev
 RUN pip install poetry
 
-COPY ./pyproject.toml ./poetry.lock
+COPY ./pyproject.toml ./poetry.lock /src
 RUN poetry install --no-root
 
 # OFF virtual envs of poetry

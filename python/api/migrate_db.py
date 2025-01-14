@@ -40,8 +40,8 @@ if __name__ == "__main__":
     session.execute(text('PRAGMA foreign_keys = ON;'))
     session.add_all([
         Person(
-            id='1',
-            nick_name='1,2,3',
+            id='1A',
+            nick_name='2,11',
             group_id=None,
             age=46,
             allergy=0,
@@ -50,8 +50,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='2',
-            nick_name='4,5,6',
+            id='2A',
+            nick_name='2,12',
             group_id=None,
             age=6,
             allergy=0,
@@ -60,8 +60,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='3',
-            nick_name='7,8,9',
+            id='3A',
+            nick_name='2,13',
             group_id=None,
             age=29,
             allergy=0,
@@ -70,8 +70,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='4',
-            nick_name='10,1,2',
+            id='4A',
+            nick_name='2,14',
             group_id=None,
             age=14,
             allergy=0,
@@ -80,8 +80,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='5',
-            nick_name='赤堀 雅代',
+            id='5A',
+            nick_name='2,15',
             group_id=None,
             age=7,
             allergy=0,
@@ -90,8 +90,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='6',
-            nick_name='笠井 直子',
+            id='6A',
+            nick_name='1,11',
             group_id=1,
             age=0,
             allergy=0,
@@ -100,8 +100,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='7',
-            nick_name='川見 達人',
+            id='7A',
+            nick_name='1,12',
             group_id=2,
             age=30,
             allergy=0,
@@ -110,8 +110,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='8',
-            nick_name='竹内 一晃',
+            id='8A',
+            nick_name='1,13',
             group_id=3,
             age=69,
             allergy=0,
@@ -120,8 +120,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='9',
-            nick_name='吉田 和美',
+            id='9A',
+            nick_name='1,14',
             group_id=4,
             age=15,
             allergy=0,
@@ -130,8 +130,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='10',
-            nick_name='東根 真実',
+            id='10A',
+            nick_name='1,15',
             group_id=5,
             age=75,
             allergy=0,
@@ -140,8 +140,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='16',
-            nick_name='長谷川 芳美',
+            id='16A',
+            nick_name='1,16',
             group_id=6,
             age=52,
             allergy=1,
@@ -150,8 +150,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='17',
-            nick_name='平井 剛士',
+            id='17A',
+            nick_name='1,17',
             group_id=7,
             age=51,
             allergy=1,
@@ -160,8 +160,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='18',
-            nick_name='木村 直美',
+            id='18A',
+            nick_name='1,18',
             group_id=8,
             age=33,
             allergy=1,
@@ -170,8 +170,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='19',
-            nick_name='10, 1, 1',
+            id='19A',
+            nick_name='1,19',
             group_id=9,
             age=52,
             allergy=1,
@@ -180,8 +180,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='20',
-            nick_name='吉田 英樹',
+            id='20A',
+            nick_name='1,20',
             group_id=10,
             age=25,
             allergy=1,
@@ -190,8 +190,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='11',
-            nick_name='田中 昭次',
+            id='11A',
+            nick_name='2,16',
             group_id=None,
             age=42,
             allergy=1,
@@ -200,8 +200,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='12',
-            nick_name='森川 俊一',
+            id='12A',
+            nick_name='2,17',
             group_id=None,
             age=11,
             allergy=1,
@@ -210,8 +210,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='13',
-            nick_name='丹羽 義典',
+            id='13A',
+            nick_name='2,18',
             group_id=None,
             age=25,
             allergy=1,
@@ -220,8 +220,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='14',
-            nick_name='中村 さおり',
+            id='14A',
+            nick_name='2,19',
             group_id=None,
             age=47,
             allergy=1,
@@ -230,8 +230,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='15',
-            nick_name='中村 雄二郎',
+            id='15A',
+            nick_name='2,20',
             group_id=None,
             age=35,
             allergy=1,
@@ -240,8 +240,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='21',
-            nick_name='吉岡 匠',
+            id='21A',
+            nick_name='2,11',
             group_id=11,
             age=22,
             allergy=0,
@@ -250,8 +250,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='22',
-            nick_name='谷 保',
+            id='22A',
+            nick_name='2,12',
             group_id=12,
             age=70,
             allergy=0,
@@ -260,8 +260,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='23',
-            nick_name='鈴木 秀太',
+            id='23A',
+            nick_name='2,13',
             group_id=None,
             age=41,
             allergy=0,
@@ -270,8 +270,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='24',
-            nick_name='山本 林太郎',
+            id='24A',
+            nick_name='2,14',
             group_id=None,
             age=33,
             allergy=0,
@@ -280,8 +280,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='25',
-            nick_name='金子 大介',
+            id='25A',
+            nick_name='2,15',
             group_id=None,
             age=2,
             allergy=0,
@@ -291,7 +291,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='26',
-            nick_name='田中 太郎',
+            nick_name='3,11',
             group_id=1,
             age=28,
             allergy=0,
@@ -301,7 +301,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='27',
-            nick_name='佐藤 花子',
+            nick_name='3,12',
             group_id=1,
             age=35,
             allergy=0,
@@ -311,7 +311,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='28',
-            nick_name='鈴木 一郎',
+            nick_name='3,13',
             group_id=1,
             age=42,
             allergy=0,
@@ -321,7 +321,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='29',
-            nick_name='高橋 美咲',
+            nick_name='3,14',
             group_id=1,
             age=27,
             allergy=0,
@@ -333,7 +333,7 @@ if __name__ == "__main__":
         # グループ2 (4人)
         Person(
             id='30',
-            nick_name='山本 俊介',
+            nick_name='3,15',
             group_id=2,
             age=50,
             allergy=0,
@@ -343,7 +343,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='31',
-            nick_name='中村 亜美',
+            nick_name='3,16',
             group_id=2,
             age=29,
             allergy=0,
@@ -353,7 +353,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='32',
-            nick_name='小林 祐樹',
+            nick_name='3,17',
             group_id=2,
             age=33,
             allergy=0,
@@ -363,7 +363,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='33',
-            nick_name='加藤 理恵',
+            nick_name='3,18',
             group_id=2,
             age=41,
             allergy=0,
@@ -375,7 +375,7 @@ if __name__ == "__main__":
         # グループ3 (4人)
         Person(
             id='34',
-            nick_name='清水 遼',
+            nick_name='3,19',
             group_id=3,
             age=38,
             allergy=0,
@@ -385,7 +385,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='35',
-            nick_name='石井 優子',
+            nick_name='3,20',
             group_id=3,
             age=26,
             allergy=0,
@@ -395,7 +395,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='36',
-            nick_name='長谷川 大輔',
+            nick_name='4,11',
             group_id=3,
             age=45,
             allergy=0,
@@ -405,7 +405,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='37',
-            nick_name='藤田 香織',
+            nick_name='4,12',
             group_id=3,
             age=37,
             allergy=0,
@@ -417,7 +417,7 @@ if __name__ == "__main__":
         # グループ4 (4人)
         Person(
             id='38',
-            nick_name='吉田 圭一',
+            nick_name='4,13',
             group_id=4,
             age=53,
             allergy=0,

@@ -12,7 +12,7 @@ const meta = {
         layout: 'fullscreen',
     },
     args: {
-        id: '1,2,3',
+        id: '1,2',
     },
 } satisfies Meta<typeof PersonIcon>;
 
@@ -21,7 +21,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Success: Story = {
     args: {
-        id: '1,2,3',
+        id: '1,2',
     },
 };
 

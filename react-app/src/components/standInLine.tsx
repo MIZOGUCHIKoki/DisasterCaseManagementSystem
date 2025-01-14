@@ -3,7 +3,7 @@ import React from 'react';
 export default function StandInLine(): JSX.Element {
     setTimeout(() => {
         window.location.href = '/reception';
-    }, 5000);
+    }, 1000);
     return (
         <div className="container">
             <div

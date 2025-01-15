@@ -40,7 +40,7 @@ if __name__ == "__main__":
     session.execute(text('PRAGMA foreign_keys = ON;'))
     session.add_all([
         Person(
-            id='1A',
+            id='202501150001',
             nick_name='2,11',
             group_id=None,
             age=46,
@@ -50,7 +50,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='2A',
+            id='202501150002',
             nick_name='2,12',
             group_id=None,
             age=6,
@@ -60,7 +60,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='3A',
+            id='202501150003',
             nick_name='2,13',
             group_id=None,
             age=29,
@@ -70,7 +70,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='4A',
+            id='202501150004',
             nick_name='2,14',
             group_id=None,
             age=14,
@@ -80,7 +80,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='5A',
+            id='202501150005',
             nick_name='2,15',
             group_id=None,
             age=7,
@@ -90,17 +90,17 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='6A',
+            id='202501150006',
             nick_name='1,11',
             group_id=1,
-            age=0,
+            age=32,
             allergy=0,
             remarks_food='なし',
             remarks_other='なし',
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='7A',
+            id='202501150007',
             nick_name='1,12',
             group_id=2,
             age=30,
@@ -110,7 +110,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='8A',
+            id='202501150008',
             nick_name='1,13',
             group_id=3,
             age=69,
@@ -120,7 +120,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='9A',
+            id='202501150009',
             nick_name='1,14',
             group_id=4,
             age=15,
@@ -130,7 +130,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='10A',
+            id='202501150010',
             nick_name='1,15',
             group_id=5,
             age=75,
@@ -140,7 +140,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='16A',
+            id='202501150016',
             nick_name='1,16',
             group_id=6,
             age=52,
@@ -150,7 +150,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='17A',
+            id='202501150017',
             nick_name='1,17',
             group_id=7,
             age=51,
@@ -160,7 +160,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='18A',
+            id='202501150018',
             nick_name='1,18',
             group_id=8,
             age=33,
@@ -170,7 +170,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='19A',
+            id='202501150019',
             nick_name='1,19',
             group_id=9,
             age=52,
@@ -180,7 +180,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='20A',
+            id='202501150020',
             nick_name='1,20',
             group_id=10,
             age=25,
@@ -190,7 +190,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='11A',
+            id='202501150011',
             nick_name='2,16',
             group_id=None,
             age=42,
@@ -200,7 +200,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='12A',
+            id='202501150012',
             nick_name='2,17',
             group_id=None,
             age=11,
@@ -210,7 +210,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='13A',
+            id='202501150013',
             nick_name='2,18',
             group_id=None,
             age=25,
@@ -220,7 +220,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='14A',
+            id='202501150014',
             nick_name='2,19',
             group_id=None,
             age=47,
@@ -230,7 +230,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='15A',
+            id='202501150015',
             nick_name='2,20',
             group_id=None,
             age=35,
@@ -240,7 +240,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='21A',
+            id='202501150021',
             nick_name='2,11',
             group_id=11,
             age=22,
@@ -250,7 +250,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='22A',
+            id='202501150022',
             nick_name='2,12',
             group_id=12,
             age=70,
@@ -260,7 +260,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='23A',
+            id='202501150023',
             nick_name='2,13',
             group_id=None,
             age=41,
@@ -270,7 +270,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='24A',
+            id='202501150024',
             nick_name='2,14',
             group_id=None,
             age=33,
@@ -280,7 +280,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='25A',
+            id='202501150025',
             nick_name='2,15',
             group_id=None,
             age=2,
@@ -290,7 +290,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='26',
+            id='202501150026',
             nick_name='3,11',
             group_id=1,
             age=28,
@@ -300,7 +300,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='27',
+            id='202501150027',
             nick_name='3,12',
             group_id=1,
             age=35,
@@ -310,7 +310,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='28',
+            id='202501150028',
             nick_name='3,13',
             group_id=1,
             age=42,
@@ -320,7 +320,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='29',
+            id='202501150029',
             nick_name='3,14',
             group_id=1,
             age=27,
@@ -332,7 +332,7 @@ if __name__ == "__main__":
         
         # グループ2 (4人)
         Person(
-            id='30',
+            id='202501150030',
             nick_name='3,15',
             group_id=2,
             age=50,
@@ -342,7 +342,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='31',
+            id='202501150031',
             nick_name='3,16',
             group_id=2,
             age=29,
@@ -352,7 +352,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='32',
+            id='202501150032',
             nick_name='3,17',
             group_id=2,
             age=33,
@@ -362,7 +362,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='33',
+            id='202501150033',
             nick_name='3,18',
             group_id=2,
             age=41,
@@ -374,7 +374,7 @@ if __name__ == "__main__":
         
         # グループ3 (4人)
         Person(
-            id='34',
+            id='202501150034',
             nick_name='3,19',
             group_id=3,
             age=38,
@@ -384,7 +384,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='35',
+            id='202501150035',
             nick_name='3,20',
             group_id=3,
             age=26,
@@ -394,7 +394,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='36',
+            id='202501150036',
             nick_name='4,11',
             group_id=3,
             age=45,
@@ -404,7 +404,7 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='37',
+            id='202501150037',
             nick_name='4,12',
             group_id=3,
             age=37,
@@ -416,7 +416,7 @@ if __name__ == "__main__":
         
         # グループ4 (4人)
         Person(
-            id='38',
+            id='202501150038',
             nick_name='4,13',
             group_id=4,
             age=53,
@@ -426,8 +426,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='39',
-            nick_name='宮崎 沙織',
+            id='202501150039',
+            nick_name='4,14',
             group_id=4,
             age=31,
             allergy=0,
@@ -436,8 +436,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='40',
-            nick_name='竹内 修',
+            id='202501150040',
+            nick_name='4,15',
             group_id=4,
             age=40,
             allergy=0,
@@ -446,8 +446,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='41',
-            nick_name='岡田 紗江',
+            id='202501150041',
+            nick_name='4,15',
             group_id=4,
             age=22,
             allergy=0,
@@ -458,8 +458,8 @@ if __name__ == "__main__":
         
         # グループ5 (2人)
         Person(
-            id='42',
-            nick_name='佐々木 隆',
+            id='202501150042',
+            nick_name='4,16',
             group_id=5,
             age=60,
             allergy=0,
@@ -468,8 +468,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='43',
-            nick_name='西村 美穂',
+            id='202501150043',
+            nick_name='4,17',
             group_id=5,
             age=25,
             allergy=0,
@@ -480,18 +480,18 @@ if __name__ == "__main__":
         
         # グループ6 (2人)
         Person(
-            id='44',
-            nick_name='清水 明',
+            id='202501150044',
+            nick_name='4,18',
             group_id=6,
             age=44,
             allergy=0,
-            remarks_food='なし',
+            remarks_food='そば',
             remarks_other='なし',
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='45',
-            nick_name='中川 真理',
+            id='202501150045',
+            nick_name='4,19',
             group_id=6,
             age=32,
             allergy=0,
@@ -502,18 +502,18 @@ if __name__ == "__main__":
         
         # グループ7 (4人)
         Person(
-            id='46',
-            nick_name='大西 博',
+            id='202501150046',
+            nick_name='4,20',
             group_id=7,
             age=28,
             allergy=0,
-            remarks_food='なし',
+            remarks_food='大豆',
             remarks_other='なし',
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='47',
-            nick_name='田村 智子',
+            id='202501150047',
+            nick_name='5,11',
             group_id=7,
             age=34,
             allergy=0,
@@ -522,8 +522,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='48',
-            nick_name='松本 貴志',
+            id='202501150048',
+            nick_name='5,12',
             group_id=7,
             age=42,
             allergy=0,
@@ -532,8 +532,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='49',
-            nick_name='遠藤 由紀',
+            id='202501150049',
+            nick_name='5,13',
             group_id=7,
             age=37,
             allergy=0,
@@ -544,18 +544,18 @@ if __name__ == "__main__":
         
         # グループ8 (2人)
         Person(
-            id='50',
-            nick_name='河野 明子',
+            id='202501150050',
+            nick_name='5,14',
             group_id=8,
             age=50,
             allergy=0,
-            remarks_food='なし',
+            remarks_food='鶏卵',
             remarks_other='なし',
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='51',
-            nick_name='永井 大樹',
+            id='202501150051',
+            nick_name='5,15',
             group_id=8,
             age=33,
             allergy=0,
@@ -566,18 +566,18 @@ if __name__ == "__main__":
         
         # グループ9 (4人)
         Person(
-            id='52',
-            nick_name='1, 2, 2',
+            id='202501150052',
+            nick_name='5,16',
             group_id=9,
             age=43,
             allergy=0,
-            remarks_food='なし',
+            remarks_food='牛乳',
             remarks_other='なし',
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='53',
-            nick_name='1,1,1',
+            id='202501150053',
+            nick_name='5,17',
             group_id=9,
             age=29,
             allergy=0,
@@ -586,8 +586,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='54',
-            nick_name='2,3,1',
+            id='202501150054',
+            nick_name='5,18',
             group_id=9,
             age=38,
             allergy=0,
@@ -596,8 +596,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='55',
-            nick_name='10,2,1',
+            id='202501150055',
+            nick_name='5,19',
             group_id=9,
             age=31,
             allergy=0,
@@ -608,8 +608,8 @@ if __name__ == "__main__":
         
         # グループ10 (4人)
         Person(
-            id='56',
-            nick_name='岡本 昭夫',
+            id='202501150056',
+            nick_name='5,20',
             group_id=10,
             age=45,
             allergy=0,
@@ -618,18 +618,18 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='57',
-            nick_name='田島 美佳',
+            id='202501150057',
+            nick_name='6,11',
             group_id=10,
             age=30,
             allergy=0,
-            remarks_food='なし',
+            remarks_food='りんご',
             remarks_other='なし',
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='58',
-            nick_name='岩田 英子',
+            id='202501150058',
+            nick_name='6,12',
             group_id=10,
             age=38,
             allergy=0,
@@ -638,8 +638,8 @@ if __name__ == "__main__":
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
         Person(
-            id='59',
-            nick_name='小松 光一',
+            id='202501150059',
+            nick_name='6,13',
             group_id=10,
             age=41,
             allergy=0,
@@ -652,11 +652,11 @@ if __name__ == "__main__":
     session.add_all([
         StockList(name='水', size='250', unit='本', allergy=0, janure_id=1),
         StockList(name='保存用パン', size=None, unit='個', allergy=1, janure_id=1),
-        StockList(name='米粉クッキー', size=None, unit='個', allergy=24, janure_id=1),
-        StockList(name='えびピラフ', size=None, unit='個', allergy=0, janure_id=2),
-        StockList(name='アルファ米アレルギーフリー', size=None, unit='個', allergy=0, janure_id=2),
-        StockList(name='カルボナーラ', size=None, unit='個', allergy=0, janure_id=3),
-        StockList(name='パスタアレルギーフリー', size=None, unit='個', allergy=0, janure_id=2)
+        StockList(name='米粉クッキー', size=None, unit='個', allergy=24, janure_id=1)#,
+       # StockList(name='えびピラフ', size=None, unit='個', allergy=0, janure_id=2),
+       # StockList(name='アルファ米アレルギーフリー', size=None, unit='個', allergy=0, janure_id=2),
+       # StockList(name='カルボナーラ', size=None, unit='個', allergy=0, janure_id=3),
+       # StockList(name='パスタアレルギーフリー', size=None, unit='個', allergy=0, janure_id=2)
     ])
     session.commit()
     

@@ -154,10 +154,9 @@ export default function SelectSupplies({ person_id, number_of_people }: Props): 
               }}
             >
               <Button
-                primary={true}
-                label='決定'
+                label='戻る'
                 onClick={() => {
-                  onClick_decide();
+                  setAskAsGroupFlag(true);
                 }}
               />
             </div>
@@ -168,9 +167,10 @@ export default function SelectSupplies({ person_id, number_of_people }: Props): 
               }}
             >
               <Button
-                label='戻る'
+                primary={true}
+                label='決定'
                 onClick={() => {
-                  setAskAsGroupFlag(true);
+                  onClick_decide();
                 }}
               />
             </div>

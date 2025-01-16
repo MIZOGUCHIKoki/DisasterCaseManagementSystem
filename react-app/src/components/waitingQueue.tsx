@@ -62,7 +62,7 @@ export default function WaitingQueue(): JSX.Element {
             });
         };
         postData().then(() => {
-            waitingQueue.filter((queue) => queue.id !== queue_id);
+            setWaitingQueue(waitingQueue.filter((queue) => queue.id !== queue_id));
             if (waitingQueue.length <= 3) {
                 setFetchDataFlag(true);
             }

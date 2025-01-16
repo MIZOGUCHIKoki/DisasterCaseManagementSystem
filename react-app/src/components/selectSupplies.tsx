@@ -142,12 +142,15 @@ export default function SelectSupplies({ person_id, number_of_people }: Props): 
         <div className='container'>
           <div
             style={{
-              margin: '10px 10px 0px'
+              margin: '10px 10px 0px',
+              display: 'flex',
+              justifyContent: 'space-between',
             }}
           >
             <div
               style={{
-                marginBottom: '5px'
+                marginBottom: '5px',
+                height: '60px'
               }}
             >
               <Button
@@ -158,7 +161,12 @@ export default function SelectSupplies({ person_id, number_of_people }: Props): 
                 }}
               />
             </div>
-            <div>
+            <div
+              style={{
+                marginBottom: '5px',
+                height: '60px'
+              }}
+            >
               <Button
                 label='戻る'
                 onClick={() => {

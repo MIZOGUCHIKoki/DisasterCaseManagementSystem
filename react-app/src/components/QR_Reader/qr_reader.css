@@ -4,8 +4,8 @@ video {
     left: 0;
     width: auto;
     height: auto;
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+    /*-webkit-transform: scaleX(-1);
+    transform: scaleX(-1);*/
 }
 
 canvas {

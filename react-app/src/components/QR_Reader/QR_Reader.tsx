@@ -28,7 +28,7 @@ export default function QR_Reader(props: QR_ReaderProps): JSX.Element {
         // constraintsの設定
         const constraints = {
             video: {
-                facingMode: 'user',
+                facingMode: 'environment',
                 width: { ideal: videoWidthHeight() },
                 height: { ideal: videoWidthHeight() },
             },

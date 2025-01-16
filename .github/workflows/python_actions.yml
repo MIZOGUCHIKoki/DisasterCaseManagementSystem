@@ -110,7 +110,7 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache-python
           cache-to: type=local,dest=/tmp/.buildx-cache-python-new
 
-      - name: Run Docker container with pyright
+      - name: Run Docker container with data migration
         run: |
           docker run --rm -v $(pwd)/python:/app -w /app python python3 migrate_db.py
           

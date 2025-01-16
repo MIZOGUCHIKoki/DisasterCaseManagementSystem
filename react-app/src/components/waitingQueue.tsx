@@ -33,13 +33,11 @@ export default function WaitingQueue(): JSX.Element {
         } 
     */
     useEffect(() => {
-        setTimeout(() => {
-            if (waitingQueue.length <= 3) {
-                setFetchDataFlag(true);
-                console.log('fetch');
-            }
-        }, 5000);
-    }, []);
+        if (waitingQueue.length <= 3) {
+            setFetchDataFlag(true);
+            console.log('fetch');
+        }
+    }, [waitingQueue]);
     useEffect(() => {
         const fetchData = async () => {
             try {

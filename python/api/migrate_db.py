@@ -242,7 +242,7 @@ if __name__ == "__main__":
         Person(
             id='202501150021',
             nick_name='2,11',
-            group_id=11,
+            group_id=None,
             age=22,
             allergy=0,
             remarks_food='なし',
@@ -252,7 +252,7 @@ if __name__ == "__main__":
         Person(
             id='202501150022',
             nick_name='2,12',
-            group_id=12,
+            group_id=None,
             age=70,
             allergy=0,
             remarks_food='なし',

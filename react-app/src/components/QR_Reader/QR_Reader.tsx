@@ -14,11 +14,23 @@ export default function QR_Reader(props: QR_ReaderProps): JSX.Element {
     const [error, setError] = useState<Error | undefined>(undefined);
 
     useEffect(() => {
+        // 画面のX％を計算
+        const xPercent = 80; // 例: 50％
+        const videoWidthHeight = () => {
+            if (window.innerWidth >= window.innerHeight) {
+                return (window.innerHeight * xPercent) / 100;
+
+            } else {
+                return (window.innerWidth * xPercent) / 100;
+            }
+        };
+
+        // constraintsの設定
         const constraints = {
             video: {
                 facingMode: 'user',
-                width: { ideal: 300 },
-                height: { ideal: 300 },
+                width: { ideal: videoWidthHeight() },
+                height: { ideal: videoWidthHeight() },
             },
         };
         const startStream = async () => {

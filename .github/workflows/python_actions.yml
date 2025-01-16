@@ -112,7 +112,7 @@ jobs:
 
       - name: Run Docker container with data migration
         run: |
-          docker run --rm -v $(pwd)/python:/app -w /app python python3 migrate_db.py
+          docker run --rm -v $(pwd)/python:/app -w /app python sh -c "cd api/ && python3 migrate_db.py"
           
       - name: Move caches
         run: |

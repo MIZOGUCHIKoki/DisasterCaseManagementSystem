@@ -32,6 +32,11 @@ export default function WaitingQueue(): JSX.Element {
             number_of_people = false;
         } 
     */
+    setTimeout(() => {
+        if (waitingQueue.length <= 3) {
+            setFetchDataFlag(true);
+        }
+    }, 5000);
     useEffect(() => {
         const fetchData = async () => {
             try {

@@ -127,7 +127,8 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                             ))}
                         </div>
                     ) : (
-                        <div style={{ marginLeft: '10px', fontSize: '1rem' }}>メンバーなし</div>
+                        // <div style={{ marginLeft: '10px', fontSize: '1rem' }}>メンバーなし</div>
+                        <div></div>
                     )}
                 </div>
             </div>

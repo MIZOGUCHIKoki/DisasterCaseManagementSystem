@@ -68,6 +68,7 @@ export default function WaitingQueue(): JSX.Element {
             });
         };
         postData();
+        waitingQueue.filter((queue) => queue.id !== queue_id);
     };
     const style = (): React.CSSProperties => {
         if (screen.width > 768) { // PC, tablet

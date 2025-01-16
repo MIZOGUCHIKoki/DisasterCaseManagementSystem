@@ -144,17 +144,21 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                         label="一人分のみ"
                     />
                 </div>
-                <div style={{ margin: '10px 10px', height: '60px' }}>
-                    <Button
-                        onClick={() => {
-                            if (fetchedData) {
-                                setNumberOfGroup(fetchedData.group_member.length + 1);
-                                post();
-                            }
-                        }}
-                        label={`グループの分も （合計${fetchedData?.group_member.length + 1}名分）`}
-                    />
-                </div>
+                {(fetchedData && fetchedData.group_member.length > 0) ? (
+                    <div style={{ margin: '10px 10px', height: '60px' }}>
+                        <Button
+                            onClick={() => {
+                                if (fetchedData) {
+                                    setNumberOfGroup(fetchedData.group_member.length + 1);
+                                    post();
+                                }
+                            }}
+                            label={`グループの分も （合計${fetchedData?.group_member.length + 1}名分）`}
+                        />
+                    </div>
+                ) : (
+                    <div></div>
+                )}
             </div>
             <div>
                 <div style={{ margin: '10px 10px', height: '60px' }}>

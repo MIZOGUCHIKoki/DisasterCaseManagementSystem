@@ -100,7 +100,7 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                     )}
                 </div>
                 <div style={{ width: '50%' }}>
-                    <div style={{ margin: '10px' }}>グループメンバ</div>
+                    {/* <div style={{ margin: '10px' }}>グループメンバ</div> */}
                     {/* Check for null or undefined groupMember */}
                     {fetchedData && fetchedData.group_member.length > 0 ? (
                         <div
@@ -122,12 +122,13 @@ export default function AskAsGroup({ person_id }: Props): JSX.Element {
                                         marginBottom: '8px'
                                     }}
                                 >
-                                    <PersonIcon id={member.nick_name} />
+                                    {/* <PersonIcon id={member.nick_name} /> */}
                                 </div>
                             ))}
                         </div>
                     ) : (
-                        <div style={{ marginLeft: '10px', fontSize: '1rem' }}>メンバーなし</div>
+                        // <div style={{ marginLeft: '10px', fontSize: '1rem' }}>メンバーなし</div>
+                        <div></div>
                     )}
                 </div>
             </div>

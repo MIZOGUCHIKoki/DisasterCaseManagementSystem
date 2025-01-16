@@ -33,6 +33,12 @@ export default function WaitingQueue(): JSX.Element {
         } 
     */
     useEffect(() => {
+        if (waitingQueue.length <= 3) {
+            setFetchDataFlag(true);
+            console.log('fetch');
+        }
+    }, [waitingQueue]);
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const fetchedData = await
@@ -62,7 +68,7 @@ export default function WaitingQueue(): JSX.Element {
             });
         };
         postData();
-        setWaitingQueue(waitingQueue.filter(queue => queue.id !== queue_id));
+        setWaitingQueue(waitingQueue.filter((queue) => { queue.id !== queue_id; }));
         if (waitingQueue.length <= 3) {
             setFetchDataFlag(true);
         }

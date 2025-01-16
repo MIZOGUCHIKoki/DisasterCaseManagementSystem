@@ -33,12 +33,6 @@ export default function WaitingQueue(): JSX.Element {
         } 
     */
     useEffect(() => {
-        if (waitingQueue.length <= 3) {
-            setFetchDataFlag(true);
-            console.log('fetch');
-        }
-    }, [waitingQueue]);
-    useEffect(() => {
         const fetchData = async () => {
             try {
                 const fetchedData = await
@@ -67,8 +61,13 @@ export default function WaitingQueue(): JSX.Element {
                 body: JSON.stringify({ id: queue_id }),
             });
         };
-        postData();
-        waitingQueue.filter((queue) => queue.id !== queue_id);
+        postData().then(() => {
+            waitingQueue.filter((queue) => queue.id !== queue_id);
+            if (waitingQueue.length <= 3) {
+                setFetchDataFlag(true);
+            }
+        });
+
     };
     const style = (): React.CSSProperties => {
         if (screen.width > 768) { // PC, tablet

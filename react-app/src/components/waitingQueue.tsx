@@ -68,10 +68,6 @@ export default function WaitingQueue(): JSX.Element {
             });
         };
         postData();
-        setWaitingQueue(waitingQueue.filter((queue) => { queue.id !== queue_id; }));
-        if (waitingQueue.length <= 3) {
-            setFetchDataFlag(true);
-        }
     };
     const style = (): React.CSSProperties => {
         if (screen.width > 768) { // PC, tablet

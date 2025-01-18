@@ -14,6 +14,8 @@ from models.qr_read import Base
 from models.person import Person
 from models.stock_list import StockList
 
+import os
+import shutil
 
 DB_URL = "sqlite:///./dataBase.db"
 engine = create_engine(
@@ -34,6 +36,11 @@ def reset_database():
     Base.metadata.create_all(bind=engine)
 
 if __name__ == "__main__":
+    
+    if os.path.exists("dataBase.db"):
+        now = datetime.now().strftime('%Y%m%d%H%M%S')
+        shutil.copy("dataBase.db", f"../db_backup/dataBase_{now}.db")
+
     reset_database()
     session = Session()
     

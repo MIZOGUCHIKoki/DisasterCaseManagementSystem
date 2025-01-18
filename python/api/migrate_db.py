@@ -39,6 +39,8 @@ if __name__ == "__main__":
     
     if os.path.exists("dataBase.db"):
         now = datetime.now().strftime('%Y%m%d%H%M%S')
+        if not os.path.exists("../db_backup"):
+            os.makedirs("../db_backup")
         shutil.copy("dataBase.db", f"../db_backup/dataBase_{now}.db")
 
     reset_database()

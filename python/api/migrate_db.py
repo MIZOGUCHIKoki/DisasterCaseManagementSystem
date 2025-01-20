@@ -668,8 +668,8 @@ if __name__ == "__main__":
         ),
         Person(
             id='2',
-            nick_name='None',
-            group_id=10,
+            nick_name='7,12',
+            group_id=None,
             age=41,
             allergy=0,
             remarks_food='なし',

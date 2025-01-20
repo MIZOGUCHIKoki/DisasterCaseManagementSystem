@@ -251,7 +251,7 @@ if __name__ == "__main__":
         Person(
             id='202501150021',
             nick_name='2,11',
-            group_id=11,
+            group_id=None,
             age=22,
             allergy=0,
             remarks_food='なし',
@@ -261,7 +261,7 @@ if __name__ == "__main__":
         Person(
             id='202501150022',
             nick_name='2,12',
-            group_id=12,
+            group_id=None,
             age=70,
             allergy=0,
             remarks_food='なし',
@@ -659,7 +659,7 @@ if __name__ == "__main__":
         Person(
             id='1',
             nick_name='7,11',
-            group_id=10,
+            group_id=None,
             age=41,
             allergy=0,
             remarks_food='なし',
@@ -668,7 +668,7 @@ if __name__ == "__main__":
         ),
         Person(
             id='2',
-            nick_name='7,12',
+            nick_name='None',
             group_id=10,
             age=41,
             allergy=0,
@@ -679,7 +679,7 @@ if __name__ == "__main__":
         Person(
             id='21',
             nick_name='7,13',
-            group_id=10,
+            group_id=None,
             age=41,
             allergy=0,
             remarks_food='なし',
@@ -689,7 +689,7 @@ if __name__ == "__main__":
         Person(
             id='22',
             nick_name='7,14',
-            group_id=10,
+            group_id=None,
             age=41,
             allergy=0,
             remarks_food='なし',
@@ -699,7 +699,7 @@ if __name__ == "__main__":
         Person(
             id='16',
             nick_name='7,15',
-            group_id=10,
+            group_id=None,
             age=41,
             allergy=0,
             remarks_food='なし',
@@ -709,7 +709,7 @@ if __name__ == "__main__":
         Person(
             id='17',
             nick_name='7,16',
-            group_id=10,
+            group_id=None,
             age=41,
             allergy=0,
             remarks_food='なし',
@@ -719,7 +719,7 @@ if __name__ == "__main__":
         Person(
             id='11',
             nick_name='7,17',
-            group_id=10,
+            group_id=None,
             age=41,
             allergy=0,
             remarks_food='なし',
@@ -729,7 +729,7 @@ if __name__ == "__main__":
         Person(
             id='12',
             nick_name='7,18',
-            group_id=10,
+            group_id=None,
             age=41,
             allergy=0,
             remarks_food='なし',
@@ -739,7 +739,7 @@ if __name__ == "__main__":
         Person(
             id='6',
             nick_name='7,19',
-            group_id=10,
+            group_id=None,
             age=41,
             allergy=0,
             remarks_food='なし',
@@ -749,7 +749,7 @@ if __name__ == "__main__":
         Person(
             id='7',
             nick_name='7,20',
-            group_id=10,
+            group_id=None,
             age=41,
             allergy=0,
             remarks_food='なし',

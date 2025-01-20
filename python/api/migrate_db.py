@@ -242,7 +242,7 @@ if __name__ == "__main__":
         Person(
             id='202501150021',
             nick_name='2,11',
-            group_id=None,
+            group_id=11,
             age=22,
             allergy=0,
             remarks_food='なし',
@@ -252,7 +252,7 @@ if __name__ == "__main__":
         Person(
             id='202501150022',
             nick_name='2,12',
-            group_id=None,
+            group_id=12,
             age=70,
             allergy=0,
             remarks_food='なし',
@@ -647,16 +647,116 @@ if __name__ == "__main__":
             remarks_other='なし',
             created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ),
+        Person(
+            id='1',
+            nick_name='7,11',
+            group_id=10,
+            age=41,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='2',
+            nick_name='7,12',
+            group_id=10,
+            age=41,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='21',
+            nick_name='7,13',
+            group_id=10,
+            age=41,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='22',
+            nick_name='7,14',
+            group_id=10,
+            age=41,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='16',
+            nick_name='7,15',
+            group_id=10,
+            age=41,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='17',
+            nick_name='7,16',
+            group_id=10,
+            age=41,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='11',
+            nick_name='7,17',
+            group_id=10,
+            age=41,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='12',
+            nick_name='7,18',
+            group_id=10,
+            age=41,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='6',
+            nick_name='7,19',
+            group_id=10,
+            age=41,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
+        Person(
+            id='7',
+            nick_name='7,20',
+            group_id=10,
+            age=41,
+            allergy=0,
+            remarks_food='なし',
+            remarks_other='なし',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ),
     ])
     session.commit()
     session.add_all([
         StockList(name='水', size='250', unit='本', allergy=0, janure_id=1),
         StockList(name='保存用パン', size=None, unit='個', allergy=1, janure_id=1),
-        StockList(name='米粉クッキー', size=None, unit='個', allergy=24, janure_id=1)#,
+        StockList(name='米粉クッキー', size=None, unit='個', allergy=24, janure_id=1),
        # StockList(name='えびピラフ', size=None, unit='個', allergy=0, janure_id=2),
        # StockList(name='アルファ米アレルギーフリー', size=None, unit='個', allergy=0, janure_id=2),
-       # StockList(name='カルボナーラ', size=None, unit='個', allergy=0, janure_id=3),
-       # StockList(name='パスタアレルギーフリー', size=None, unit='個', allergy=0, janure_id=2)
+       StockList(name='カルボナーラ', size=None, unit='個', allergy=0, janure_id=3),
+       StockList(name='パスタアレルギーフリー', size=None, unit='個', allergy=0, janure_id=2)
     ])
     session.commit()
     
